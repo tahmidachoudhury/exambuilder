@@ -49,7 +49,7 @@ export default function ExamForm() {
     defaultValues: {
       numberOfQuestions: 10,
       difficultyLevel: "medium",
-      answerSheet: false,
+      answerSheet: true,
       topics: [],
     },
   })
@@ -57,6 +57,20 @@ export default function ExamForm() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true)
     // Here you would typically send the form data to your backend
+    fetch("http://localhost:3001/api/test", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json", // Tell the server the payload is JSON
+      },
+      body: JSON.stringify({ values }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data)
+      })
+      .catch((error) => {
+        console.error("Error:", error)
+      })
     console.log(values)
     setTimeout(() => {
       setIsSubmitting(false)
