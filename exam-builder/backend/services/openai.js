@@ -7,12 +7,15 @@ const openai = new OpenAI({
 })
 
 async function generateQuestions(payload) {
-  const { numberOfQuestions, difficultyLevel, topics } = payload.values
+  const { numberOfQuestions, difficultyLevel, topics, answerSheet } =
+    payload.values
 
   const prompt = `
-Generate ${numberOfQuestions} ${difficultyLevel} level questions on the topic(s): ${topics.join(
+Generate ${numberOfQuestions} ${difficultyLevel} level questions, with${
+    answerSheet ? "" : "out"
+  } a list of answers seperately, on the topic(s): ${topics.join(
     ", "
-  )}. Make sure they are strictly for GCSE Maths curriculum in the UK. Do not include pleasantries or any other text.`
+  )}. Make sure the output is a JSON object with the following format: {questions: [{id: number, text: string, math: string}], answers: [{id: number, math: string}]}. Make sure the questions are strictly for GCSE Maths curriculum in the UK. Do not include pleasantries, backticks or any other text. Do not give any help or hints such as equations.`
 
   const response = await openai.chat.completions.create({
     model: "gpt-4o",
