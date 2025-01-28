@@ -34,10 +34,13 @@ const formSchema = z.object({
 })
 
 const topics = [
+  { label: "Number", value: "number" },
   { label: "Algebra", value: "algebra" },
   { label: "Geometry", value: "geometry" },
-  { label: "Trigonometry", value: "trigonometry" },
-  { label: "Calculus", value: "calculus" },
+  {
+    label: "Ratio, Proportion and Rates of Change",
+    value: "ratio-proportion-and-rates-of-change",
+  },
   { label: "Statistics", value: "statistics" },
   { label: "Probability", value: "probability" },
 ]
@@ -110,7 +113,7 @@ export default function ExamForm() {
                   />
                 </FormControl>
                 <FormDescription>
-                  Enter the number of questions for the exam (1-100).
+                  Enter the number of questions for the exam (1-10).
                 </FormDescription>
                 <FormMessage />
               </FormItem>
