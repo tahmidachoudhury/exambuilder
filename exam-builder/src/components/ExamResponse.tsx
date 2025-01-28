@@ -79,12 +79,8 @@ export function ExamResponse({ message, item, questions }: ExamResponseProps) {
       ? JSON.parse(questions)
       : { questions: defaultQuestions, answers: defaultAnswers }
 
-  console.log("Parsed AIQuestionsAndAnswers:", AIQuestionsAndAnswers) // Debug log
-
   const allQuestions = AIQuestionsAndAnswers.questions
   const allAnswers = AIQuestionsAndAnswers.answers
-
-  console.log("Final allAnswers:", allAnswers)
 
   return (
     // <Card className="mt-8">

@@ -27,7 +27,7 @@ import { MultiSelect } from "@/components/ui/multi-select"
 import { ExamResponse } from "./ExamResponse"
 
 const formSchema = z.object({
-  numberOfQuestions: z.number().min(1).max(100),
+  numberOfQuestions: z.number().min(1).max(10),
   difficultyLevel: z.enum(["easy", "medium", "hard"]),
   answerSheet: z.boolean(),
   topics: z.array(z.string()).min(1),
