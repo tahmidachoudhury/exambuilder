@@ -26,7 +26,7 @@ interface ExamResponseProps {
   questions?: Question[]
 }
 
-const examQuestions = [
+const defaultQuestions = [
   {
     id: 1,
     text: "Solve the equation:",
@@ -64,7 +64,7 @@ const examQuestions = [
   },
 ]
 
-const answers = [
+const defaultAnswers = [
   { id: 1, math: "x = 10" },
   { id: 2, math: "-3x^2 - 5x + 12" },
   { id: 3, math: "(x - 8)(x + 3)" },
@@ -77,11 +77,15 @@ export function ExamResponse({ message, item, questions }: ExamResponseProps) {
   const AIQuestionsAndAnswers =
     typeof questions === "string"
       ? JSON.parse(questions)
-      : { questions: examQuestions, answers: answers }
+      : { questions: defaultQuestions, answers: defaultAnswers }
+
+  console.log("Parsed AIQuestionsAndAnswers:", AIQuestionsAndAnswers) // Debug log
 
   const allQuestions = AIQuestionsAndAnswers.questions
   const allAnswers = AIQuestionsAndAnswers.answers
-  console.log("examQuestions", allQuestions)
+
+  console.log("Final allAnswers:", allAnswers)
+
   return (
     // <Card className="mt-8">
     //   <CardHeader>
@@ -118,7 +122,7 @@ export function ExamResponse({ message, item, questions }: ExamResponseProps) {
         <h1 className="text-xl font-bold mb-4">Questions</h1>
         <ul className="list-decimal ml-6 space-y-4">
           {allQuestions.map((question: any) => (
-            <li key={question.id}>
+            <li key={`question-${question.id}-${Math.random()}`}>
               <MathJax>{question.text}</MathJax>
               {question.math && (
                 <MathJax>
@@ -132,10 +136,12 @@ export function ExamResponse({ message, item, questions }: ExamResponseProps) {
         <h1 className="text-xl font-bold mt-8 mb-4">Answers</h1>
         <ul className="list-decimal ml-6 space-y-4">
           {allAnswers.map((answer: any) => (
-            <li key={answer.id}>
-              <MathJax>
-                <div>${answer.math}$</div>
-              </MathJax>
+            <li key={`answer-${answer.id}-${Math.random()}`}>
+              {answer.math && (
+                <MathJax>
+                  <div>${answer.math}$</div>
+                </MathJax>
+              )}
             </li>
           ))}
         </ul>
