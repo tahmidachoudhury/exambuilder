@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/select"
 import { Switch } from "@/components/ui/switch"
 import { MultiSelect } from "@/components/ui/multi-select"
+import { ExamResponse } from "./ExamResponse"
 
 const formSchema = z.object({
   numberOfQuestions: z.number().min(1).max(100),
@@ -42,12 +43,17 @@ const topics = [
 ]
 
 export default function ExamForm() {
+  const [examResponse, setExamResponse] = useState<{
+    message: string
+    item: any
+    questions: any[]
+  } | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      numberOfQuestions: 10,
+      numberOfQuestions: 1,
       difficultyLevel: "medium",
       answerSheet: true,
       topics: [],
@@ -66,7 +72,12 @@ export default function ExamForm() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Success:", data)
+        setTimeout(() => {
+          console.log("Success:", data)
+          const { message, item, questions } = data
+          setExamResponse({ message, item, questions })
+          console.log(examResponse?.item)
+        }, 1000)
       })
       .catch((error) => {
         console.error("Error:", error)
@@ -76,104 +87,116 @@ export default function ExamForm() {
       setIsSubmitting(false)
       alert("Exam created successfully!")
       form.reset()
-    }, 1000)
+    }, 5000)
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="numberOfQuestions"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Number of Questions</FormLabel>
-              <FormControl>
-                <Input
-                  type="number"
-                  {...field}
-                  onChange={(e) =>
-                    field.onChange(Number.parseInt(e.target.value, 10))
-                  }
-                />
-              </FormControl>
-              <FormDescription>
-                Enter the number of questions for the exam (1-100).
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="difficultyLevel"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Difficulty Level</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+    <>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <FormField
+            control={form.control}
+            name="numberOfQuestions"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Number of Questions</FormLabel>
                 <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select difficulty level" />
-                  </SelectTrigger>
+                  <Input
+                    type="number"
+                    {...field}
+                    onChange={(e) =>
+                      field.onChange(Number.parseInt(e.target.value, 10))
+                    }
+                  />
                 </FormControl>
-                <SelectContent>
-                  <SelectItem value="easy">Easy</SelectItem>
-                  <SelectItem value="medium">Medium</SelectItem>
-                  <SelectItem value="hard">Hard</SelectItem>
-                </SelectContent>
-              </Select>
-              <FormDescription>
-                Choose the difficulty level for the exam.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="answerSheet"
-          render={({ field }) => (
-            <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-              <div className="space-y-0.5">
-                <FormLabel className="text-base">Answer Sheet</FormLabel>
                 <FormDescription>
-                  Do you need an answer sheet for this exam?
+                  Enter the number of questions for the exam (1-100).
                 </FormDescription>
-              </div>
-              <FormControl>
-                <Switch
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                />
-              </FormControl>
-            </FormItem>
-          )}
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="difficultyLevel"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Difficulty Level</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select difficulty level" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="easy">Easy</SelectItem>
+                    <SelectItem value="medium">Medium</SelectItem>
+                    <SelectItem value="hard">Hard</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormDescription>
+                  Choose the difficulty level for the exam.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="answerSheet"
+            render={({ field }) => (
+              <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                <div className="space-y-0.5">
+                  <FormLabel className="text-base">Answer Sheet</FormLabel>
+                  <FormDescription>
+                    Do you need an answer sheet for this exam?
+                  </FormDescription>
+                </div>
+                <FormControl>
+                  <Switch
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="topics"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Topics</FormLabel>
+                <FormControl>
+                  <MultiSelect
+                    options={topics}
+                    selected={field.value}
+                    onChange={field.onChange}
+                    placeholder="Select topics"
+                  />
+                </FormControl>
+                <FormDescription>
+                  Select the topics to appear in the exam.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Creating..." : "Create Exam"}
+          </Button>
+        </form>
+      </Form>
+      {examResponse && (
+        <ExamResponse
+          message={examResponse?.message}
+          item={examResponse?.item}
+          questions={examResponse?.questions}
         />
-        <FormField
-          control={form.control}
-          name="topics"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Topics</FormLabel>
-              <FormControl>
-                <MultiSelect
-                  options={topics}
-                  selected={field.value}
-                  onChange={field.onChange}
-                  placeholder="Select topics"
-                />
-              </FormControl>
-              <FormDescription>
-                Select the topics to appear in the exam.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Creating..." : "Create Exam"}
-        </Button>
-      </form>
-    </Form>
+      )}
+    </>
   )
 }
