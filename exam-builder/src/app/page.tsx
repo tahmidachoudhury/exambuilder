@@ -1,4 +1,4 @@
-import ExamForm from "@/components/ExamForm"
+import ExamForm from "@/components/UserForm"
 
 export default function CreateExamPage() {
   return (

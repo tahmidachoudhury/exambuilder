@@ -65,8 +65,9 @@ export default function ExamForm() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true)
+    setExamResponse(null)
     // Here you would typically send the form data to your backend
-    fetch("http://localhost:3001/api/test", {
+    fetch("http://localhost:3002/api/test", {
       method: "POST",
       headers: {
         "Content-Type": "application/json", // Tell the server the payload is JSON
@@ -75,22 +76,14 @@ export default function ExamForm() {
     })
       .then((response) => response.json())
       .then((data) => {
-        setTimeout(() => {
-          console.log("Success:", data)
-          const { message, item, questions } = data
-          setExamResponse({ message, item, questions })
-          console.log(examResponse?.item)
-        }, 1000)
+        const { message, item, questions } = data
+        setExamResponse({ message, item, questions })
+        setIsSubmitting(false)
       })
       .catch((error) => {
         console.error("Error:", error)
+        setIsSubmitting(false)
       })
-    console.log(values)
-    setTimeout(() => {
-      setIsSubmitting(false)
-      alert("Exam created successfully!")
-      form.reset()
-    }, 5000)
   }
 
   return (
@@ -193,13 +186,18 @@ export default function ExamForm() {
           </Button>
         </form>
       </Form>
-      {examResponse && (
+      {isSubmitting ? (
+        <div className="flex items-center justify-center p-8">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900" />
+          <span className="ml-3">Generating exam questions...</span>
+        </div>
+      ) : examResponse ? (
         <ExamResponse
           message={examResponse?.message}
           item={examResponse?.item}
           questions={examResponse?.questions}
         />
-      )}
+      ) : null}
     </>
   )
 }

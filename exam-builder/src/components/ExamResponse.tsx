@@ -1,12 +1,5 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import { MathJaxContext, MathJax } from "better-react-mathjax"
+import { useEffect, useState } from "react"
 
 interface Question {
   id?: string
@@ -29,22 +22,22 @@ interface ExamResponseProps {
 const defaultQuestions = [
   {
     id: 1,
-    text: "Solve the equation:",
+    text: "Solve the default equation:",
     math: "3(x - 2) = 2x + 4",
   },
   {
     id: 2,
-    text: "Simplify the expression:",
+    text: "Simplify the default expression:",
     math: "(2x + 3)(x - 4) - 5x^2",
   },
   {
     id: 3,
-    text: "Factorize the quadratic expression:",
+    text: "Factorize the default quadratic expression:",
     math: "x^2 - 5x - 24",
   },
   {
     id: 4,
-    text: "Solve the simultaneous equations:",
+    text: "Solve the default simultaneous equations:",
     math: `
       \\begin{aligned}
       3x + 2y &= 12 \\\\
@@ -54,12 +47,12 @@ const defaultQuestions = [
   },
   {
     id: 5,
-    text: "Find the value of \\(x\\) in the equation:",
+    text: "Find the value of \\(x\\) in the default equation:",
     math: "\\frac{2x - 3}{4} = \\frac{x + 5}{3}",
   },
   {
     id: 6,
-    text: "If the sequence is defined by \\(a_n = 3n^2 + 2n\\), find the value of the 5th term in the sequence.",
+    text: "If the default sequence is defined by \\(a_n = 3n^2 + 2n\\), find the value of the 5th term in the sequence.",
     math: "",
   },
 ]
@@ -74,6 +67,23 @@ const defaultAnswers = [
 ]
 
 export function ExamResponse({ message, item, questions }: ExamResponseProps) {
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    if (questions) {
+      setIsLoading(false)
+    }
+  }, [questions])
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center p-8">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900" />
+        <span className="ml-3">Generating exam questions...</span>
+      </div>
+    )
+  }
+
   const AIQuestionsAndAnswers =
     typeof questions === "string"
       ? JSON.parse(questions)
