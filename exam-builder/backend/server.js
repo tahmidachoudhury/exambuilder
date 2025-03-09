@@ -1,4 +1,7 @@
 const express = require("express")
+const latex = require("node-latex")
+const fs = require("fs")
+const path = require("path")
 const app = express()
 const { generateQuestions } = require("./services/openai")
 
@@ -34,6 +37,45 @@ app.post("/api/test", async (req, res) => {
     // Add error handling
     console.error("Error:", error)
     res.status(500).json({ error: "Internal server error" })
+  }
+})
+
+app.post("/api/generate-exam", async (req, res) => {
+  try {
+    // const { questions, examTitle, examDate } = req.body
+
+    // // 1. Load your LaTeX template
+    let templateContent = fs.readFileSync(
+      path.join(__dirname, "templates/exam-template.tex"),
+      "utf8"
+    )
+
+    // 2. Replace placeholders with actual data
+    // templateContent = templateContent
+    //   .replace("EXAM_TITLE", examTitle)
+    //   .replace("EXAM_DATE", examDate)
+
+    // // 3. Generate question content based on your template format
+    // // This will depend on your specific GCSE math format
+    // const questionsContent = generateQuestionsContent(questions)
+    // templateContent = templateContent.replace(
+    //   "QUESTIONS_PLACEHOLDER",
+    //   questionsContent
+    // )
+
+    // 4. Compile LaTeX to PDF
+    const output = fs.createWriteStream("exam.pdf")
+    const pdf = latex(templateContent)
+
+    pdf.pipe(output)
+
+    output.on("finish", () => {
+      // 5. Send the PDF file
+      res.download("exam.pdf")
+    })
+  } catch (error) {
+    console.error("Error generating exam:", error)
+    res.status(500).send("Error generating exam PDF")
   }
 })
 

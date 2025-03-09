@@ -45,7 +45,7 @@ const topics = [
   { label: "Probability", value: "probability" },
 ]
 
-export default function UserForm() {
+export default function GenerateLatexExam() {
   const [examResponse, setExamResponse] = useState<{
     message: string
     item: any
@@ -63,34 +63,42 @@ export default function UserForm() {
     },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    setIsSubmitting(true)
-    setExamResponse(null)
-    // Here you would typically send the form data to your backend
-    fetch("http://localhost:3002/api/test", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json", // Tell the server the payload is JSON
-      },
-      body: JSON.stringify({ values }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const { message, item, questions } = data
-        setExamResponse({ message, item, questions })
-        setIsSubmitting(false)
+  async function generateExam() {
+    try {
+      // Send request to backend
+      const response = await fetch("http://localhost:3002/api/generate-exam", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
       })
-      .catch((error) => {
-        console.error("Error:", error)
-        console.log("Check the server mate")
-        setIsSubmitting(false)
-      })
+
+      if (!response.ok) throw new Error("PDF generation failed")
+
+      // Create blob from the PDF data
+      const blob = await response.blob()
+
+      // Create download link and trigger download
+      const downloadUrl = window.URL.createObjectURL(blob)
+      const a = document.createElement("a")
+      a.href = downloadUrl
+      a.download = "exam.pdf"
+      document.body.appendChild(a)
+      a.click()
+
+      // Clean up
+      window.URL.revokeObjectURL(downloadUrl)
+      document.body.removeChild(a)
+    } catch (error) {
+      console.error("Error:", error)
+      // Show error to user
+    }
   }
 
   return (
     <>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(generateExam)} className="space-y-8">
           <FormField
             control={form.control}
             name="numberOfQuestions"
