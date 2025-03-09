@@ -82,6 +82,7 @@ export default function ExamForm() {
       })
       .catch((error) => {
         console.error("Error:", error)
+        console.log("Check the server mate")
         setIsSubmitting(false)
       })
   }
