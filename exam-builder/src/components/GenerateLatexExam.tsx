@@ -69,7 +69,11 @@ export default function GenerateLatexExam() {
       const response = await fetch("http://localhost:3002/api/generate-exam", {
         method: "POST",
         headers: {
+          //added headers to control cache when downloading
           "Content-Type": "application/json",
+          "Cache-Control": "no-cache, no-store, must-revalidate",
+          Pragma: "no-cache",
+          Expires: "0",
         },
       })
 
@@ -82,7 +86,7 @@ export default function GenerateLatexExam() {
       const downloadUrl = window.URL.createObjectURL(blob)
       const a = document.createElement("a")
       a.href = downloadUrl
-      a.download = "exam.pdf"
+      a.download = `exam-${Date.now()}.pdf` // Add timestamp to filename
       document.body.appendChild(a)
       a.click()
 

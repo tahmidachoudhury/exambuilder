@@ -3,4 +3,5 @@ RUN apt update && apt install -y texlive texlive-latex-extra texlive-xetex lmode
 WORKDIR /app
 COPY . .
 RUN npm install
+EXPOSE 3002
 CMD ["node", "server.js"]

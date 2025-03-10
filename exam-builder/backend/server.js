@@ -43,14 +43,16 @@ app.post("/api/test", async (req, res) => {
 app.post("/api/generate-exam", async (req, res) => {
   try {
     // const { questions, examTitle, examDate } = req.body
-
+    console.log("Generating new PDF at:", Date.now())
     // // 1. Load your LaTeX template
     let templateContent = fs.readFileSync(
       path.join(__dirname, "templates/exam-template.tex"),
       "utf8"
     )
 
-    // 2. Replace placeholders with actual data
+    console.log("Template content:", templateContent.substring(0, 100))
+
+    // // 2. Replace placeholders with actual data
     // templateContent = templateContent
     //   .replace("EXAM_TITLE", examTitle)
     //   .replace("EXAM_DATE", examDate)
@@ -64,14 +66,24 @@ app.post("/api/generate-exam", async (req, res) => {
     // )
 
     // 4. Compile LaTeX to PDF
-    const output = fs.createWriteStream("exam.pdf")
+    const timestamp = Date.now()
+    const outputPath = `exam-${timestamp}.pdf`
+    const output = fs.createWriteStream(outputPath)
+    console.log("Creating PDF with path:", outputPath)
+
     const pdf = latex(templateContent)
 
     pdf.pipe(output)
 
     output.on("finish", () => {
       // 5. Send the PDF file
-      res.download("exam.pdf")
+      res.download(outputPath, "exam.pdf", (error) => {
+        console.log("File sent to client, cleaning up...")
+        fs.unlink(outputPath, (unlinkError) => {
+          if (unlinkError) console.error("Error deleting file:", unlinkError)
+          else console.log("Cleanup completed successfully")
+        })
+      })
     })
   } catch (error) {
     console.error("Error generating exam:", error)
