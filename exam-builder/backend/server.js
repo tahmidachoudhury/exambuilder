@@ -4,6 +4,7 @@ const fs = require("fs")
 const path = require("path")
 const app = express()
 const { generateQuestions } = require("./services/openai")
+const { generateExam } = require("./services/latex")
 
 // Middleware to parse JSON
 app.use(express.json())
@@ -20,9 +21,6 @@ app.post("/api/test", async (req, res) => {
   try {
     // Access the payload from req.body
     const payload = req.body
-
-    // Simulate saving the item (in real use case, you'd save it to a database)
-    console.log("Received payload:", payload)
 
     // Generate questions first
     const response = await generateQuestions(payload)
@@ -42,48 +40,70 @@ app.post("/api/test", async (req, res) => {
 
 app.post("/api/generate-exam", async (req, res) => {
   try {
-    // const { questions, examTitle, examDate } = req.body
     console.log("Generating new PDF at:", Date.now())
-    // // 1. Load your LaTeX template
-    let templateContent = fs.readFileSync(
-      path.join(__dirname, "templates/exam-template.tex"),
-      "utf8"
-    )
 
-    console.log("Template content:", templateContent.substring(0, 100))
+    // Example question for MVP
+    const questions = [
+      {
+        content: `\\[f(x) = (x + 3)(x + 2)(x - 1)\\] 
 
-    // // 2. Replace placeholders with actual data
-    // templateContent = templateContent
-    //   .replace("EXAM_TITLE", examTitle)
-    //   .replace("EXAM_DATE", examDate)
+\\begin{enumerate}[label=(\\alph*)]
+\\item Sketch the curve \\( y = f(x) \\), showing the points of intersection with the coordinate axes. \\hfill \\textbf{(3)}
+\\item Showing the coordinates of the points of intersection with the coordinate axes, sketch on separate diagrams the curves:
+    \\begin{enumerate}[label=(\\roman*)]
+    \\item \\( y = f(x - 3) \\) \\hfill \\textbf{(2)}
+    \\item \\( y = f(-x) \\) \\hfill \\textbf{(2)}
+    \\end{enumerate}
+\\end{enumerate}
 
-    // // 3. Generate question content based on your template format
-    // // This will depend on your specific GCSE math format
-    // const questionsContent = generateQuestionsContent(questions)
-    // templateContent = templateContent.replace(
-    //   "QUESTIONS_PLACEHOLDER",
-    //   questionsContent
-    // )
+\\vspace{8cm}`,
+        totalMarks: 7,
+      },
+      {
+        content:
+          "$a$ is directly proportional to $b$.\n\nWhen $a = 7$, $b = 28$.\n\nFind the value of $b$ when $a = 5$.\n\n\\vspace{8cm}",
+        totalMarks: 3,
+      },
+    ]
 
-    // 4. Compile LaTeX to PDF
+    // Generate LaTeX content
+    const latexContent = generateExam(questions)
+
+    // Create a temporary file for the LaTeX content
     const timestamp = Date.now()
-    const outputPath = `exam-${timestamp}.pdf`
-    const output = fs.createWriteStream(outputPath)
-    console.log("Creating PDF with path:", outputPath)
+    const tempLatexPath = path.join(__dirname, `temp-${timestamp}.tex`)
+    fs.writeFileSync(tempLatexPath, latexContent)
 
-    const pdf = latex(templateContent)
+    // Generate PDF
+    const outputPath = path.join(__dirname, `exam-${timestamp}.pdf`)
+    const output = fs.createWriteStream(outputPath)
+    const pdf = latex(fs.createReadStream(tempLatexPath))
 
     pdf.pipe(output)
 
     output.on("finish", () => {
-      // 5. Send the PDF file
+      // Clean up temporary LaTeX file
+      fs.unlinkSync(tempLatexPath)
+
+      // Send the PDF file
       res.download(outputPath, "exam.pdf", (error) => {
-        console.log("File sent to client, cleaning up...")
+        if (error) {
+          console.error("Error sending file:", error)
+          return res.status(500).send("Error sending PDF")
+        }
+        // Clean up PDF file after sending
         fs.unlink(outputPath, (unlinkError) => {
-          if (unlinkError) console.error("Error deleting file:", unlinkError)
-          else console.log("Cleanup completed successfully")
+          if (unlinkError)
+            console.error("Error deleting PDF file:", unlinkError)
         })
       })
+    })
+
+    pdf.on("error", (error) => {
+      console.error("Error generating PDF:", error)
+      // Clean up temporary LaTeX file
+      fs.unlinkSync(tempLatexPath)
+      res.status(500).send("Error generating PDF")
     })
   } catch (error) {
     console.error("Error generating exam:", error)
@@ -92,7 +112,7 @@ app.post("/api/generate-exam", async (req, res) => {
 })
 
 // Start the server
-const PORT = 3002
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`)
+const port = process.env.PORT || 3002
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`)
 })
