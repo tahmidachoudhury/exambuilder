@@ -43,28 +43,9 @@ app.post("/api/generate-exam", async (req, res) => {
     console.log("Generating new PDF at:", Date.now())
 
     // Example question for MVP
-    const questions = [
-      {
-        content: `\\[f(x) = (x + 3)(x + 2)(x - 1)\\] 
+    const tempQuestions = require("./data/questions.json")
 
-\\begin{enumerate}[label=(\\alph*)]
-\\item Sketch the curve \\( y = f(x) \\), showing the points of intersection with the coordinate axes. \\hfill \\textbf{(3)}
-\\item Showing the coordinates of the points of intersection with the coordinate axes, sketch on separate diagrams the curves:
-    \\begin{enumerate}[label=(\\roman*)]
-    \\item \\( y = f(x - 3) \\) \\hfill \\textbf{(2)}
-    \\item \\( y = f(-x) \\) \\hfill \\textbf{(2)}
-    \\end{enumerate}
-\\end{enumerate}
-
-\\vspace{8cm}`,
-        totalMarks: 7,
-      },
-      {
-        content:
-          "$a$ is directly proportional to $b$.\n\nWhen $a = 7$, $b = 28$.\n\nFind the value of $b$ when $a = 5$.\n\n\\vspace{8cm}",
-        totalMarks: 3,
-      },
-    ]
+    const questions = tempQuestions["questions"]
 
     // Generate LaTeX content
     const latexContent = generateExam(questions)
