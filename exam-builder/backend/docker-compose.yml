@@ -1,11 +1,7 @@
-version: "3"
 services:
   exam-builder:
     build: .
     ports:
       - "3002:3002"
     volumes:
-      - ./templates:/app/templates
-      - ./server.js:/app/server.js
-      - ./latex.js:/app/latex.js
-      - ./package.json:/app/package.json
+      - .:/app
