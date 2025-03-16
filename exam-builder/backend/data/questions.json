@@ -1,8 +1,8 @@
 {
   "questions": [
     {
-      "content": "\\[f(x) = (x + 3)(x + 2)(x - 1)\\] \n\n\\begin{enumerate}[label=(\\alph*)]\n\\item Sketch the curve \\( y = f(x) \\), showing the points of intersection with the coordinate axes. \\hfill \\textbf{(3)}\n\\item Showing the coordinates of the points of intersection with the coordinate axes, sketch on separate diagrams the curves:\n    \\begin{enumerate}[label=(\\roman*)]\n    \\item \\( y = f(x - 3) \\) \\hfill \\textbf{(2)}\n    \\item \\( y = f(-x) \\) \\hfill \\textbf{(2)}\n    \\end{enumerate}\n\\end{enumerate}\n\n\\vspace{8cm}",
-      "totalMarks": 7
+      "content": "A piece of gold has a mass of $760$ grams and a volume of $40 \\text{ cm}^3$.\n\nWork out the density of the piece of gold.\n\n\\vspace{8cm}",
+      "totalMarks": 3
     },
     {
       "content": "$a$ is directly proportional to $b$.\n\nWhen $a = 7$, $b = 28$.\n\nFind the value of $b$ when $a = 5$.\n\n\\vspace{8cm}",
@@ -10,6 +10,26 @@
     },
     {
       "content": "$x$ is directly proportional to $y$.\n\nWhen $x = 4$, $y = 20$.\n\nFind the value of $y$ when $x = 6$.\n\n\\vspace{8cm}",
+      "totalMarks": 3
+    },
+    {
+      "content": "$x$ is directly proportional to $y$.\n\nWhen $x = 5$, $y = 25$.\n\nFind the value of $y$ when $x = 6$.\n\n\\vspace{8cm}",
+      "totalMarks": 3
+    },
+    {
+      "content": "$x$ is directly proportional to $y$.\n\nWhen $x = 4$, $y = 12$.\n\nFind the value of $y$ when $x = 9$.\n\n\\vspace{8cm}",
+      "totalMarks": 3
+    },
+    {
+      "content": "$p$ is inversely proportional to $q$.\n\nWhen $p = 10$, $q = 2$.\n\nFind the value of $q$ when $p = 5$.\n\n\\vspace{8cm}",
+      "totalMarks": 3
+    },
+    {
+      "content": "$m$ is directly proportional to $n$.\n\nWhen $m = 8$, $n = 24$.\n\nFind the value of $n$ when $m = 6$.\n\n\\vspace{8cm}",
+      "totalMarks": 3
+    },
+    {
+      "content": "$r$ is inversely proportional to $s$.\n\nWhen $r = 15$, $s = 3$.\n\nFind the value of $s$ when $r = 5$.\n\n\\vspace{8cm}",
       "totalMarks": 3
     }
   ]

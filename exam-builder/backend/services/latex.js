@@ -35,7 +35,7 @@ function createQuestions(questions) {
     return formatQuestion(index + 1, question.content, question.totalMarks)
   })
 
-  // console.log("successfully formatted questions")
+  console.log("successfully formatted questions", questionsContent)
 
   return questionsContent
 }
@@ -51,14 +51,14 @@ const groupQuestionsIntoPairs = (formattedQuestions) => {
       pairs.push(formattedQuestions[i])
     }
   }
-  console.log("successfully paired questions", String(pairs).slice(0, 700))
+  // console.log("successfully paired questions", pairs)
   return pairs
 }
 
 function createPages(questionPair) {
   const finalExam = questionPair
     .map((question) => {
-      return formatPage(questionPair)
+      return formatPage(question)
     })
     .join("\n")
   // console.log(
