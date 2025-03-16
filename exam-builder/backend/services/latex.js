@@ -6,7 +6,7 @@ function formatQuestion(questionNumber, questionContent, totalMarks) {
   return `
 %question ${questionNumber}
 
-\\textbf{${questionNumber}} \\hspace{1em} 
+\\textbf{${questionNumber}} \\hspace{1em}
 ${questionContent}
 
 \\hfill \\textbf{(Total for question ${questionNumber} is ${totalMarks} marks)}
@@ -35,7 +35,7 @@ function createQuestions(questions) {
     return formatQuestion(index + 1, question.content, question.totalMarks)
   })
 
-  console.log("successfully formatted questions", questionsContent)
+  // console.log("successfully formatted questions", questionsContent)
 
   return questionsContent
 }
