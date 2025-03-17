@@ -1,7 +1,7 @@
 const fs = require("fs")
 const path = require("path")
 
-//This function formats the question in a consistent way
+//This function formats the questions consistently using latex
 function formatQuestion(questionNumber, questionContent, totalMarks) {
   return `
 %question ${questionNumber}
@@ -16,7 +16,7 @@ ${questionContent}
 `
 }
 
-//This function formats the pages consistently
+//This function formats the pages consistently using latex
 function formatPage(questionPair) {
   return `
 \\begin{tcolorbox}
@@ -40,6 +40,7 @@ function createQuestions(questions) {
   return questionsContent
 }
 
+//formats the questions into pairs
 const groupQuestionsIntoPairs = (formattedQuestions) => {
   const pairs = []
   for (let i = 0; i < formattedQuestions.length; i += 2) {
@@ -82,7 +83,7 @@ function generateExam(questions) {
     const templatePath = path.join(__dirname, "../templates/exam-template.tex")
     let template = fs.readFileSync(templatePath, "utf8")
 
-    // Generate all questions content
+    // Generate all pages with 2 questions per page
     const finalExam = createPages(questionPairs)
 
     // Replace the placeholder with actual questions
