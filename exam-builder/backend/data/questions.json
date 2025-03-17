@@ -10,27 +10,7 @@
       "totalMarks": 3
     },
     {
-      "content": "$x$ is directly proportional to $y$.\n\nWhen $x = 4$, $y = 20$.\n\nFind the value of $y$ when $x = 6$.\n\n\\vspace{8cm}",
-      "totalMarks": 3
-    },
-    {
-      "content": "$x$ is directly proportional to $y$.\n\nWhen $x = 5$, $y = 25$.\n\nFind the value of $y$ when $x = 6$.\n\n\\vspace{8cm}",
-      "totalMarks": 3
-    },
-    {
-      "content": "$x$ is directly proportional to $y$.\n\nWhen $x = 4$, $y = 12$.\n\nFind the value of $y$ when $x = 9$.\n\n\\vspace{8cm}",
-      "totalMarks": 3
-    },
-    {
-      "content": "$p$ is inversely proportional to $q$.\n\nWhen $p = 10$, $q = 2$.\n\nFind the value of $q$ when $p = 5$.\n\n\\vspace{8cm}",
-      "totalMarks": 3
-    },
-    {
-      "content": "$m$ is directly proportional to $n$.\n\nWhen $m = 8$, $n = 24$.\n\nFind the value of $n$ when $m = 6$.\n\n\\vspace{8cm}",
-      "totalMarks": 3
-    },
-    {
-      "content": "$r$ is inversely proportional to $s$.\n\nWhen $r = 15$, $s = 3$.\n\nFind the value of $s$ when $r = 5$.\n\n\\vspace{8cm}",
+      "content": "\\noindent\\quad Here is a polygon.\n\\vspace{0.5cm}\n\\begin{center}\n    \\begin{tikzpicture}\n        \\draw (90:1.5) -- (162:1.5) -- (234:1.5) -- (306:1.5) -- (18:1.5) -- cycle;\n    \\end{tikzpicture}\n\\end{center}\n\n(a) Write down the mathematical name of this polygon. \\\\[2cm] % Adjust spacing as needed\n\n\\hfill \\makebox[5cm]{\\dotfill}\n\\vspace{0.2cm}\n\n\\noindent Here is a prism.\n\\vspace{0.5cm}\n\\begin{center}\n    \\begin{tikzpicture}\n        % Front pentagon\n        \\coordinate (A) at (90:1.5);\n        \\coordinate (B) at (162:1.5);\n        \\coordinate (C) at (234:1.5);\n        \\coordinate (D) at (306:1.5);\n        \\coordinate (E) at (18:1.5);\n        % Shifted back pentagon\n        \\coordinate (F) at ($(A)+(1,1)$);\n        \\coordinate (G) at ($(B)+(1,1)$);\n        \\coordinate (H) at ($(C)+(1,1)$);\n        \\coordinate (I) at ($(D)+(1,1)$);\n        \\coordinate (J) at ($(E)+(1,1)$);\n        % Draw front pentagon\n        \\draw (A) -- (B) -- (C) -- (D) -- (E) -- cycle;\n        % Draw back pentagon (dashed for hidden edges)\n        \\draw[dashed] (F) -- (G) -- (H) -- (I) -- (J) -- cycle;\n        % Connect front and back pentagons\n        \\draw (A) -- (F);\n        \\draw (B) -- (G);\n        \\draw (C) -- (H);\n        \\draw (D) -- (I);\n        \\draw (E) -- (J);\n    \\end{tikzpicture}\n\\end{center}\n\\noindent Each edge of the prism has a length of 7.5 cm.\n\\vspace{0.3cm}\n\n(b) Work out the total length of the edges of the prism.\n\n\\vspace{5cm}\n\n\\hfill \\makebox[5cm]{\\dotfill} cm\n\n\\hfill \\textbf{(2)}\n\n\\vspace{0.5cm}",
       "totalMarks": 3
     }
   ]
