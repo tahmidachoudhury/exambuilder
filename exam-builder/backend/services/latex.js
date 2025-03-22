@@ -40,19 +40,45 @@ function createQuestions(questions) {
   return questionsContent
 }
 
+function getSinglePageQuestions(questions) {
+  const singlePageQuestions = []
+
+  questions.forEach((question, index) => {
+    if (question.fullPage) {
+      console.log("Question", index + 1, "is single!")
+      singlePageQuestions.push(index)
+    }
+  })
+
+  return singlePageQuestions
+}
+
 //formats the questions into pairs
-const groupQuestionsIntoPairs = (formattedQuestions) => {
+function groupQuestionsIntoPairs(formattedQuestions, singlePageQuestions) {
   const pairs = []
-  for (let i = 0; i < formattedQuestions.length; i += 2) {
-    if (i + 1 < formattedQuestions.length) {
-      // If we have two questions, pair them
-      pairs.push(formattedQuestions[i] + "\n\n" + formattedQuestions[i + 1])
-    } else {
-      // If we have an odd number of questions, the last one goes alone
+  let i = 0
+
+  while (i < formattedQuestions.length) {
+    //if current q should remain single
+    if (singlePageQuestions.includes(i)) {
       pairs.push(formattedQuestions[i])
+      i++
+    }
+    // If theres a next question and it should NOT remain single
+    else if (
+      i + 1 < formattedQuestions.length &&
+      !singlePageQuestions.includes(i + 1)
+    ) {
+      pairs.push(formattedQuestions[i] + "\n\n" + formattedQuestions[i + 1])
+      i += 2
+    }
+    // If theres an odd number of questions, the last one goes alone
+    else {
+      pairs.push(formattedQuestions[i])
+      i++
     }
   }
-  // console.log("successfully paired questions", pairs)
+
   return pairs
 }
 
@@ -70,11 +96,18 @@ function createPages(questionPair) {
 }
 
 function generateExam(questions) {
+  const singlePageQuestions = getSinglePageQuestions(questions)
+
+  console.log(singlePageQuestions)
+
   const formattedQuestions = createQuestions(questions)
 
   console.log(`Formatted ${formattedQuestions.length} questions`)
 
-  const questionPairs = groupQuestionsIntoPairs(formattedQuestions)
+  const questionPairs = groupQuestionsIntoPairs(
+    formattedQuestions,
+    singlePageQuestions
+  )
 
   console.log(`Created ${questionPairs.length} pages`)
 
