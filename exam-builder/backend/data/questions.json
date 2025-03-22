@@ -1,12 +1,12 @@
 {
   "questions": [
     {
-      "content": "A piece of gold has a mass of $760$ grams and a volume of $40 \\text{ cm}^3$.\n\nWork out the density of the piece of gold.\n\n\\vspace{8cm}",
+      "content": "A piece of gold has a mass of $760$ grams and a volume of $40 \\text{ cm}^3$.\n\n\\vspace{0.5cm} \n\n\\qquad Work out the density of the piece of gold.\n\n\\vspace{8cm} \n\n\\hfill \\makebox[4cm]{\\dotfill}",
       "totalMarks": 3,
       "answer": "$19 \\,\\text{g/cm}^3$"
     },
     {
-      "content": "$a$ is directly proportional to $b$.\n\nWhen $a = 7$, $b = 28$.\n\nFind the value of $b$ when $a = 5$.\n\n\\vspace{8cm}\n\n \\hfill $b = \\underline{\\hspace{4cm}}$",
+      "content": "$a$ is directly proportional to $b$.\n\n\\vspace{0.5cm} \n\n\\qquad When $a = 7$, $b = 28$.\n\n\\vspace{0.5cm} \n\n\\qquad Find the value of $b$ when $a = 5$.\n\n\\vspace{8cm}\n\n\\hfill $b$ =\\makebox[4cm]{\\dotfill}",
       "totalMarks": 3
     },
     {
