@@ -3,6 +3,7 @@ const latex = require("node-latex")
 const fs = require("fs")
 const path = require("path")
 const app = express()
+const tempQuestions = require("./data/questions.json")
 const { generateQuestions } = require("./services/openai")
 const { generateExam } = require("./services/latex")
 
@@ -17,19 +18,12 @@ app.get("/", (req, res) => {
 })
 
 // Sample Route
-app.post("/api/test", async (req, res) => {
+app.get("/api/test", async (req, res) => {
   try {
-    // Access the payload from req.body
-    const payload = req.body
-
-    // Generate questions first
-    const response = await generateQuestions(payload)
-
-    // Send single response with both the success message and generated questions
+    // Send single response with both the success message and json questions
     res.status(201).json({
       message: "Item created successfully",
-      item: payload,
-      questions: response,
+      tempQuestions,
     })
   } catch (error) {
     // Add error handling

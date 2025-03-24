@@ -28,7 +28,7 @@ import { ExamResponse } from "./ExamResponse"
 
 const formSchema = z.object({
   numberOfQuestions: z.number().min(1).max(10),
-  difficultyLevel: z.enum(["easy", "medium", "hard"]),
+  difficultyLevel: z.enum(["easy", "medium", "hard", "hardest"]),
   answerSheet: z.boolean(),
   topics: z.array(z.string()).min(1),
 })
@@ -63,56 +63,26 @@ export default function UserForm() {
     },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    setIsSubmitting(true)
-    setExamResponse(null)
-    // Here you would typically send the form data to your backend
-    fetch("http://localhost:3002/api/test", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json", // Tell the server the payload is JSON
-      },
-      body: JSON.stringify({ values }),
+  // Here you would typically send the form data to your backend
+  fetch("http://localhost:3002/api/test", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json", // Tell the server the payload is JSON
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data)
     })
-      .then((response) => response.json())
-      .then((data) => {
-        const { message, item, questions } = data
-        setExamResponse({ message, item, questions })
-        setIsSubmitting(false)
-      })
-      .catch((error) => {
-        console.error("Error:", error)
-        console.log("Check the server mate")
-        setIsSubmitting(false)
-      })
-  }
+    .catch((error) => {
+      console.error("Error:", error)
+      console.log("Check the server mate")
+    })
 
   return (
     <>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <FormField
-            control={form.control}
-            name="numberOfQuestions"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Number of Questions</FormLabel>
-                <FormControl>
-                  <Input
-                    type="number"
-                    {...field}
-                    onChange={(e) =>
-                      field.onChange(Number.parseInt(e.target.value, 10))
-                    }
-                  />
-                </FormControl>
-                <FormDescription>
-                  Enter the number of questions for the exam (1-10).
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+        <form className="space-y-8">
           <FormField
             control={form.control}
             name="difficultyLevel"
@@ -129,35 +99,16 @@ export default function UserForm() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="easy">Easy</SelectItem>
-                    <SelectItem value="medium">Medium</SelectItem>
-                    <SelectItem value="hard">Hard</SelectItem>
+                    <SelectItem value="easy">Grade 1-3</SelectItem>
+                    <SelectItem value="medium">Grade 4-5</SelectItem>
+                    <SelectItem value="hard">Grade 6-7</SelectItem>
+                    <SelectItem value="hardest">Grade 8-9</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormDescription>
                   Choose the difficulty level for the exam.
                 </FormDescription>
                 <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="answerSheet"
-            render={({ field }) => (
-              <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-                <div className="space-y-0.5">
-                  <FormLabel className="text-base">Answer Sheet</FormLabel>
-                  <FormDescription>
-                    Do you need an answer sheet for this exam?
-                  </FormDescription>
-                </div>
-                <FormControl>
-                  <Switch
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
               </FormItem>
             )}
           />
@@ -177,6 +128,27 @@ export default function UserForm() {
                 </FormControl>
                 <FormDescription>
                   Select the topics to appear in the exam.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="topics"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Questions</FormLabel>
+                <FormControl>
+                  <MultiSelect
+                    options={topics}
+                    selected={field.value}
+                    onChange={field.onChange}
+                    placeholder="Select questions"
+                  />
+                </FormControl>
+                <FormDescription>
+                  Select the questions to appear in the exam.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
