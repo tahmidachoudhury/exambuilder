@@ -22,6 +22,7 @@ import { Badge } from "@/components/ui/badge"
 export type Option = {
   label: string
   value: string
+  desc?: string
 }
 
 type MultiSelectProps = {
@@ -79,15 +80,24 @@ export function MultiSelect({
                     )
                   }}
                 >
-                  <Check
-                    className={cn(
-                      "mr-2 h-4 w-4",
-                      selected.includes(option.value)
-                        ? "opacity-100"
-                        : "opacity-0"
-                    )}
-                  />
-                  {option.label}
+                  <div className="flex items-center space-x-2">
+                    <Check
+                      className={cn(
+                        "mr-2 h-4 w-4",
+                        selected.includes(option.value)
+                          ? "opacity-100"
+                          : "opacity-0"
+                      )}
+                    />
+                    <div className="flex flex-col">
+                      <span className="font-medium">{option.label}</span>
+                      {option.desc && (
+                        <span className="text-sm text-gray-500">
+                          {option.desc}
+                        </span>
+                      )}
+                    </div>
+                  </div>
                 </CommandItem>
               ))}
             </CommandGroup>

@@ -36,6 +36,7 @@ const formSchema = z.object({
 interface Question {
   question_id: string
   question_topic: string
+  question_description: string
   difficulty: string
 }
 
@@ -189,6 +190,7 @@ export default function UserForm() {
                     options={backendQuestions.map((question: Question) => ({
                       label: `${question.question_id}: ${question.question_topic}`,
                       value: question.question_id,
+                      desc: question.question_description,
                     }))}
                     selected={field.value}
                     onChange={field.onChange}
