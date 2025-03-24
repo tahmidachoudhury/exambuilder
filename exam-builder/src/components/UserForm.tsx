@@ -36,6 +36,7 @@ const formSchema = z.object({
 interface Question {
   question_id: string
   question_topic: string
+  difficulty: string
 }
 
 const topics = [
@@ -76,7 +77,6 @@ export default function UserForm() {
       .then((data) => {
         console.log(data)
         const {
-          message,
           tempQuestions: { questions },
         } = data
         console.log(questions)
@@ -88,12 +88,46 @@ export default function UserForm() {
       })
   }, [])
 
-  console.log("backendQuestions:", backendQuestions)
+  async function generateExam() {
+    try {
+      // Send request to backend
+      const response = await fetch("http://localhost:3002/api/generate-exam", {
+        method: "POST",
+        headers: {
+          //added headers to control cache when downloading
+          "Content-Type": "application/json",
+          "Cache-Control": "no-cache, no-store, must-revalidate",
+          Pragma: "no-cache",
+          Expires: "0",
+        },
+      })
+
+      if (!response.ok) throw new Error("PDF generation failed")
+
+      // Create blob from the PDF data
+      const blob = await response.blob()
+
+      // Create download link and trigger download
+      const downloadUrl = window.URL.createObjectURL(blob)
+      const a = document.createElement("a")
+      a.href = downloadUrl
+      a.download = `exam-${Date.now()}.pdf` // Add timestamp to filename
+      document.body.appendChild(a)
+      a.click()
+
+      // Clean up
+      window.URL.revokeObjectURL(downloadUrl)
+      document.body.removeChild(a)
+    } catch (error) {
+      console.error("Error:", error)
+      // Show error to user
+    }
+  }
 
   return (
     <>
       <Form {...form}>
-        <form className="space-y-8">
+        <form onSubmit={form.handleSubmit(generateExam)} className="space-y-8">
           <FormField
             control={form.control}
             name="difficultyLevel"

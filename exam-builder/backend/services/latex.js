@@ -32,7 +32,7 @@ ${questionPair}
 //Questions comes from server
 function createQuestions(questions) {
   const questionsContent = questions.map((question, index) => {
-    return formatQuestion(index + 1, question.content, question.totalMarks)
+    return formatQuestion(index + 1, question.content, question.total_marks)
   })
 
   // console.log("successfully formatted questions", questionsContent)
@@ -44,7 +44,7 @@ function getSinglePageQuestions(questions) {
   const singlePageQuestions = []
 
   questions.forEach((question, index) => {
-    if (question.fullPage) {
+    if (question.full_page) {
       console.log("Question", index + 1, "is single!")
       singlePageQuestions.push(index)
     }
