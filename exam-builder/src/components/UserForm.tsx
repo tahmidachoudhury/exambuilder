@@ -1,7 +1,7 @@
 "use client"
 
-import { useState } from "react"
-import { useForm } from "react-hook-form"
+import { useEffect, useState } from "react"
+import { set, useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import { Button } from "@/components/ui/button"
@@ -33,6 +33,11 @@ const formSchema = z.object({
   topics: z.array(z.string()).min(1),
 })
 
+interface Question {
+  question_id: string
+  question_topic: string
+}
+
 const topics = [
   { label: "Number", value: "number" },
   { label: "Algebra", value: "algebra" },
@@ -46,11 +51,7 @@ const topics = [
 ]
 
 export default function UserForm() {
-  const [examResponse, setExamResponse] = useState<{
-    message: string
-    item: any
-    questions: any[]
-  } | null>(null)
+  const [backendQuestions, setBackendQuestions] = useState<any[]>([])
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -63,21 +64,31 @@ export default function UserForm() {
     },
   })
 
-  // Here you would typically send the form data to your backend
-  fetch("http://localhost:3002/api/test", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json", // Tell the server the payload is JSON
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data)
+  useEffect(() => {
+    // Here you would typically send the form data to your backend
+    fetch("http://localhost:3002/api/test", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json", // Tell the server the payload is JSON
+      },
     })
-    .catch((error) => {
-      console.error("Error:", error)
-      console.log("Check the server mate")
-    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data)
+        const {
+          message,
+          tempQuestions: { questions },
+        } = data
+        console.log(questions)
+        setBackendQuestions(questions)
+      })
+      .catch((error) => {
+        console.error("Error:", error)
+        console.log("Check the server mate")
+      })
+  }, [])
+
+  console.log("backendQuestions:", backendQuestions)
 
   return (
     <>
@@ -141,7 +152,10 @@ export default function UserForm() {
                 <FormLabel>Questions</FormLabel>
                 <FormControl>
                   <MultiSelect
-                    options={topics}
+                    options={backendQuestions.map((question: Question) => ({
+                      label: `${question.question_id}: ${question.question_topic}`,
+                      value: question.question_id,
+                    }))}
                     selected={field.value}
                     onChange={field.onChange}
                     placeholder="Select questions"
@@ -159,18 +173,6 @@ export default function UserForm() {
           </Button>
         </form>
       </Form>
-      {isSubmitting ? (
-        <div className="flex items-center justify-center p-8">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900" />
-          <span className="ml-3">Generating exam questions...</span>
-        </div>
-      ) : examResponse ? (
-        <ExamResponse
-          message={examResponse?.message}
-          item={examResponse?.item}
-          questions={examResponse?.questions}
-        />
-      ) : null}
     </>
   )
 }
