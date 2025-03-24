@@ -14,7 +14,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
+
 import {
   Select,
   SelectContent,
@@ -22,15 +22,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Switch } from "@/components/ui/switch"
+
 import { MultiSelect } from "@/components/ui/multi-select"
-import { ExamResponse } from "./ExamResponse"
 
 const formSchema = z.object({
-  numberOfQuestions: z.number().min(1).max(10),
-  difficultyLevel: z.enum(["easy", "medium", "hard", "hardest"]),
-  answerSheet: z.boolean(),
+  difficultyLevel: z.enum([
+    "Grade 1-3",
+    "Grade 4-5",
+    "Grade 6-7",
+    "Grade 8-9",
+    "All levels",
+  ]),
   topics: z.array(z.string()).min(1),
+  questions: z.array(z.string()).min(1),
 })
 
 interface Question {
@@ -50,19 +54,20 @@ const topics = [
   },
   { label: "Statistics", value: "statistics" },
   { label: "Probability", value: "probability" },
+  { label: "All topics", value: "all-topics" },
 ]
 
 export default function UserForm() {
   const [backendQuestions, setBackendQuestions] = useState<any[]>([])
+  const [filteredQuestions, setFilteredQuestions] = useState<any[]>([])
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      numberOfQuestions: 1,
-      difficultyLevel: "medium",
-      answerSheet: true,
+      difficultyLevel: "All levels",
       topics: [],
+      questions: [],
     },
   })
 
@@ -136,7 +141,17 @@ export default function UserForm() {
               <FormItem>
                 <FormLabel>Difficulty Level</FormLabel>
                 <Select
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value)
+                    //filters questions based on chosen difficulty
+                    if (value !== "All levels") {
+                      const newQuestions = backendQuestions.filter(
+                        (q) => q.difficulty === value
+                      )
+                      console.log(filteredQuestions)
+                      setFilteredQuestions(newQuestions)
+                    }
+                  }}
                   defaultValue={field.value}
                 >
                   <FormControl>
@@ -145,10 +160,11 @@ export default function UserForm() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="easy">Grade 1-3</SelectItem>
-                    <SelectItem value="medium">Grade 4-5</SelectItem>
-                    <SelectItem value="hard">Grade 6-7</SelectItem>
-                    <SelectItem value="hardest">Grade 8-9</SelectItem>
+                    <SelectItem value="Grade 1-3">Grade 1-3</SelectItem>
+                    <SelectItem value="Grade 4-5">Grade 4-5</SelectItem>
+                    <SelectItem value="Grade 6-7">Grade 6-7</SelectItem>
+                    <SelectItem value="Grade 8-9">Grade 8-9</SelectItem>
+                    <SelectItem value="All levels">All levels</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormDescription>
@@ -181,13 +197,17 @@ export default function UserForm() {
           />
           <FormField
             control={form.control}
-            name="topics"
+            name="questions"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Questions</FormLabel>
                 <FormControl>
                   <MultiSelect
-                    options={backendQuestions.map((question: Question) => ({
+                    //check if the user chose to filter any questions, if not then display all questions
+                    options={(filteredQuestions.length > 0
+                      ? filteredQuestions
+                      : backendQuestions
+                    ).map((question: Question) => ({
                       label: `${question.question_id}: ${question.question_topic}`,
                       value: question.question_id,
                       desc: question.question_description,
