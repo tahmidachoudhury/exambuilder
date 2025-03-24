@@ -45,15 +45,15 @@ interface Question {
 }
 
 const topics = [
-  { label: "Number", value: "number" },
-  { label: "Algebra", value: "algebra" },
-  { label: "Geometry", value: "geometry" },
+  { label: "Number", value: "Number" },
+  { label: "Algebra", value: "Algebra" },
+  { label: "Geometry", value: "Geometry" },
   {
     label: "Ratio, Proportion and Rates of Change",
-    value: "ratio-proportion-and-rates-of-change",
+    value: "RPR",
   },
-  { label: "Statistics", value: "statistics" },
-  { label: "Probability", value: "probability" },
+  { label: "Statistics", value: "Statistics" },
+  { label: "Probability", value: "Probability" },
   { label: "All topics", value: "all-topics" },
 ]
 
@@ -66,7 +66,7 @@ export default function UserForm() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       difficultyLevel: "All levels",
-      topics: [],
+      topics: ["all-topics"],
       questions: [],
     },
   })
@@ -184,7 +184,9 @@ export default function UserForm() {
                   <MultiSelect
                     options={topics}
                     selected={field.value}
-                    onChange={field.onChange}
+                    onChange={(value) => {
+                      field.onChange(value)
+                    }}
                     placeholder="Select topics"
                   />
                 </FormControl>
