@@ -25,20 +25,25 @@ import {
 
 import { MultiSelect } from "@/components/ui/multi-select"
 
+const difficultyOptions = [
+  "Grade 1-3",
+  "Grade 4-5",
+  "Grade 6-7",
+  "Grade 8-9",
+  "all-levels",
+] as const
+
+const difficulties = difficultyOptions.slice(0, -1)
+
 const formSchema = z.object({
-  difficultyLevel: z.enum([
-    "Grade 1-3",
-    "Grade 4-5",
-    "Grade 6-7",
-    "Grade 8-9",
-    "All levels",
-  ]),
+  difficultyLevel: z.enum(difficultyOptions),
   topics: z.array(z.string()).min(1),
   questions: z.array(z.string()).min(1),
 })
 
 interface Question {
   question_id: string
+  topic: string
   question_topic: string
   question_description: string
   difficulty: string
@@ -54,19 +59,19 @@ const topics = [
   },
   { label: "Statistics", value: "Statistics" },
   { label: "Probability", value: "Probability" },
-  { label: "All topics", value: "all-topics" },
 ]
 
 export default function UserForm() {
   const [backendQuestions, setBackendQuestions] = useState<any[]>([])
   const [filteredQuestions, setFilteredQuestions] = useState<any[]>([])
+  const [finalQuestions, setFinalQuestions] = useState<any[]>([])
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      difficultyLevel: "All levels",
-      topics: ["all-topics"],
+      difficultyLevel: "all-levels",
+      topics: [],
       questions: [],
     },
   })
@@ -81,11 +86,10 @@ export default function UserForm() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
         const {
           tempQuestions: { questions },
         } = data
-        console.log(questions)
+
         setBackendQuestions(questions)
       })
       .catch((error) => {
@@ -106,6 +110,7 @@ export default function UserForm() {
           Pragma: "no-cache",
           Expires: "0",
         },
+        body: JSON.stringify(finalQuestions), // Send the filtered exam questions to the backend
       })
 
       if (!response.ok) throw new Error("PDF generation failed")
@@ -144,11 +149,16 @@ export default function UserForm() {
                   onValueChange={(value) => {
                     field.onChange(value)
                     //filters questions based on chosen difficulty
+                    //if all levels is picked then it will filter through backend questions hook
                     if (value !== "All levels") {
                       const newQuestions = backendQuestions.filter(
                         (q) => q.difficulty === value
                       )
-                      console.log(filteredQuestions)
+                      setFilteredQuestions(newQuestions)
+                    } else {
+                      const newQuestions = backendQuestions.filter(
+                        (q) => q.difficulty !== value
+                      )
                       setFilteredQuestions(newQuestions)
                     }
                   }}
@@ -160,11 +170,22 @@ export default function UserForm() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="Grade 1-3">Grade 1-3</SelectItem>
-                    <SelectItem value="Grade 4-5">Grade 4-5</SelectItem>
-                    <SelectItem value="Grade 6-7">Grade 6-7</SelectItem>
-                    <SelectItem value="Grade 8-9">Grade 8-9</SelectItem>
-                    <SelectItem value="All levels">All levels</SelectItem>
+                    {difficulties.map((difficulty) => {
+                      //checks if at least one question exists from the backend payload
+                      const hasQuestions = backendQuestions.some(
+                        (q) => q.difficulty === difficulty
+                      )
+                      return (
+                        <SelectItem
+                          key={difficulty}
+                          value={difficulty}
+                          disabled={!hasQuestions}
+                        >
+                          {difficulty}
+                        </SelectItem>
+                      )
+                    })}
+                    <SelectItem value="all-levels">All levels</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormDescription>
@@ -184,8 +205,13 @@ export default function UserForm() {
                   <MultiSelect
                     options={topics}
                     selected={field.value}
-                    onChange={(value) => {
-                      field.onChange(value)
+                    onChange={(chosenTopics) => {
+                      field.onChange(chosenTopics)
+
+                      const newTopics = backendQuestions.filter((question) =>
+                        chosenTopics.includes(question.topic)
+                      )
+                      setFilteredQuestions(newTopics)
                     }}
                     placeholder="Select topics"
                   />
@@ -215,7 +241,14 @@ export default function UserForm() {
                       desc: question.question_description,
                     }))}
                     selected={field.value}
-                    onChange={field.onChange}
+                    onChange={(chosenQuestions) => {
+                      field.onChange(chosenQuestions)
+                      const newQuestions = backendQuestions.filter((question) =>
+                        chosenQuestions.includes(question.question_id)
+                      )
+                      console.log(newQuestions)
+                      setFinalQuestions(newQuestions)
+                    }}
                     placeholder="Select questions"
                   />
                 </FormControl>

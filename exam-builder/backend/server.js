@@ -37,9 +37,9 @@ app.post("/api/generate-exam", async (req, res) => {
     console.log("Generating new PDF at:", Date.now())
 
     // Example question for MVP
-    const tempQuestions = require("./data/questions.json")
 
-    const questions = tempQuestions["questions"]
+    const questions = req.body
+    console.log(questions)
 
     // Generate LaTeX content
     const latexContent = generateExam(questions)
