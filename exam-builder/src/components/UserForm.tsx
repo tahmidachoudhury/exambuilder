@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/select"
 
 import { MultiSelect } from "@/components/ui/multi-select"
+import { DropdownMenuCheckboxes } from "./ui/Checkbox"
 
 const difficultyOptions = [
   "Grade 1-3",
@@ -37,8 +38,8 @@ const difficulties = difficultyOptions.slice(0, -1)
 
 const formSchema = z.object({
   difficultyLevel: z.enum(difficultyOptions),
-  topics: z.array(z.string()).min(1),
-  questions: z.array(z.string()).min(1),
+  topics: z.array(z.string()),
+  questions: z.array(z.string()),
 })
 
 interface Question {
@@ -202,7 +203,17 @@ export default function UserForm() {
               <FormItem>
                 <FormLabel>Topics</FormLabel>
                 <FormControl>
-                  <MultiSelect
+                  {backendQuestions.length > 0 && (
+                    <DropdownMenuCheckboxes
+                      selected={field.value}
+                      onChange={() => {
+                        console.log(field.value)
+                      }}
+                      backendQuestions={backendQuestions}
+                    />
+                  )}
+
+                  {/* <MultiSelect
                     options={topics}
                     selected={field.value}
                     onChange={(chosenTopics) => {
@@ -214,7 +225,7 @@ export default function UserForm() {
                       setFilteredQuestions(newTopics)
                     }}
                     placeholder="Select topics"
-                  />
+                  /> */}
                 </FormControl>
                 <FormDescription>
                   Select the topics to appear in the exam.
