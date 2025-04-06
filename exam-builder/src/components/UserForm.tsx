@@ -24,8 +24,8 @@ import {
 } from "@/components/ui/select"
 
 import { MultiSelect } from "@/components/ui/multi-select"
-import { DropdownMenuCheckboxes } from "./ui/Checkbox"
 import { TopicSelect } from "./ui/topic-select"
+import { Loader2 } from "lucide-react"
 
 const difficultyOptions = [
   "Grade 1-3",
@@ -40,7 +40,8 @@ const difficulties = difficultyOptions.slice(0, -1)
 const formSchema = z.object({
   difficultyLevel: z.enum(difficultyOptions),
   topics: z.array(z.string()),
-  questions: z.array(z.string()),
+  paperType: z.enum(["calculator", "non-calculator", "mixed"]),
+  questions: z.array(z.string()).min(1),
 })
 
 interface Question {
@@ -74,6 +75,7 @@ export default function UserForm() {
     defaultValues: {
       difficultyLevel: "all-levels",
       topics: [],
+      paperType: "mixed",
       questions: [],
     },
   })
@@ -101,6 +103,8 @@ export default function UserForm() {
   }, [])
 
   async function generateExam() {
+    setIsSubmitting(true)
+
     try {
       // Send request to backend
       const response = await fetch("http://localhost:3002/api/generate-exam", {
@@ -134,6 +138,8 @@ export default function UserForm() {
     } catch (error) {
       console.error("Error:", error)
       // Show error to user
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -205,6 +211,7 @@ export default function UserForm() {
                 <FormLabel>Topics</FormLabel>
                 <FormControl>
                   {backendQuestions.length > 0 && (
+                    //a custom built variant of multiselect which allows for more prop handling
                     <TopicSelect
                       options={topics}
                       selected={field.value}
@@ -220,23 +227,55 @@ export default function UserForm() {
                       backendQuestions={backendQuestions}
                     />
                   )}
-
-                  {/* <MultiSelect
-                    options={topics}
-                    selected={field.value}
-                    onChange={(chosenTopics) => {
-                      field.onChange(chosenTopics)
-
-                      const newTopics = backendQuestions.filter((question) =>
-                        chosenTopics.includes(question.topic)
-                      )
-                      setFilteredQuestions(newTopics)
-                    }}
-                    placeholder="Select topics"
-                  /> */}
                 </FormControl>
                 <FormDescription>
                   Select the topics to appear in the exam.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="paperType"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Paper Type</FormLabel>
+                <Select
+                  onValueChange={(value) => {
+                    field.onChange(value)
+                    //filters questions based on chosen difficulty
+                    //if all levels is picked then it will filter through backend questions hook
+                    if (value !== "mixed") {
+                      const newQuestions = backendQuestions.filter(
+                        (q) => q.type === value
+                      )
+                      setFilteredQuestions(newQuestions)
+                    } else {
+                      const newQuestions = backendQuestions.filter(
+                        (q) => q.type !== value
+                      )
+                      setFilteredQuestions(newQuestions)
+                    }
+                  }}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select Paper Type" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="calc">Calculator Only</SelectItem>
+                    <SelectItem value="non-calc">
+                      Non-Calculator Only
+                    </SelectItem>
+                    <SelectItem value="mixed">Mixed Questions</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormDescription>
+                  Choose whether the paper is a Calculator or Non-Calculator
+                  paper, or mixed.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -278,8 +317,19 @@ export default function UserForm() {
               </FormItem>
             )}
           />
-          <Button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? "Creating..." : "Create Exam"}
+          <Button
+            type="submit"
+            onClick={() => generateExam}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Generating...
+              </>
+            ) : (
+              "Generate Exam"
+            )}
           </Button>
         </form>
       </Form>

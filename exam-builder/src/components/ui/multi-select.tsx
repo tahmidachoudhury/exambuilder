@@ -30,14 +30,12 @@ type MultiSelectProps = {
   selected: string[]
   onChange: (selected: string[]) => void
   placeholder?: string
-  disabled?: string
 }
 
 export function MultiSelect({
   options,
   selected,
   onChange,
-  disabled,
   placeholder = "Select items...",
 }: MultiSelectProps) {
   const [open, setOpen] = React.useState(false)
