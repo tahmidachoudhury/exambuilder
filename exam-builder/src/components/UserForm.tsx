@@ -40,7 +40,7 @@ const difficulties = difficultyOptions.slice(0, -1)
 const formSchema = z.object({
   difficultyLevel: z.enum(difficultyOptions),
   topics: z.array(z.string()),
-  paperType: z.enum(["calculator", "non-calculator", "mixed"]),
+  paperType: z.enum(["calc", "non-calc", "mixed"]),
   questions: z.array(z.string()).min(1),
 })
 
