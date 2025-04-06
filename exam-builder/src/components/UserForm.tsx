@@ -25,6 +25,7 @@ import {
 
 import { MultiSelect } from "@/components/ui/multi-select"
 import { DropdownMenuCheckboxes } from "./ui/Checkbox"
+import { TopicSelect } from "./ui/topic-select"
 
 const difficultyOptions = [
   "Grade 1-3",
@@ -204,11 +205,18 @@ export default function UserForm() {
                 <FormLabel>Topics</FormLabel>
                 <FormControl>
                   {backendQuestions.length > 0 && (
-                    <DropdownMenuCheckboxes
+                    <TopicSelect
+                      options={topics}
                       selected={field.value}
-                      onChange={() => {
-                        console.log(field.value)
+                      onChange={(chosenTopics) => {
+                        field.onChange(chosenTopics)
+
+                        const newTopics = backendQuestions.filter((question) =>
+                          chosenTopics.includes(question.topic)
+                        )
+                        setFilteredQuestions(newTopics)
                       }}
+                      placeholder="Select topics"
                       backendQuestions={backendQuestions}
                     />
                   )}
