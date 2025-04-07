@@ -52,7 +52,7 @@ export function TopicSelect({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full justify-between"
+          className="w-full justify-between h-full"
         >
           {selected.length > 0 ? (
             <div className="flex flex-wrap gap-1">
