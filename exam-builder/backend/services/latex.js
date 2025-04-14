@@ -17,6 +17,7 @@ ${questionContent}
 }
 
 //This function formats the pages consistently using latex
+
 function formatPage(questionPair) {
   return `
 \\begin{tcolorbox}
@@ -35,7 +36,7 @@ function createQuestions(questions) {
     return formatQuestion(index + 1, question.content, question.total_marks)
   })
 
-  console.log("successfully formatted questions", questionsContent)
+  //console.log("successfully formatted questions", questionsContent)
 
   return questionsContent
 }
@@ -96,10 +97,10 @@ function createPages(questionPair) {
 }
 
 function generateExam(questions) {
-  console.log(questions)
+  //console.log(questions)
   const singlePageQuestions = getSinglePageQuestions(questions)
 
-  console.log(singlePageQuestions)
+  //console.log(singlePageQuestions)
 
   const formattedQuestions = createQuestions(questions)
 

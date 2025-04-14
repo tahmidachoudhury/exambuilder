@@ -1,5 +1,9 @@
 "use client"
 
+const dotenv = require("dotenv")
+
+dotenv.config()
+
 import { useEffect, useState } from "react"
 import { set, useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -107,7 +111,7 @@ export default function UserForm() {
 
     try {
       // Send request to backend
-      const response = await fetch("http://localhost:3002/api/generate-exam", {
+      const response = await fetch("BACKEND_API_KEY", {
         method: "POST",
         headers: {
           //added headers to control cache when downloading

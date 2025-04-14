@@ -39,7 +39,7 @@ app.post("/api/generate-exam", async (req, res) => {
     // Example question for MVP
 
     const questions = req.body
-    console.log(questions)
+    //console.log(questions)
 
     // Generate LaTeX content
     const latexContent = generateExam(questions)
