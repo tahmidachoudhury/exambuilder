@@ -33,7 +33,7 @@ ${questionPair}
 //Questions comes from server
 function createQuestions(questions) {
   const questionsContent = questions.map((question, index) => {
-    return formatQuestion(index + 1, question.content, question.total_marks)
+    return formatQuestion(index + 1, question.answer, question.total_marks)
   })
 
   //console.log("successfully formatted questions", questionsContent)
@@ -54,33 +54,16 @@ function getSinglePageQuestions(questions) {
   return singlePageQuestions
 }
 
-//formats the questions into pairs
-function groupQuestionsIntoPairs(formattedQuestions, singlePageQuestions) {
-  const pairs = []
-  let i = 0
+//formats the markscheme into 10 questions per page
+function groupQuestionsIntoPages(formattedQuestions) {
+  const pages = []
 
-  while (i < formattedQuestions.length) {
-    //if current q should remain single
-    if (singlePageQuestions.includes(i)) {
-      pairs.push(formattedQuestions[i])
-      i++
-    }
-    // If theres a next question and it should NOT remain single
-    else if (
-      i + 1 < formattedQuestions.length &&
-      !singlePageQuestions.includes(i + 1)
-    ) {
-      pairs.push(formattedQuestions[i] + "\n\n" + formattedQuestions[i + 1])
-      i += 2
-    }
-    // If theres an odd number of questions, the last one goes alone
-    else {
-      pairs.push(formattedQuestions[i])
-      i++
-    }
+  for (let i = 0; i < formattedQuestions.length; i += 10) {
+    const page = formattedQuestions.slice(i, i + 10).join("\n\n")
+    pages.push(page)
   }
 
-  return pairs
+  return pages
 }
 
 function createPages(questionPair) {
@@ -96,22 +79,18 @@ function createPages(questionPair) {
   return finalExam
 }
 
-function generateExam(questions) {
+function generateMarkscheme(questions) {
   //console.log(questions)
-  const singlePageQuestions = getSinglePageQuestions(questions)
 
   //console.log(singlePageQuestions)
 
   const formattedQuestions = createQuestions(questions)
 
-  console.log(`Formatted ${formattedQuestions.length} questions`)
+  console.log(`Formatted ${formattedQuestions.length} answers`)
 
-  const questionPairs = groupQuestionsIntoPairs(
-    formattedQuestions,
-    singlePageQuestions
-  )
+  const questionPages = groupQuestionsIntoPages(formattedQuestions)
 
-  console.log(`Created ${questionPairs.length} pages`)
+  console.log(`Created ${questionPages.length} markscheme pages`)
 
   try {
     // Read the template
@@ -119,7 +98,7 @@ function generateExam(questions) {
     let template = fs.readFileSync(templatePath, "utf8")
 
     // Generate all pages with 2 questions per page
-    const finalExam = createPages(questionPairs)
+    const finalExam = createPages(questionPages)
 
     // Replace the placeholder with actual questions
     const finalLatex = template.replace("%PAGES_PLACEHOLDER", finalExam)
@@ -132,6 +111,6 @@ function generateExam(questions) {
 }
 
 module.exports = {
-  generateExam,
+  generateMarkscheme,
   formatQuestion,
 }

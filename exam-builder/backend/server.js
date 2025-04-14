@@ -5,12 +5,14 @@ const path = require("path")
 const app = express()
 const tempQuestions = require("./data/questions.json")
 const { generateQuestions } = require("./services/openai")
-const { generateExam } = require("./services/latex")
+const { generateExam } = require("./services/QPLatexGenerator")
 
 // Middleware to parse JSON
 app.use(express.json())
 
 const cors = require("cors")
+const archiver = require("archiver")
+const { generateMarkscheme } = require("./services/MSLatexGenerator")
 app.use(cors())
 
 app.get("/", (req, res) => {
@@ -34,57 +36,69 @@ app.get("/api/test", async (req, res) => {
 
 app.post("/api/generate-exam", async (req, res) => {
   try {
-    console.log("Generating new PDF at:", Date.now())
-
-    // Example question for MVP
-
     const questions = req.body
-    //console.log(questions)
-
-    // Generate LaTeX content
-    const latexContent = generateExam(questions)
-
-    // Create a temporary file for the LaTeX content
     const timestamp = Date.now()
-    const tempLatexPath = path.join(__dirname, `temp-${timestamp}.tex`)
-    fs.writeFileSync(tempLatexPath, latexContent)
+    const tempDir = path.join(__dirname, `temp-${timestamp}`)
+    fs.mkdirSync(tempDir)
 
-    // Generate PDF
-    const outputPath = path.join(__dirname, `exam-${timestamp}.pdf`)
-    const output = fs.createWriteStream(outputPath)
-    const pdf = latex(fs.createReadStream(tempLatexPath))
+    // --- Step 1: Generate LaTeX content ---
+    const examLatex = generateExam(questions) // You already have this
+    const markschemeLatex = generateMarkscheme(questions) // You'll need to create this function
 
-    pdf.pipe(output)
+    const examTexPath = path.join(tempDir, "exam.tex")
+    const markschemeTexPath = path.join(tempDir, "markscheme.tex")
 
-    output.on("finish", () => {
-      // Clean up temporary LaTeX file
-      fs.unlinkSync(tempLatexPath)
+    fs.writeFileSync(examTexPath, examLatex)
+    fs.writeFileSync(markschemeTexPath, markschemeLatex)
 
-      // Send the PDF file
-      res.download(outputPath, "exam.pdf", (error) => {
-        if (error) {
-          console.error("Error sending file:", error)
-          return res.status(500).send("Error sending PDF")
-        }
-        // Clean up PDF file after sending
-        fs.unlink(outputPath, (unlinkError) => {
-          if (unlinkError)
-            console.error("Error deleting PDF file:", unlinkError)
-        })
+    // --- Step 2: Compile LaTeX to PDF ---
+    const examPdfPath = path.join(tempDir, "exam.pdf")
+    const markschemePdfPath = path.join(tempDir, "markscheme.pdf")
+
+    await Promise.all([
+      compileLatexToPdf(examTexPath, examPdfPath),
+      compileLatexToPdf(markschemeTexPath, markschemePdfPath),
+    ])
+
+    // --- Step 3: Create ZIP file ---
+    res.setHeader("Content-Type", "application/zip")
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="exam-files-${timestamp}.zip"`
+    )
+
+    const archive = archiver("zip")
+    archive.pipe(res)
+
+    archive.file(examPdfPath, { name: "exam.pdf" })
+    archive.file(markschemePdfPath, { name: "markscheme.pdf" })
+
+    archive.finalize()
+
+    // --- Step 4: Cleanup after download finishes ---
+    res.on("finish", () => {
+      fs.rm(tempDir, { recursive: true, force: true }, (err) => {
+        if (err) console.error("Cleanup error:", err)
       })
     })
-
-    pdf.on("error", (error) => {
-      console.error("Error generating PDF:", error)
-      // Clean up temporary LaTeX file
-      fs.unlinkSync(tempLatexPath)
-      res.status(500).send("Error generating PDF")
-    })
   } catch (error) {
-    console.error("Error generating exam:", error)
-    res.status(500).send("Error generating exam PDF")
+    console.error("Error generating exam zip:", error)
+    res.status(500).send("Failed to generate ZIP file.")
   }
 })
+
+// Helper function to compile LaTeX to PDF
+function compileLatexToPdf(inputPath, outputPath) {
+  return new Promise((resolve, reject) => {
+    const input = fs.createReadStream(inputPath)
+    const output = fs.createWriteStream(outputPath)
+    const pdf = latex(input)
+
+    pdf.pipe(output)
+    pdf.on("error", reject)
+    output.on("finish", resolve)
+  })
+}
 
 // Start the server
 const port = process.env.PORT || 3002

@@ -111,7 +111,7 @@ export default function UserForm() {
 
     try {
       // Send request to backend
-      const response = await fetch("BACKEND_API_KEY", {
+      const response = await fetch("http://localhost:3002/api/generate-exam", {
         method: "POST",
         headers: {
           //added headers to control cache when downloading
@@ -122,17 +122,17 @@ export default function UserForm() {
         },
         body: JSON.stringify(finalQuestions), // Send the filtered exam questions to the backend
       })
+      console.log(response)
+      if (!response.ok) throw new Error("ZIP generation failed")
 
-      if (!response.ok) throw new Error("PDF generation failed")
+      // Get ZIP blob from response
+      const zipBlob = await response.blob()
 
-      // Create blob from the PDF data
-      const blob = await response.blob()
-
-      // Create download link and trigger download
-      const downloadUrl = window.URL.createObjectURL(blob)
+      // Create download link
+      const downloadUrl = window.URL.createObjectURL(zipBlob)
       const a = document.createElement("a")
       a.href = downloadUrl
-      a.download = `exam-${Date.now()}.pdf` // Add timestamp to filename
+      a.download = `exam-${Date.now()}.zip` // Timestamped ZIP filename
       document.body.appendChild(a)
       a.click()
 
