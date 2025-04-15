@@ -26,6 +26,10 @@ import { Switch } from "@/components/ui/switch"
 import { MultiSelect } from "@/components/ui/multi-select"
 import { ExamResponse } from "./ExamResponse"
 
+const BACKEND_API_KEY =
+  process.env.NEXT_PUBLIC_BACKEND_API_KEY ||
+  "http://localhost:3002/api/generate-exam"
+
 const formSchema = z.object({
   numberOfQuestions: z.number().min(1).max(10),
   difficultyLevel: z.enum(["easy", "medium", "hard"]),
@@ -66,7 +70,7 @@ export default function GenerateLatexExam() {
   async function generateExam() {
     try {
       // Send request to backend
-      const response = await fetch("http://localhost:3002/api/generate-exam", {
+      const response = await fetch(BACKEND_API_KEY, {
         method: "POST",
         headers: {
           //added headers to control cache when downloading
