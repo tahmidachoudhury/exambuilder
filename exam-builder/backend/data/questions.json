@@ -14,8 +14,8 @@
     },
     {
       "question_id": "3.2.3",
-      "content": "$a$ is directly proportional to $b$.\n\n\\vspace{0.5cm} \n\n\\qquad When $a = 7$, $b = 28$.\n\n\\vspace{0.5cm} \n\n\\qquad Find the value of $b$ when $a = 5$.\n\n\\vspace{8cm}\n\n\\hfill $b$ =\\makebox[4cm]{\\dotfill}",
-      "answer": "3",
+      "content": "$a$ is directly proportional to $b$.\n\n\\vspace{0.5cm} \n\n\\qquad When $a = 5$, $b = 20$.\n\n\\vspace{0.5cm} \n\n\\qquad Find the value of $b$ when $a = 7$.\n\n\\vspace{8cm}\n\n\\hfill $b$ =\\makebox[4cm]{\\dotfill}",
+      "answer": "\\noindent a is directly proportional to b. \\\nWhen a = 5, b = 20.\\\\\n\n\\[ a \\propto b \\quad \\text{or} \\quad a = k \\cdot b \\]\nwhere k is the constant of proportionality.\\\\\nSubstitute the values a = 5 and b = 20 into the equation to find k:\n\n\\[ 5 = k \\cdot 20 \\quad \\Rightarrow \\quad k = \\frac{5}{20} = \\frac{1}{4} \\]\\\\\nNow, to find b when a = 7, use the formula:\n\n\\[ 7 = \\frac{1}{4} \\cdot b \\quad \\Rightarrow \\quad b = 7 \\times 4 = 28 \\]\\\\\nThus, the value of b when a = 7 is \\[ \\boxed{28} \\].",
       "total_marks": 3,
       "topic": "RPR",
       "type": "non-calc",
@@ -27,7 +27,7 @@
     {
       "question_id": "4.1.19",
       "content": "\\noindent\\quad Here is a polygon.\n\\vspace{0.5cm}\n\\begin{center}\n    \\begin{tikzpicture}\n        \\draw (90:1.5) -- (162:1.5) -- (234:1.5) -- (306:1.5) -- (18:1.5) -- cycle;\n    \\end{tikzpicture}\n\\end{center}\n\n(a) Write down the mathematical name of this polygon. \\\\[2cm] % Adjust spacing as needed\n\n\\hfill \\makebox[5cm]{\\dotfill}\n\\vspace{0.2cm}\n\n\\noindent Here is a prism.\n\\vspace{0.5cm}\n\\begin{center}\n    \\begin{tikzpicture}\n        % Front pentagon\n        \\coordinate (A) at (90:1.5);\n        \\coordinate (B) at (162:1.5);\n        \\coordinate (C) at (234:1.5);\n        \\coordinate (D) at (306:1.5);\n        \\coordinate (E) at (18:1.5);\n        % Shifted back pentagon\n        \\coordinate (F) at ($(A)+(1,1)$);\n        \\coordinate (G) at ($(B)+(1,1)$);\n        \\coordinate (H) at ($(C)+(1,1)$);\n        \\coordinate (I) at ($(D)+(1,1)$);\n        \\coordinate (J) at ($(E)+(1,1)$);\n        % Draw front pentagon\n        \\draw (A) -- (B) -- (C) -- (D) -- (E) -- cycle;\n        % Draw back pentagon (dashed for hidden edges)\n        \\draw[dashed] (F) -- (G) -- (H) -- (I) -- (J) -- cycle;\n        % Connect front and back pentagons\n        \\draw (A) -- (F);\n        \\draw (B) -- (G);\n        \\draw (C) -- (H);\n        \\draw (D) -- (I);\n        \\draw (E) -- (J);\n    \\end{tikzpicture}\n\\end{center}\n\\noindent Each edge of the prism has a length of 7.5 cm.\n\\vspace{0.3cm}\n\n(b) Work out the total perimeter of the prism.\n\n\\vspace{5cm}\n\n\\hfill \\makebox[5cm]{\\dotfill} cm\n\n\\hfill \\textbf{(2)}\n\n\\vspace{0.5cm}",
-      "answer": "3",
+      "answer": "\\noindent \\textbf{(a) Mathematical Name of the Polygon} \\\nThe polygon in question is a pentagon. This is because it has five sides.\\\n\n\\vspace{0.5cm}\\\n\n\\noindent \\textbf{(b) Total Perimeter of the Prism} \\\nEach edge of the prism has a length of 7.5 cm. The prism has 10 edges: 5 edges on the front pentagon and 5 edges on the back pentagon (since the front and back pentagons are connected by edges).\\\n\n\\vspace{0.5cm}\\\n\nTo find the total perimeter, calculate the total length of all edges:\\\n\n\\[\\text{Total Perimeter} = 10 \\times 7.5 \\text{ cm} = 75 \\text{ cm}\\]\\\n\nThus, the total perimeter of the prism is:\\\n\n\\[\\boxed{75 \\text{ cm}}\\]",
       "total_marks": 3,
       "topic": "Geometry",
       "type": "non-calc",
@@ -39,7 +39,7 @@
     {
       "question_id": "3.2.4",
       "content": "$a$ is directly proportional to $b$.\n\n\\vspace{0.5cm} \n\n\\qquad When $a = 7$, $b = 28$.\n\n\\vspace{0.5cm} \n\n\\qquad Find the value of $b$ when $a = 5$.\n\n\\vspace{8cm}\n\n\\hfill $b$ =\\makebox[4cm]{\\dotfill}",
-      "answer": "3",
+      "answer": "\\noindent a is directly proportional to b. \\\nWhen a = 7, b = 28.\\\\\n\n\\[ a \\propto b \\quad \\text{or} \\quad a = k \\cdot b \\]\nwhere k is the constant of proportionality.\\\\\nSubstitute the values a = 7 and b = 28 into the equation to find k:\n\n\\[ 7 = k \\cdot 28 \\quad \\Rightarrow \\quad k = \\frac{7}{28} = \\frac{1}{4} \\]\\\\\nNow, to find b when a = 5, use the formula:\n\n\\[ 5 = \\frac{1}{4} \\cdot b \\quad \\Rightarrow \\quad b = 5 \\times 4 = 20 \\]\\\\\nThus, the value of b when a = 5 is \\[ \\boxed{20} \\].",
       "total_marks": 3,
       "topic": "RPR",
       "type": "non-calc",

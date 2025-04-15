@@ -58,8 +58,8 @@ function getSinglePageQuestions(questions) {
 function groupQuestionsIntoPages(formattedQuestions) {
   const pages = []
 
-  for (let i = 0; i < formattedQuestions.length; i += 10) {
-    const page = formattedQuestions.slice(i, i + 10).join("\n\n")
+  for (let i = 0; i < formattedQuestions.length; i += 3) {
+    const page = formattedQuestions.slice(i, i + 3).join("\n\n")
     pages.push(page)
   }
 
