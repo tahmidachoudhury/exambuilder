@@ -1,5 +1,5 @@
 import Footer from "@/components/footer"
-import GenerateLatexExam from "@/components/GenerateLatexExam"
+
 import UserForm from "@/components/UserForm"
 
 export default function CreateExamPage() {

@@ -13,7 +13,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { ChevronsUpDown } from "lucide-react"
 
 type Checked = DropdownMenuCheckboxItemProps["checked"]
 
@@ -32,26 +31,19 @@ type Props = {
 }
 
 export function DropdownMenuCheckboxes({ backendQuestions, selected }: Props) {
-  const [showStatusBar, setShowStatusBar] = React.useState<Checked>(true)
-  const [showActivityBar, setShowActivityBar] = React.useState<Checked>(false)
-  const [showPanel, setShowPanel] = React.useState<Checked>(false)
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
           role="combobox"
-          aria-expanded={!!showPanel}
           className="w-full justify-between"
         >
           {/* {console.log(selected)} */}
           {selected.length > 0 ? (
             <div className="flex flex-wrap gap-1">
               {selected.map((value) => (
-                <Badge variant="secondary" key={value} className="mr-1">
-                  hello
-                </Badge>
+                <Badge variant="secondary" key={value} className="mr-1"></Badge>
               ))}
             </div>
           ) : (
@@ -66,12 +58,7 @@ export function DropdownMenuCheckboxes({ backendQuestions, selected }: Props) {
         {topics.map((topic) => {
           const hasTopics = backendQuestions.some((q: any) => q.topic === topic)
           return (
-            <DropdownMenuCheckboxItem
-              checked={showPanel}
-              key={topic}
-              onCheckedChange={setShowStatusBar}
-              disabled={!hasTopics}
-            >
+            <DropdownMenuCheckboxItem key={topic} disabled={!hasTopics}>
               {topic}
             </DropdownMenuCheckboxItem>
           )

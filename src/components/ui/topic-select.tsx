@@ -8,7 +8,6 @@ import {
   Command,
   CommandEmpty,
   CommandGroup,
-  CommandInput,
   CommandItem,
   CommandList,
   CommandTitle,
@@ -20,7 +19,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { Badge } from "@/components/ui/badge"
-import { DisabledDiv } from "./DisabledDiv"
 import { Question } from "@/components/UserForm"
 
 export type Option = {
