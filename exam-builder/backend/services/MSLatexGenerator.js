@@ -94,7 +94,7 @@ function generateMarkscheme(questions) {
 
   try {
     // Read the template
-    const templatePath = path.join(__dirname, "../templates/exam-template.tex")
+    const templatePath = path.join(__dirname, "../templates/ms-template.tex")
     let template = fs.readFileSync(templatePath, "utf8")
 
     // Generate all pages with 2 questions per page

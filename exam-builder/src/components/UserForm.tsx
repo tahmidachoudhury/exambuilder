@@ -48,12 +48,17 @@ const formSchema = z.object({
   questions: z.array(z.string()).min(1),
 })
 
-interface Question {
+export type Question = {
   question_id: string
+  content: string
+  answer: string
+  total_marks: number
   topic: string
+  type: string
   question_topic: string
   question_description: string
   difficulty: string
+  full_page: boolean
 }
 
 const topics = [
@@ -69,7 +74,7 @@ const topics = [
 ]
 
 export default function UserForm() {
-  const [backendQuestions, setBackendQuestions] = useState<any[]>([])
+  const [backendQuestions, setBackendQuestions] = useState<Question[]>([])
   const [filteredQuestions, setFilteredQuestions] = useState<any[]>([])
   const [finalQuestions, setFinalQuestions] = useState<any[]>([])
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -162,6 +167,7 @@ export default function UserForm() {
                     field.onChange(value)
                     //filters questions based on chosen difficulty
                     //if all levels is picked then it will filter through backend questions hook
+                    setFilteredQuestions([])
                     if (value !== "All levels") {
                       const newQuestions = backendQuestions.filter(
                         (q) => q.difficulty === value

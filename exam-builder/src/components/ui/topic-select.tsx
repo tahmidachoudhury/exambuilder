@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/popover"
 import { Badge } from "@/components/ui/badge"
 import { DisabledDiv } from "./DisabledDiv"
+import { Question } from "@/components/UserForm"
 
 export type Option = {
   label: string
@@ -33,7 +34,7 @@ type MultiSelectProps = {
   selected: string[]
   onChange: (selected: string[]) => void
   placeholder?: string
-  backendQuestions: []
+  backendQuestions: Question[]
 }
 
 export function TopicSelect({

@@ -4,6 +4,7 @@ import * as React from "react"
 import { DropdownMenuCheckboxItemProps } from "@radix-ui/react-dropdown-menu"
 
 import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -12,7 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Badge, ChevronsUpDown } from "lucide-react"
+import { ChevronsUpDown } from "lucide-react"
 
 type Checked = DropdownMenuCheckboxItemProps["checked"]
 
@@ -41,7 +42,7 @@ export function DropdownMenuCheckboxes({ backendQuestions, selected }: Props) {
         <Button
           variant="outline"
           role="combobox"
-          aria-expanded={showPanel}
+          aria-expanded={!!showPanel}
           className="w-full justify-between"
         >
           {/* {console.log(selected)} */}
@@ -63,7 +64,7 @@ export function DropdownMenuCheckboxes({ backendQuestions, selected }: Props) {
         <DropdownMenuSeparator />
 
         {topics.map((topic) => {
-          const hasTopics = backendQuestions.some((q) => q.topic === topic)
+          const hasTopics = backendQuestions.some((q: any) => q.topic === topic)
           return (
             <DropdownMenuCheckboxItem
               checked={showPanel}
