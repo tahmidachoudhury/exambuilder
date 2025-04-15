@@ -13,8 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-
-type Checked = DropdownMenuCheckboxItemProps["checked"]
+import { Question } from "../UserForm"
 
 const topics = [
   "Number",
@@ -56,7 +55,9 @@ export function DropdownMenuCheckboxes({ backendQuestions, selected }: Props) {
         <DropdownMenuSeparator />
 
         {topics.map((topic) => {
-          const hasTopics = backendQuestions.some((q: any) => q.topic === topic)
+          const hasTopics = backendQuestions.some(
+            (q: Question) => q.topic === topic
+          )
           return (
             <DropdownMenuCheckboxItem key={topic} disabled={!hasTopics}>
               {topic}

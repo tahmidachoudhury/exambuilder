@@ -71,8 +71,8 @@ const topics = [
 
 export default function UserForm() {
   const [backendQuestions, setBackendQuestions] = useState<Question[]>([])
-  const [filteredQuestions, setFilteredQuestions] = useState<any[]>([])
-  const [finalQuestions, setFinalQuestions] = useState<any[]>([])
+  const [filteredQuestions, setFilteredQuestions] = useState<Question[]>([])
+  const [finalQuestions, setFinalQuestions] = useState<Question[]>([])
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const form = useForm<z.infer<typeof formSchema>>({
