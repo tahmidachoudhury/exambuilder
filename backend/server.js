@@ -4,7 +4,7 @@ const fs = require("fs")
 const path = require("path")
 const app = express()
 const tempQuestions = require("./data/questions.json")
-const { generateQuestions } = require("./services/openai")
+//const { generateQuestions } = require("./services/openai")
 const { generateExam } = require("./services/QPLatexGenerator")
 
 // Middleware to parse JSON
@@ -102,6 +102,6 @@ function compileLatexToPdf(inputPath, outputPath) {
 
 // Start the server
 const port = process.env.PORT || 3002
-app.listen(port, () => {
+app.listen(port, '0.0.0.0', () => {
   console.log(`Server is running on port ${port}`)
 })
