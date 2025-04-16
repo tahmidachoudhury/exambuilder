@@ -5,3 +5,4 @@ services:
       - "3002:3002"
     volumes:
       - .:/app
+      - /app/node_modules
