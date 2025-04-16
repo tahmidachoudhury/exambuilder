@@ -87,7 +87,7 @@ export default function UserForm() {
 
   useEffect(() => {
     // Here you would typically send the form data to your backend
-    fetch("http://localhost:3002/api/test", {
+    fetch("http://134.209.16.60:3002/api/test", {
       method: "GET",
       headers: {
         "Content-Type": "application/json", // Tell the server the payload is JSON
@@ -112,7 +112,7 @@ export default function UserForm() {
 
     try {
       // Send request to backend
-      const response = await fetch("http://localhost:3002/api/generate-exam", {
+      const response = await fetch("http://134.209.16.60:3002", {
         method: "POST",
         headers: {
           //added headers to control cache when downloading
@@ -123,8 +123,8 @@ export default function UserForm() {
         },
         body: JSON.stringify(finalQuestions), // Send the filtered exam questions to the backend
       })
-      console.log(response)
       if (!response.ok) throw new Error("ZIP generation failed")
+      console.log(response)
 
       // Get ZIP blob from response
       const zipBlob = await response.blob()
