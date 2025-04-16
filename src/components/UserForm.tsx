@@ -112,17 +112,20 @@ export default function UserForm() {
 
     try {
       // Send request to backend
-      const response = await fetch("http://134.209.16.60:3002", {
-        method: "POST",
-        headers: {
-          //added headers to control cache when downloading
-          "Content-Type": "application/json",
-          "Cache-Control": "no-cache, no-store, must-revalidate",
-          Pragma: "no-cache",
-          Expires: "0",
-        },
-        body: JSON.stringify(finalQuestions), // Send the filtered exam questions to the backend
-      })
+      const response = await fetch(
+        "http://134.209.16.60:3002/api/generate-exam",
+        {
+          method: "POST",
+          headers: {
+            //added headers to control cache when downloading
+            "Content-Type": "application/json",
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            Pragma: "no-cache",
+            Expires: "0",
+          },
+          body: JSON.stringify(finalQuestions), // Send the filtered exam questions to the backend
+        }
+      )
       if (!response.ok) throw new Error("ZIP generation failed")
       console.log(response)
 
