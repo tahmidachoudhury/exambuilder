@@ -87,7 +87,7 @@ export default function UserForm() {
 
   useEffect(() => {
     // retreive the questions from the backend, will change this to a Database fetch
-    const apiUrl = process.env.NEXT_PUBLIC_BACKEND_API_KEY
+    const apiUrl = process.env.NEXT_PUBLIC_RETRIEVE_QUESTIONS_BACKEND_API_KEY
     if (!apiUrl) {
       throw new Error(
         "Backend API URL is not configured. Please check your environment variables."
@@ -117,7 +117,7 @@ export default function UserForm() {
     setIsSubmitting(true)
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_BACKEND_API_KEY
+      const apiUrl = process.env.NEXT_PUBLIC_GENERATE_EXAM_BACKEND_API_KEY
       if (!apiUrl) {
         throw new Error(
           "Backend API URL is not configured. Please check your environment variables."
