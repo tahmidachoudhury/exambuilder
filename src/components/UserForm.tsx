@@ -90,7 +90,7 @@ export default function UserForm() {
   useEffect(() => {
     // retreive the questions from the backend, will change this to a Database fetch
     const apiUrl = process.env.NEXT_PUBLIC_RETRIEVE_QUESTIONS_BACKEND_API_KEY
-    // const apiUrl = "http://localhost:3002"
+    // const apiUrl = "http://localhost:3002/api/test"
     if (!apiUrl) {
       throw new Error(
         "Backend API URL is not configured. Please check your environment variables."
@@ -104,9 +104,7 @@ export default function UserForm() {
     })
       .then((response) => response.json())
       .then((data) => {
-        const {
-          tempQuestions: { questions },
-        } = data
+        const { questions } = data
 
         setBackendQuestions(questions)
       })
