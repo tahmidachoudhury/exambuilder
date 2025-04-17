@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import { Button } from "@/components/ui/button"
+import { useToast } from "@/hooks/use-toast"
 import {
   Form,
   FormControl,
@@ -26,6 +27,7 @@ import {
 import { MultiSelect } from "@/components/ui/multi-select"
 import { TopicSelect } from "./ui/topic-select"
 import { Loader2 } from "lucide-react"
+import { ToastAction } from "./ui/toast"
 
 const difficultyOptions = [
   "Grade 1-3",
@@ -74,6 +76,7 @@ export default function UserForm() {
   const [filteredQuestions, setFilteredQuestions] = useState<Question[]>([])
   const [finalQuestions, setFinalQuestions] = useState<Question[]>([])
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const { toast } = useToast()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -156,6 +159,10 @@ export default function UserForm() {
       // Show error to user
     } finally {
       setIsSubmitting(false)
+      toast({
+        title: "Download complete 🎉",
+        description: "Please check your downloads for a .zip folder",
+      })
     }
   }
 
