@@ -1,7 +1,6 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -17,10 +16,12 @@
     "docker": "^1.0.0",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "firebase-admin": "^13.2.0",
     "node-latex": "^3.1.0",
     "openai": "^4.80.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.9"
-  }
+  },
+  "description": ""
 }

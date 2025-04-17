@@ -4,6 +4,7 @@ const fs = require("fs")
 const path = require("path")
 const app = express()
 const tempQuestions = require("./data/questions.json")
+const db = require("./services/firebase")
 //const { generateQuestions } = require("./services/openai")
 const { generateExam } = require("./services/QPLatexGenerator")
 
@@ -23,9 +24,16 @@ app.get("/", (req, res) => {
 app.get("/api/test", async (req, res) => {
   try {
     // Send single response with both the success message and json questions
+    const snapshot = await db.collection("questions").get()
+
+    const questions = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }))
+
     res.status(201).json({
       message: "Item created successfully",
-      tempQuestions,
+      questions,
     })
   } catch (error) {
     // Add error handling

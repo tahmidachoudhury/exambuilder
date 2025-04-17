@@ -35,6 +35,9 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+#firebase-key
+/backend/scripts/firebase-key.json
+
 # vercel
 .vercel
 
