@@ -86,8 +86,14 @@ export default function UserForm() {
   })
 
   useEffect(() => {
-    // Here you would typically send the form data to your backend
-    fetch("http://134.209.16.60:3002/api/test", {
+    // retreive the questions from the backend, will change this to a Database fetch
+    const apiUrl = process.env.NEXT_PUBLIC_BACKEND_API_KEY
+    if (!apiUrl) {
+      throw new Error(
+        "Backend API URL is not configured. Please check your environment variables."
+      )
+    }
+    fetch(apiUrl, {
       method: "GET",
       headers: {
         "Content-Type": "application/json", // Tell the server the payload is JSON
@@ -111,21 +117,23 @@ export default function UserForm() {
     setIsSubmitting(true)
 
     try {
-      // Send request to backend
-      const response = await fetch(
-        "http://134.209.16.60:3002/api/generate-exam",
-        {
-          method: "POST",
-          headers: {
-            //added headers to control cache when downloading
-            "Content-Type": "application/json",
-            "Cache-Control": "no-cache, no-store, must-revalidate",
-            Pragma: "no-cache",
-            Expires: "0",
-          },
-          body: JSON.stringify(finalQuestions), // Send the filtered exam questions to the backend
-        }
-      )
+      const apiUrl = process.env.NEXT_PUBLIC_BACKEND_API_KEY
+      if (!apiUrl) {
+        throw new Error(
+          "Backend API URL is not configured. Please check your environment variables."
+        )
+      }
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          //added headers to control cache when downloading
+          "Content-Type": "application/json",
+          "Cache-Control": "no-cache, no-store, must-revalidate",
+          Pragma: "no-cache",
+          Expires: "0",
+        },
+        body: JSON.stringify(finalQuestions), // Send the filtered exam questions to the backend
+      })
       if (!response.ok) throw new Error("ZIP generation failed")
       console.log(response)
 
