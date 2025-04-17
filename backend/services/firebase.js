@@ -1,5 +1,8 @@
 const admin = require("firebase-admin")
-const serviceAccount = require("./scripts/firebase-key.json")
+require("dotenv").config()
+
+//parse firebase service from the .env, will need to be an env variable on DO
+const serviceAccount = JSON.parse(process.env.FIREBASE_PRIVATE_KEY)
 
 if (!admin.apps.length) {
   admin.initializeApp({
