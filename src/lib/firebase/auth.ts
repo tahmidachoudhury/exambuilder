@@ -5,6 +5,7 @@ import {
   onAuthStateChanged,
   User,
 } from "firebase/auth"
+import { FirebaseError } from "firebase/app"
 import { auth } from "./firebase"
 
 // Sign in existing users
@@ -30,8 +31,9 @@ export const registerUser = async (email: string, password: string) => {
       password
     )
     return { user: userCredential.user, error: null }
-  } catch (error: any) {
-    if (error.code === "auth/email-already-in-use") {
+  } catch (error) {
+    const firebaseError = error as FirebaseError
+    if (firebaseError.code === "auth/email-already-in-use") {
       return {
         user: null,
         error: new Error(
