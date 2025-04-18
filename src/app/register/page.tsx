@@ -4,10 +4,10 @@ import Link from "next/link"
 import { RegisterForm } from "./register-form"
 import { GalleryVerticalEnd } from "lucide-react"
 
-export const metadata: Metadata = {
-  title: "Register - Mednotate",
-  description: "Create a Mednotate account",
-}
+// export const metadata: Metadata = {
+//   title: "Register - Mednotate",
+//   description: "Create a Mednotate account",
+// }
 
 export default function RegisterPage() {
   return (

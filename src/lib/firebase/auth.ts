@@ -30,7 +30,15 @@ export const registerUser = async (email: string, password: string) => {
       password
     )
     return { user: userCredential.user, error: null }
-  } catch (error) {
+  } catch (error: any) {
+    if (error.code === "auth/email-already-in-use") {
+      return {
+        user: null,
+        error: new Error(
+          "This email is already registered. Please use a different email or try to log in."
+        ),
+      }
+    }
     return { user: null, error }
   }
 }

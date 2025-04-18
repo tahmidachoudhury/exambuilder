@@ -15,12 +15,10 @@ import { Input } from "@/components/ui/input"
 import { useToast } from "@/hooks/use-toast"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
+import { registerUser } from "@/lib/firebase/auth"
 import * as z from "zod"
 
 const formSchema = z.object({
-  name: z.string().min(2, {
-    message: "Name must be at least 2 characters.",
-  }),
   email: z.string().email({
     message: "Please enter a valid email address.",
   }),
@@ -33,46 +31,49 @@ export function RegisterForm() {
   const router = useRouter()
   const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  //const [error, setError] = useState<string | null>(null)
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsLoading(true)
+    //setError(null)
+
+    const { user, error } = await registerUser(email, password)
+
+    if (error) {
+      //Check the issue with the sign in
+      //setError((error as Error).message)
+      toast({
+        title: "Uh oh! Something went wrong.",
+        description: (error as Error).message,
+      })
+
+      return
+    }
+
+    setIsLoading(false)
+    toast({
+      title: "Registration successful 🥳",
+      description: "Your account has been created",
+    })
+    if (user) {
+      router.push("/login")
+    }
+  }
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
       email: "",
       password: "",
     },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    setIsLoading(true)
-
-    // Simulate API call
-    setTimeout(() => {
-      setIsLoading(false)
-      toast({
-        title: "Registration successful",
-        description: "Your account has been created",
-      })
-      router.push("/dashboard")
-    }, 1000)
-  }
-
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Full Name</FormLabel>
-              <FormControl>
-                <Input placeholder="Full Name" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+      <form onSubmit={handleSubmit} className="space-y-4">
         <FormField
           control={form.control}
           name="email"
@@ -80,7 +81,10 @@ export function RegisterForm() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="m@example.com" {...field} />
+                <Input
+                  placeholder="m@example.com"
+                  onChange={(e) => setEmail(e.target.value)}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -93,7 +97,11 @@ export function RegisterForm() {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input type="password" placeholder="••••••••" {...field} />
+                <Input
+                  type="password"
+                  placeholder="••••••••"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
