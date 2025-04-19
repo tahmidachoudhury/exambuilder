@@ -9,6 +9,11 @@ import { QuestionForm } from "./question-form"
 import { Question } from "@/types/questionType"
 import { useToast } from "@/hooks/use-toast"
 import { ToastAction } from "@/components/ui/toast"
+import {
+  createQuestion,
+  deleteQuestion,
+  updateQuestion,
+} from "@/lib/firebase/crudQuestions"
 
 export function ExamDashboard() {
   const [questions, setQuestions] = useState<Question[]>([])
@@ -60,6 +65,7 @@ export function ExamDashboard() {
     toast({
       title: "Are you sure?",
       description: "This will permanently delete the question.",
+      variant: "warning",
       action: (
         <ToastAction
           onClick={() => confirmDelete(questionId)}
@@ -72,30 +78,74 @@ export function ExamDashboard() {
   }
 
   // Separated function to handle the actual deletion after confirmation
-  const confirmDelete = (questionId: string) => {
+  const confirmDelete = async (questionId: string) => {
     // Only delete when this function is called (which happens on ToastAction click)
     setQuestions(questions.filter((q) => q.question_id !== questionId))
+    //deletes question from firestore db
+    const response = await deleteQuestion(questionId)
+
     if (selectedQuestion?.question_id === questionId) {
       setSelectedQuestion(null)
     }
 
     //successful deletion toast
-    toast({
-      title: "Question deleted",
-      description: "The question has been permanently removed.",
-    })
+    if (response.success) {
+      toast({
+        title: "Question deleted",
+        description: "The question has been permanently removed.",
+        variant: "success",
+      })
+    } else {
+      toast({
+        title: "Error deleting question",
+        description: "Something went wrong.",
+        variant: "destructive",
+      })
+    }
   }
 
-  const handleSave = (question: Question) => {
+  const handleSave = async (question: Question) => {
     if (isCreating) {
       setQuestions([...questions, question])
       setIsCreating(false)
+      //creates new question in firebase db
+      const response = await createQuestion(question.question_id, question)
+
+      if (response.success) {
+        toast({
+          title: "Question created",
+          description:
+            "The question has been created and uploaded to the database.",
+          variant: "success",
+        })
+      } else {
+        toast({
+          title: "Error creating question",
+          description: "Something went wrong.",
+          variant: "destructive",
+        })
+      }
     } else {
       setQuestions(
         questions.map((q) =>
           q.question_id === question.question_id ? question : q
         )
       )
+      //updates new question in firebase db
+      const response = await updateQuestion(question.question_id, question)
+
+      if (response.success) {
+        toast({
+          title: "Question updated",
+          description:
+            "The question has been updated and uploaded to the database.",
+        })
+      } else {
+        toast({
+          title: "Error updating question",
+          description: "Something went wrong.",
+        })
+      }
     }
     setSelectedQuestion(null)
   }
