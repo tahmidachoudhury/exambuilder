@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/hooks/use-toast"
+import { Question } from "@/types/questionType"
 import {
   Form,
   FormControl,
@@ -44,19 +45,6 @@ const formSchema = z.object({
   paperType: z.enum(["calc", "non-calc", "mixed"]),
   questions: z.array(z.string()).min(1),
 })
-
-export type Question = {
-  question_id: string
-  content: string
-  answer: string
-  total_marks: number
-  topic: string
-  type: string
-  question_topic: string
-  question_description: string
-  difficulty: string
-  full_page: boolean
-}
 
 const topics = [
   { label: "Number", value: "Number" },

@@ -19,7 +19,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import type { Question } from "@/components/UserForm"
+
+import { Question } from "@/types/questionType"
 
 interface QuestionsTableProps {
   questions: Question[]
@@ -87,7 +88,7 @@ export function QuestionsTable({
                             <DialogTitle>Question Preview</DialogTitle>
                           </DialogHeader>
                           {selectedQuestion && (
-                            <div className="space-y-6 max-h-[70vh] overflow-y-scroll">
+                            <div className="space-y-6 max-h-[70vh] overflow-y-auto">
                               <div className="space-y-2">
                                 <h3 className="text-lg font-medium">
                                   Question

@@ -19,7 +19,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { Badge } from "@/components/ui/badge"
-import { Question } from "@/components/UserForm"
+import { Question } from "@/types/questionType"
 
 export type Option = {
   label: string

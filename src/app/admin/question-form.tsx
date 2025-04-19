@@ -24,7 +24,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import type { Question } from "@/components/UserForm"
+import type { Question } from "@/types/questionType"
 
 interface QuestionFormProps {
   question: Question | null

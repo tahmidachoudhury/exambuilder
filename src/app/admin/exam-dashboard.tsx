@@ -6,8 +6,9 @@ import { PlusCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { QuestionsTable } from "./questions-table"
 import { QuestionForm } from "./question-form"
-import { Question } from "@/components/UserForm"
+import { Question } from "@/types/questionType"
 import { useToast } from "@/hooks/use-toast"
+import { ToastAction } from "@/components/ui/toast"
 
 export function ExamDashboard() {
   const [questions, setQuestions] = useState<Question[]>([])
@@ -55,14 +56,34 @@ export function ExamDashboard() {
   }
 
   const handleDelete = (questionId: string) => {
+    // Show confirmation toast first
     toast({
       title: "Are you sure?",
       description: "This will permanently delete the question.",
+      action: (
+        <ToastAction
+          onClick={() => confirmDelete(questionId)}
+          altText="Permanently delete question from database"
+        >
+          Delete
+        </ToastAction>
+      ),
     })
+  }
+
+  // Separated function to handle the actual deletion after confirmation
+  const confirmDelete = (questionId: string) => {
+    // Only delete when this function is called (which happens on ToastAction click)
     setQuestions(questions.filter((q) => q.question_id !== questionId))
     if (selectedQuestion?.question_id === questionId) {
       setSelectedQuestion(null)
     }
+
+    //successful deletion toast
+    toast({
+      title: "Question deleted",
+      description: "The question has been permanently removed.",
+    })
   }
 
   const handleSave = (question: Question) => {
