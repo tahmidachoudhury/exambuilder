@@ -1,7 +1,7 @@
 "use client"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import type { Question } from "./exam-dashboard"
+import type { Question } from "@/components/UserForm"
 
 interface QuestionPreviewProps {
   question: Question
@@ -16,7 +16,9 @@ export function QuestionPreview({ question }: QuestionPreviewProps) {
       <CardContent>
         <div className="space-y-4">
           <div>
-            <h3 className="text-lg font-medium">Question {question.question_id}</h3>
+            <h3 className="text-lg font-medium">
+              Question {question.question_id}
+            </h3>
             <div className="mt-2 whitespace-pre-wrap">{question.content}</div>
           </div>
           <div>

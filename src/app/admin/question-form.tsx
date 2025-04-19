@@ -6,13 +6,25 @@ import { useState } from "react"
 import { Save, X } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import type { Question } from "./exam-dashboard"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import type { Question } from "@/components/UserForm"
 
 interface QuestionFormProps {
   question: Question | null
@@ -21,10 +33,14 @@ interface QuestionFormProps {
   onCancel: () => void
 }
 
-export function QuestionForm({ question, isCreating, onSave, onCancel }: QuestionFormProps) {
+export function QuestionForm({
+  question,
+  isCreating,
+  onSave,
+  onCancel,
+}: QuestionFormProps) {
   const [formData, setFormData] = useState<Question>(
     question || {
-      id: "",
       question_id: "",
       content: "",
       answer: "",
@@ -35,11 +51,14 @@ export function QuestionForm({ question, isCreating, onSave, onCancel }: Questio
       question_description: "",
       difficulty: "",
       full_page: false,
-      createdAt: { _seconds: 0, _nanoseconds: 0 },
-    },
+    }
   )
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     const { name, value } = e.target
     setFormData({ ...formData, [name]: value })
   }
@@ -67,7 +86,9 @@ export function QuestionForm({ question, isCreating, onSave, onCancel }: Questio
     <form onSubmit={handleSubmit}>
       <Card>
         <CardHeader>
-          <CardTitle>{isCreating ? "Create New Question" : "Edit Question"}</CardTitle>
+          <CardTitle>
+            {isCreating ? "Create New Question" : "Edit Question"}
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="basic">
@@ -105,16 +126,22 @@ export function QuestionForm({ question, isCreating, onSave, onCancel }: Questio
 
                 <div className="space-y-2">
                   <Label htmlFor="topic">Main Topic</Label>
-                  <Select value={formData.topic} onValueChange={(value) => handleSelectChange("topic", value)}>
+                  <Select
+                    value={formData.topic}
+                    onValueChange={(value) =>
+                      handleSelectChange("topic", value)
+                    }
+                  >
                     <SelectTrigger id="topic">
                       <SelectValue placeholder="Select topic" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="Geometry">Geometry</SelectItem>
+                      <SelectItem value="Number">Number</SelectItem>
                       <SelectItem value="Algebra">Algebra</SelectItem>
-                      <SelectItem value="Calculus">Calculus</SelectItem>
+                      <SelectItem value="Geometry">Geometry</SelectItem>
+                      <SelectItem value="RPR">RPR</SelectItem>
                       <SelectItem value="Statistics">Statistics</SelectItem>
-                      <SelectItem value="Trigonometry">Trigonometry</SelectItem>
+                      <SelectItem value="Probability">Probability</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -131,15 +158,16 @@ export function QuestionForm({ question, isCreating, onSave, onCancel }: Questio
 
                 <div className="space-y-2">
                   <Label htmlFor="type">Question Type</Label>
-                  <Select value={formData.type} onValueChange={(value) => handleSelectChange("type", value)}>
+                  <Select
+                    value={formData.type}
+                    onValueChange={(value) => handleSelectChange("type", value)}
+                  >
                     <SelectTrigger id="type">
                       <SelectValue placeholder="Select type" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="calc">Calculation</SelectItem>
-                      <SelectItem value="mcq">Multiple Choice</SelectItem>
-                      <SelectItem value="proof">Proof</SelectItem>
-                      <SelectItem value="essay">Essay</SelectItem>
+                      <SelectItem value="calc">Calculator</SelectItem>
+                      <SelectItem value="non-calc">Non-Calculator</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -148,15 +176,18 @@ export function QuestionForm({ question, isCreating, onSave, onCancel }: Questio
                   <Label htmlFor="difficulty">Difficulty</Label>
                   <Select
                     value={formData.difficulty}
-                    onValueChange={(value) => handleSelectChange("difficulty", value)}
+                    onValueChange={(value) =>
+                      handleSelectChange("difficulty", value)
+                    }
                   >
                     <SelectTrigger id="difficulty">
                       <SelectValue placeholder="Select difficulty" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="Grade 1-3">Grade 1-3</SelectItem>
-                      <SelectItem value="Grade 4-6">Grade 4-6</SelectItem>
-                      <SelectItem value="Grade 7-9">Grade 7-9</SelectItem>
+                      <SelectItem value="Grade 4-5">Grade 4-5</SelectItem>
+                      <SelectItem value="Grade 6-7">Grade 6-7</SelectItem>
+                      <SelectItem value="Grade 8-9">Grade 8-9</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -218,20 +249,26 @@ export function QuestionForm({ question, isCreating, onSave, onCancel }: Questio
                 <div className="space-y-2">
                   <h3 className="text-lg font-medium">Question Preview</h3>
                   <div className="p-4 border rounded-md bg-gray-50 dark:bg-gray-900">
-                    <div className="whitespace-pre-wrap font-serif">{formData.content}</div>
+                    <div className="whitespace-pre-wrap font-serif">
+                      {formData.content}
+                    </div>
                   </div>
                 </div>
 
                 <div className="space-y-2">
                   <h3 className="text-lg font-medium">Answer Preview</h3>
                   <div className="p-4 border rounded-md bg-gray-50 dark:bg-gray-900">
-                    <div className="whitespace-pre-wrap font-serif">{formData.answer}</div>
+                    <div className="whitespace-pre-wrap font-serif">
+                      {formData.answer}
+                    </div>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <h3 className="text-sm font-medium text-gray-500">Question ID</h3>
+                    <h3 className="text-sm font-medium text-gray-500">
+                      Question ID
+                    </h3>
                     <p>{formData.question_id}</p>
                   </div>
                   <div>
@@ -245,7 +282,9 @@ export function QuestionForm({ question, isCreating, onSave, onCancel }: Questio
                     </p>
                   </div>
                   <div>
-                    <h3 className="text-sm font-medium text-gray-500">Difficulty</h3>
+                    <h3 className="text-sm font-medium text-gray-500">
+                      Difficulty
+                    </h3>
                     <p>{formData.difficulty}</p>
                   </div>
                   <div>
@@ -253,7 +292,9 @@ export function QuestionForm({ question, isCreating, onSave, onCancel }: Questio
                     <p>{formData.type}</p>
                   </div>
                   <div>
-                    <h3 className="text-sm font-medium text-gray-500">Full Page</h3>
+                    <h3 className="text-sm font-medium text-gray-500">
+                      Full Page
+                    </h3>
                     <p>{formData.full_page ? "Yes" : "No"}</p>
                   </div>
                 </div>

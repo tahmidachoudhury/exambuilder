@@ -1,37 +1,48 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { PlusCircle } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { QuestionsTable } from "./questions-table"
 import { QuestionForm } from "./question-form"
-
-// Sample initial data
-const initialQuestions = [
-  {
-    id: "1.3.13",
-    question_id: "1.3.13",
-    content:
-      "A piece of gold has a mass of $760$ grams and a volume of $40 \\text{ cm}^3$.\n\n\\vspace{0.5cm} \n\n\\qquad Work out the density of the piece of gold.\n\n\\vspace{8cm} \n\n\\hfill \\makebox[4cm]{\\dotfill}",
-    answer: "$19 \\,\\text{g/cm}^3$",
-    total_marks: 3,
-    topic: "Number",
-    type: "calc",
-    question_topic: "Compound Measures",
-    question_description: "Work out the density of the piece of gold.",
-    difficulty: "Grade 1-3",
-    full_page: false,
-    createdAt: { _seconds: 1744901326, _nanoseconds: 263000000 },
-  },
-]
-
-export type Question = (typeof initialQuestions)[0]
+import { Question } from "@/components/UserForm"
+import { useToast } from "@/hooks/use-toast"
 
 export function ExamDashboard() {
-  const [questions, setQuestions] = useState<Question[]>(initialQuestions)
-  const [selectedQuestion, setSelectedQuestion] = useState<Question | null>(null)
+  const [questions, setQuestions] = useState<Question[]>([])
+  const [selectedQuestion, setSelectedQuestion] = useState<Question | null>(
+    null
+  )
+  const { toast } = useToast()
   const [isCreating, setIsCreating] = useState(false)
+
+  useEffect(() => {
+    // retreive the questions from the firebase backend
+    const apiUrl = process.env.NEXT_PUBLIC_RETRIEVE_QUESTIONS_BACKEND_API_KEY
+    // const apiUrl = "http://localhost:3002/api/test"
+    if (!apiUrl) {
+      throw new Error(
+        "Backend API URL is not configured. Please check your environment variables."
+      )
+    }
+    fetch(apiUrl, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json", // Tell the server the payload is JSON
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const { questions } = data
+
+        setQuestions(questions)
+      })
+      .catch((error) => {
+        console.error("Error:", error)
+        console.log("Check the server mate")
+      })
+  }, [])
 
   const handleEdit = (question: Question) => {
     setSelectedQuestion(question)
@@ -44,6 +55,10 @@ export function ExamDashboard() {
   }
 
   const handleDelete = (questionId: string) => {
+    toast({
+      title: "Are you sure?",
+      description: "This will permanently delete the question.",
+    })
     setQuestions(questions.filter((q) => q.question_id !== questionId))
     if (selectedQuestion?.question_id === questionId) {
       setSelectedQuestion(null)
@@ -55,7 +70,11 @@ export function ExamDashboard() {
       setQuestions([...questions, question])
       setIsCreating(false)
     } else {
-      setQuestions(questions.map((q) => (q.question_id === question.question_id ? question : q)))
+      setQuestions(
+        questions.map((q) =>
+          q.question_id === question.question_id ? question : q
+        )
+      )
     }
     setSelectedQuestion(null)
   }
@@ -84,7 +103,11 @@ export function ExamDashboard() {
             onCancel={handleCancel}
           />
         ) : (
-          <QuestionsTable questions={questions} onEdit={handleEdit} onDelete={handleDelete} />
+          <QuestionsTable
+            questions={questions}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+          />
         )}
       </div>
     </div>

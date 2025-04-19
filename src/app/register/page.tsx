@@ -1,8 +1,9 @@
 // import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
-import { RegisterForm } from "./register-form"
+
 import { GalleryVerticalEnd } from "lucide-react"
+import { DisableRegister } from "./register-disabled"
 
 // export const metadata: Metadata = {
 //   title: "Register - Mednotate",
@@ -50,7 +51,7 @@ export default function RegisterPage() {
               Enter your information to create your account
             </p>
           </div>
-          <RegisterForm />
+          <DisableRegister />
           <p className="px-8 text-center text-sm text-muted-foreground">
             Already have an account?{" "}
             <Link
