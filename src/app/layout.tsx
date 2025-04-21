@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster"
 import { Analytics } from "@vercel/analytics/react"
 import { AuthProvider } from "@/context/AuthContext"
 import { TabNavigation } from "@/components/TabNavigation"
+import Footer from "@/components/footer"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,6 +34,7 @@ export default function RootLayout({
       >
         <TabNavigation />
         <AuthProvider>{children}</AuthProvider>
+        <Footer />
         <Toaster />
         <Analytics />
       </body>
