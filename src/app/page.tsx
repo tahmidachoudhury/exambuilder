@@ -8,7 +8,6 @@ export default function CreateExamPage() {
       <div className="container mx-auto py-10 flex-grow">
         <UserForm />
       </div>
-      <Footer />
     </div>
   )
 }
