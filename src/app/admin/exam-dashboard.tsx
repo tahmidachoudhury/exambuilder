@@ -139,11 +139,13 @@ export function ExamDashboard() {
           title: "Question updated",
           description:
             "The question has been updated and uploaded to the database.",
+          variant: "success",
         })
       } else {
         toast({
           title: "Error updating question",
           description: "Something went wrong.",
+          variant: "destructive",
         })
       }
     }
