@@ -4,6 +4,7 @@ import "./globals.css"
 import { Toaster } from "@/components/ui/toaster"
 import { Analytics } from "@vercel/analytics/react"
 import { AuthProvider } from "@/context/AuthContext"
+import { TabNavigation } from "@/components/TabNavigation"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,6 +31,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <TabNavigation />
         <AuthProvider>{children}</AuthProvider>
         <Toaster />
         <Analytics />
