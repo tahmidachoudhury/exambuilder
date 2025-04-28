@@ -3,24 +3,22 @@ import { ArrowUpRight } from "lucide-react"
 interface TopicItemProps {
   topic: string
   categoryId: number
+  url: string
   index: number
 }
-
 export default function TopicItem({
   topic,
   categoryId,
   index,
+  url,
 }: TopicItemProps) {
   // Convert the topic to a URL-friendly format
-  const topicSlug = topic
-    .toLowerCase()
-    .replace(/[^\w\s]/g, "")
-    .replace(/\s+/g, "-")
-  const url = `https://mathsgenie.co.uk/${topicSlug}.php`
+  const topicSlug = url
+  const finalurl = `https://mathsgenie.co.uk/${topicSlug}`
 
   return (
     <a
-      href={url}
+      href={finalurl}
       target="_blank"
       rel="noopener noreferrer"
       className="p-4 flex items-center justify-between hover:bg-gray-50 transition-colors group"

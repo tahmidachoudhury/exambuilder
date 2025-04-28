@@ -19,14 +19,20 @@ export default function TopicList({ topics }: TopicListProps) {
             </h2>
           </div>
           <div className="divide-y">
-            {category.topics.map((topic, index) => (
-              <TopicItem
-                key={index}
-                topic={topic}
-                categoryId={category.id}
-                index={index + 1}
-              />
-            ))}
+            {category.topics.map((topicObj, index) => {
+              {
+                console.log(topicObj.url)
+              }
+              return (
+                <TopicItem
+                  key={index}
+                  topic={topicObj.topic}
+                  categoryId={category.id}
+                  url={topicObj.url}
+                  index={index + 1}
+                />
+              )
+            })}
           </div>
         </div>
       ))}
