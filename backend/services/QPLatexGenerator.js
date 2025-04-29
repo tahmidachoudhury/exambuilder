@@ -11,9 +11,18 @@ ${questionContent}
 
 \\hfill \\textbf{(Total for question ${questionNumber} is ${totalMarks} marks)}
 
-\\hrule height 0.4pt
+\\hrule height 0.1pt
 \\vspace{1em}
 `
+}
+
+//calculates the total mark of the paper
+function getTotalMarks(questions) {
+  let total = 0
+  questions.forEach((question) => {
+    total += question.total_marks
+  })
+  return total
 }
 
 //This function formats the pages consistently using latex
@@ -97,7 +106,8 @@ function createPages(questionPair) {
 }
 
 function generateExam(questions) {
-  //console.log(questions)
+  // console.log(questions)
+  const totalMarksinExam = getTotalMarks(questions)
   const singlePageQuestions = getSinglePageQuestions(questions)
 
   //console.log(singlePageQuestions)
@@ -122,7 +132,9 @@ function generateExam(questions) {
     const finalExam = createPages(questionPairs)
 
     // Replace the placeholder with actual questions
-    const finalLatex = template.replace("%PAGES_PLACEHOLDER", finalExam)
+    const finalLatex = template
+      .replace("%PAGES_PLACEHOLDER", finalExam)
+      .replaceAll("@@TOTAL@@", totalMarksinExam)
 
     return finalLatex
   } catch (error) {

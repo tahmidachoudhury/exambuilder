@@ -8,8 +8,17 @@
 \usepackage{times} % Use Times New Roman font
 \usepackage{tcolorbox} % For adding border boxes 
 \geometry{margin=0.4in} % 0.4-inch margin for a clean layout 
+\usepackage{fancyhdr} % Allows you to edit the header
+\geometry{
+  headheight=14pt,      % reserve 14pt for the header line itself
+  headsep=10pt          % 20pt gap between header and main text
+}
 
 \begin{document} 
+\pagestyle{fancy}
+\fancyhf{}                               
+\fancyhead[C]{\sffamily\scriptsize www.tacknowledge.co.uk}
+\renewcommand\headrulewidth{0pt} 
 \title{\textbf{Mathematics Exam Markscheme/Worked Solutions}} % Bold title 
 \date{} % No date 
 \maketitle % Add a border around the entire page 

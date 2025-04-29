@@ -8,13 +8,25 @@
 \usepackage{times} % Use Times New Roman font
 \usepackage{tcolorbox} % For adding border boxes 
 \usepackage{changepage} % For changing the page width
+\usepackage{fancyhdr} % Allows you to edit the header
 \geometry{margin=0.4in} % 0.4-inch margin for a clean layout 
 \pagestyle{empty}
+\geometry{
+  headheight=14pt,      % reserve 14pt for the header line itself
+  headsep=10pt          % 20pt gap between header and main text
+}
 
 \begin{document} 
+
+\pagestyle{fancy}
+\fancyhf{}                               
+\fancyhead[C]{\sffamily\scriptsize www.tacknowledge.co.uk}
+\renewcommand\headrulewidth{0pt} 
 {%
 \sffamily %change the font to sanserif
+
 \begin{center}
+
 \begin{tikzpicture}[x=1cm,y=1cm]
 % Outer main frame
   \draw[rounded corners=5pt, line width=1pt] (0.8,9.8) rectangle (17.2,25);
@@ -108,7 +120,7 @@
       parsep=0pt, 
       itemsep=0pt
     ]
-    \item The total mark for this paper is \textbf{80}
+    \item The total mark for this paper is \textbf{@@TOTAL@@}
     \item The marks for \textbf{each} question are shown in brackets\\
           \hspace*{1em}-- \textit{use this as a guide as to how much time to spend on each question}.
   \end{itemize}
@@ -133,4 +145,12 @@
 
 
 %PAGES_PLACEHOLDER
+
+\vspace{1ex}
+
+\hrule height 1pt
+
+\vspace{1ex}
+
+\hfill \textbf{TOTAL FOR PAPER IS @@TOTAL@@ MARKS}
 \end{document}
