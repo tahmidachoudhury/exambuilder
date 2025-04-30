@@ -19,6 +19,9 @@
 /.next/
 /out/
 
+# db backup
+/db_backup
+
 # production
 /build
 
