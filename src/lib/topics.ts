@@ -54,6 +54,7 @@ export const topics: TopicCategory[] = [
         url: "compound-shapes.php",
       },
       { topic: "Surds", url: "surds.php" },
+      { topic: "Indices", url: "indices.php" },
       { topic: "Bounds", url: "bounds.php" },
       {
         topic: "Converting Recurring Decimals to Fractions",
