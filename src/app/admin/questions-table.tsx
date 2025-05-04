@@ -380,7 +380,7 @@ export function QuestionsTable({
                               <DialogTitle>Question Preview</DialogTitle>
                             </DialogHeader>
                             {selectedQuestion && (
-                              <div className="space-y-6">
+                              <div className="space-y-6 max-h-[70vh] overflow-y-auto">
                                 <div className="space-y-2">
                                   <h3 className="text-lg font-medium">
                                     Question
