@@ -9,4 +9,5 @@ export type Question = {
   question_description: string
   difficulty: string
   full_page: boolean
+  createdAt: { _seconds: number; _nanoseconds: number }
 }

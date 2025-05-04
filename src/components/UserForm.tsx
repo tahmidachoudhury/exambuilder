@@ -28,6 +28,7 @@ import {
 import { MultiSelect } from "@/components/ui/multi-select"
 import { TopicSelect } from "./ui/topic-select"
 import { Loader2 } from "lucide-react"
+import { truncate } from "@/app/admin/questions-table"
 
 const difficultyOptions = [
   "Grade 1-3",
@@ -307,7 +308,7 @@ export default function UserForm() {
                     ).map((question: Question) => ({
                       label: `${question.question_id}: ${question.question_topic}`,
                       value: question.question_id,
-                      desc: question.question_description,
+                      desc: truncate(question.question_description, 50),
                     }))}
                     selected={field.value}
                     onChange={(chosenQuestions) => {
