@@ -58,6 +58,7 @@ export const topics: TopicCategory[] = [
       },
       { topic: "Surds", url: "surds.php" },
       { topic: "Indices", url: "indices.php" },
+      { topic: "Fractional and Negative Indices", url: "indices2.php" },
       { topic: "Bounds", url: "bounds.php" },
       {
         topic: "Converting Recurring Decimals to Fractions",
@@ -70,10 +71,6 @@ export const topics: TopicCategory[] = [
     id: 2,
     name: "Algebra",
     topics: [
-      {
-        topic: "Writing, Simplifying and Ordering Fractions",
-        url: "writing-fractions.php",
-      },
       { topic: "Simplifying Algebra", url: "simplifyingalgebra.php" },
       { topic: "Writing an Expression", url: "writing-an-expression.php" },
       { topic: "Substitution", url: "substitution.php" },

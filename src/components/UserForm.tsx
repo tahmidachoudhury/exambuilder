@@ -77,37 +77,27 @@ export default function UserForm() {
   })
 
   useEffect(() => {
-    // retreive the questions from the backend, will change this to a Database fetch
-    const apiUrl = process.env.NEXT_PUBLIC_RETRIEVE_QUESTIONS_BACKEND_API_KEY
-    // const apiUrl = "http://localhost:3002/api/test"
-    if (!apiUrl) {
-      throw new Error(
-        "Backend API URL is not configured. Please check your environment variables."
-      )
-    }
-    fetch(apiUrl, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json", // Tell the server the payload is JSON
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const { questions } = data
-
+    //retrieve db questions securely through firebase admin with limits
+    const getQuestions = async () => {
+      try {
+        const response = await fetch("/api/getQuestions?limit=20")
+        if (!response.ok)
+          throw new Error(`HTTP error! Status: ${response.status}`)
+        const { questions } = await response.json()
         setBackendQuestions(questions)
-      })
-      .catch((error) => {
-        console.error("Error:", error)
-        console.log("Check the server mate")
-      })
+      } catch (error) {
+        console.error("Error fetching questions:", error)
+      }
+    }
+
+    getQuestions()
   }, [])
 
   async function generateExam() {
     setIsSubmitting(true)
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_GENERATE_EXAM_BACKEND_API_KEY
+      const apiUrl = process.env.NEXT_PUBLIC_GENERATE_EXAM_ENDPOINT_URL
       // const apiUrl = "http://localhost:3002/api/generate-exam"
       if (!apiUrl) {
         throw new Error(
