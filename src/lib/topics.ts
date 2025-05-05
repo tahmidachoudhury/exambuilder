@@ -28,7 +28,10 @@ export const topics: TopicCategory[] = [
       { topic: "Rounding", url: "rounding.php" },
       { topic: "Negative Numbers", url: "negativenumbers.php" },
       { topic: "Powers and Roots", url: "squares-cubes-and-roots.php" },
-      { topic: "The Order of Operations", url: "writing-fractions.php" },
+      {
+        topic: "Writing, Simplifying and Ordering Fractions",
+        url: "writing-fractions.php",
+      },
       {
         topic: "Factors, Multiples and Primes",
         url: "factors-multiples-and-primes.php",
