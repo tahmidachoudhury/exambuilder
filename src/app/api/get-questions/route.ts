@@ -2,11 +2,16 @@ import { NextRequest, NextResponse } from "next/server"
 import { cert, getApps, initializeApp } from "firebase-admin/app"
 import { getFirestore } from "firebase-admin/firestore"
 
+const serviceAccountJSON = Buffer.from(
+  process.env.FIREBASE_SERVICE_ACCOUNT_KEY_BASE64!,
+  "base64"
+).toString("utf8")
+
+const serviceAccount = JSON.parse(serviceAccountJSON)
+
 if (!getApps().length) {
   initializeApp({
-    credential: cert(
-      JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY as string)
-    ),
+    credential: cert(serviceAccount),
   })
 }
 
