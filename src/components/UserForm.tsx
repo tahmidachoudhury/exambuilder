@@ -1,7 +1,7 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
-import { useForm } from "react-hook-form"
+import { useEffect, useMemo, useRef, useState } from "react"
+import { set, useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import { Button } from "@/components/ui/button"
@@ -28,53 +28,34 @@ import {
 import { TopicSelect } from "./ui/topic-select"
 import { Loader2 } from "lucide-react"
 import { QuestionSelector } from "./QuestionSelector"
-
-const difficultyOptions = [
-  "Grade 1-3",
-  "Grade 4-5",
-  "Grade 6-7",
-  "Grade 8-9",
-  "all-levels",
-] as const
-
-const difficulties = difficultyOptions.slice(0, -1)
+import { DiffSelect } from "./ui/diff-select"
 
 const formSchema = z.object({
-  difficultyLevel: z.enum(difficultyOptions),
+  difficultyLevel: z.array(z.string()),
   topics: z.array(z.string()),
   paperType: z.enum(["calc", "non-calc", "mixed"]),
   questions: z.array(z.string()).min(1),
 })
 
-const topics = [
-  { label: "Number", value: "Number" },
-  { label: "Algebra", value: "Algebra" },
-  { label: "Geometry", value: "Geometry" },
-  {
-    label: "Ratio, Proportion and Rates of Change",
-    value: "RPR",
-  },
-  { label: "Statistics", value: "Statistics" },
-  { label: "Probability", value: "Probability" },
-]
-
 export default function UserForm() {
   const [backendQuestions, setBackendQuestions] = useState<Question[]>([])
-  const [filteredQuestions, setFilteredQuestions] = useState<Question[]>([])
+
   const [nextCursor, setNextCursor] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [hasMore, setHasMore] = useState(true)
   const [dropdownOpen, setDropdownOpen] = useState(false)
-  const loaderRef = useRef<HTMLDivElement>(null)
   const [finalQuestions, setFinalQuestions] = useState<Question[]>([])
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [selectedDifficulty, setSelectedDifficulty] = useState<string[]>([])
+  const [selectedTopic, setSelectedTopic] = useState<string[]>([])
+  const [selectedPaperType, setSelectedPaperType] = useState("")
 
   const { toast } = useToast()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      difficultyLevel: "all-levels",
+      difficultyLevel: [],
       topics: [],
       paperType: "mixed",
       questions: [],
@@ -108,8 +89,8 @@ export default function UserForm() {
 
     try {
       const url = cursor
-        ? `/api/getQuestions?limit=20&startAfter=${cursor}`
-        : `/api/getQuestions?limit=20`
+        ? `/api/getQuestions?limit=100&startAfter=${cursor}`
+        : `/api/getQuestions?limit=100`
 
       const res = await fetch(url)
       const data = await res.json()
@@ -129,25 +110,16 @@ export default function UserForm() {
     setIsLoading(false)
   }
 
-  //scroll trigger
-  useEffect(() => {
-    if (!loaderRef.current) return
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && nextCursor) {
-          fetchQuestions(nextCursor)
-        }
-      },
-      {
-        rootMargin: "100px",
-      }
+  const filteredQuestions = useMemo(() => {
+    return backendQuestions.filter(
+      (q: Question) =>
+        (selectedTopic.length > 0 ? selectedTopic.includes(q.topic) : true) &&
+        (selectedDifficulty.length > 0
+          ? selectedDifficulty.includes(q.difficulty)
+          : true) &&
+        (selectedPaperType ? q.type === selectedPaperType : true)
     )
-
-    observer.observe(loaderRef.current)
-
-    return () => observer.disconnect()
-  }, [nextCursor])
+  }, [backendQuestions, selectedTopic, selectedDifficulty, selectedPaperType])
 
   async function generateExam() {
     setIsSubmitting(true)
@@ -210,23 +182,22 @@ export default function UserForm() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Difficulty Level</FormLabel>
-                <Select
+                <DiffSelect
+                  selected={field.value}
+                  onChange={(chosenDiff) => {
+                    field.onChange(chosenDiff)
+
+                    setSelectedDifficulty(chosenDiff)
+                  }}
+                  placeholder="Select Difficulty"
+                />
+
+                {/* <Select
                   onValueChange={(value) => {
                     field.onChange(value)
                     //filters questions based on chosen difficulty
                     //if all levels is picked then it will filter through backend questions hook
-                    setFilteredQuestions([])
-                    if (value !== "All levels") {
-                      const newQuestions = backendQuestions.filter(
-                        (q) => q.difficulty === value
-                      )
-                      setFilteredQuestions(newQuestions)
-                    } else {
-                      const newQuestions = backendQuestions.filter(
-                        (q) => q.difficulty !== value
-                      )
-                      setFilteredQuestions(newQuestions)
-                    }
+                    setSelectedDifficulty(value)
                   }}
                   defaultValue={field.value}
                 >
@@ -245,7 +216,7 @@ export default function UserForm() {
                     })}
                     <SelectItem value="all-levels">All levels</SelectItem>
                   </SelectContent>
-                </Select>
+                </Select> */}
                 <FormDescription>
                   Choose the difficulty level for the exam.
                 </FormDescription>
@@ -260,22 +231,15 @@ export default function UserForm() {
               <FormItem>
                 <FormLabel>Topics</FormLabel>
                 <FormControl>
-                  {backendQuestions.length > 0 && (
-                    //a custom built variant of multiselect which allows for more prop handling
-                    <TopicSelect
-                      options={topics}
-                      selected={field.value}
-                      onChange={(chosenTopics) => {
-                        field.onChange(chosenTopics)
+                  <TopicSelect
+                    selected={field.value}
+                    onChange={(chosenTopics) => {
+                      field.onChange(chosenTopics)
 
-                        const newTopics = backendQuestions.filter((question) =>
-                          chosenTopics.includes(question.topic)
-                        )
-                        setFilteredQuestions(newTopics)
-                      }}
-                      placeholder="Select topics"
-                    />
-                  )}
+                      setSelectedTopic(chosenTopics)
+                    }}
+                    placeholder="Select topics"
+                  />
                 </FormControl>
                 <FormDescription>
                   Select the topics to appear in the exam.
@@ -296,15 +260,9 @@ export default function UserForm() {
                     //filters questions based on chosen difficulty
                     //if all levels is picked then it will filter through backend questions hook
                     if (value !== "mixed") {
-                      const newQuestions = backendQuestions.filter(
-                        (q) => q.type === value
-                      )
-                      setFilteredQuestions(newQuestions)
+                      setSelectedPaperType(value)
                     } else {
-                      const newQuestions = backendQuestions.filter(
-                        (q) => q.type !== value
-                      )
-                      setFilteredQuestions(newQuestions)
+                      setSelectedPaperType("")
                     }
                   }}
                   defaultValue={field.value}
@@ -346,7 +304,6 @@ export default function UserForm() {
                       console.log(selectedQuestions)
                       setFinalQuestions(selectedQuestions)
                     }}
-                    loaderRef={loaderRef}
                     dropdownOpen={dropdownOpen}
                     setDropdownOpen={setDropdownOpen}
                   />

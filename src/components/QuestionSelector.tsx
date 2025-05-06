@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { MultiSelect } from "@/components/ui/multi-select"
 import { truncate } from "@/app/admin/questions-table"
 import type { Question } from "@/types/questionType"
@@ -9,7 +9,7 @@ interface QuestionSelectorProps {
   selectedValues: string[]
   onSelectedValuesChange: (values: string[]) => void
   filteredQuestions?: Question[] // optional
-  loaderRef: React.RefObject<HTMLDivElement>
+
   dropdownOpen: boolean
   setDropdownOpen: (isOpen: boolean) => void
 }
@@ -20,7 +20,6 @@ export function QuestionSelector({
   onSelect,
   selectedValues,
   onSelectedValuesChange,
-  loaderRef,
   setDropdownOpen,
 }: QuestionSelectorProps) {
   const displayedQuestions =

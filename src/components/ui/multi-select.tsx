@@ -18,7 +18,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { Badge } from "@/components/ui/badge"
-import { useEffect, useRef, useState } from "react"
+import { useState } from "react"
 
 export type Option = {
   label: string
@@ -44,35 +44,6 @@ export function MultiSelect({
   placeholder = "Select items...",
 }: MultiSelectProps) {
   const [open, setOpen] = useState(false)
-
-  //detects last element
-  const loaderRef = useRef<HTMLDivElement>(null)
-
-  //scroller reference
-  const scrollContainerRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    if (!loaderRef.current || !scrollContainerRef.current) return
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          console.log("Scrolled to bottom!")
-        }
-      },
-      {
-        root: scrollContainerRef.current,
-        rootMargin: "0px",
-        threshold: 0.1, //
-      }
-    )
-
-    if (loaderRef.current) {
-      observer.observe(loaderRef.current)
-    }
-
-    return () => observer.disconnect()
-  }, [])
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -110,42 +81,40 @@ export function MultiSelect({
           <CommandInput placeholder="Search..." />
           <CommandList>
             <CommandEmpty>No item found.</CommandEmpty>
-            <div ref={scrollContainerRef} className="max-h-60 overflow-y-auto">
-              <CommandGroup>
-                {options.map((option) => (
-                  <CommandItem
-                    key={option.value}
-                    onSelect={() => {
-                      onChange(
+
+            <CommandGroup>
+              {options.map((option) => (
+                <CommandItem
+                  key={option.value}
+                  onSelect={() => {
+                    onChange(
+                      selected.includes(option.value)
+                        ? selected.filter((item) => item !== option.value)
+                        : [...selected, option.value]
+                    )
+                  }}
+                >
+                  <div className="flex items-center space-x-2">
+                    <Check
+                      className={cn(
+                        "mr-2 h-4 w-4",
                         selected.includes(option.value)
-                          ? selected.filter((item) => item !== option.value)
-                          : [...selected, option.value]
-                      )
-                    }}
-                  >
-                    <div className="flex items-center space-x-2">
-                      <Check
-                        className={cn(
-                          "mr-2 h-4 w-4",
-                          selected.includes(option.value)
-                            ? "opacity-100"
-                            : "opacity-0"
-                        )}
-                      />
-                      <div className="flex flex-col">
-                        <span className="font-medium">{option.label}</span>
-                        {option.desc && (
-                          <span className="text-sm text-gray-500">
-                            {option.desc}
-                          </span>
-                        )}
-                      </div>
+                          ? "opacity-100"
+                          : "opacity-0"
+                      )}
+                    />
+                    <div className="flex flex-col">
+                      <span className="font-medium">{option.label}</span>
+                      {option.desc && (
+                        <span className="text-sm text-gray-500">
+                          {option.desc}
+                        </span>
+                      )}
                     </div>
-                  </CommandItem>
-                ))}
-                <div ref={loaderRef} className="h-10 bg-red-500" />
-              </CommandGroup>
-            </div>
+                  </div>
+                </CommandItem>
+              ))}
+            </CommandGroup>
           </CommandList>
         </Command>
       </PopoverContent>

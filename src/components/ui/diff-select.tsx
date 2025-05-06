@@ -20,17 +20,12 @@ import {
 } from "@/components/ui/popover"
 import { Badge } from "@/components/ui/badge"
 
-const topics = [
-  { label: "Number", value: "Number" },
-  { label: "Algebra", value: "Algebra" },
-  { label: "Geometry", value: "Geometry" },
-  {
-    label: "Ratio, Proportion and Rates of Change",
-    value: "RPR",
-  },
-  { label: "Statistics", value: "Statistics" },
-  { label: "Probability", value: "Probability" },
-]
+const options = [
+  { label: "Grade 1-3", value: "Grade 1-3" },
+  { label: "Grade 4-5", value: "Grade 4-5" },
+  { label: "Grade 6-7", value: "Grade 6-7" },
+  { label: "Grade 8-9", value: "Grade 8-9" },
+] as const
 
 type MultiSelectProps = {
   selected: string[]
@@ -38,7 +33,7 @@ type MultiSelectProps = {
   placeholder?: string
 }
 
-export function TopicSelect({
+export function DiffSelect({
   selected,
   onChange,
 
@@ -59,7 +54,7 @@ export function TopicSelect({
             <div className="flex flex-wrap gap-1">
               {selected.map((value) => (
                 <Badge variant="secondary" key={value} className="mr-1">
-                  {topics.find((option) => option.value === value)?.label}
+                  {options.find((option) => option.value === value)?.label}
                 </Badge>
               ))}
             </div>
@@ -71,11 +66,11 @@ export function TopicSelect({
       </PopoverTrigger>
       <PopoverContent className="w-full p-0">
         <Command>
-          <CommandTitle placeholder="GCSE Maths Topics" />
+          <CommandTitle placeholder="Difficulty Level" />
           <CommandList>
             <CommandEmpty>No item found.</CommandEmpty>
             <CommandGroup>
-              {topics.map((option) => {
+              {options.map((option) => {
                 return (
                   <CommandItem
                     key={option.value}
