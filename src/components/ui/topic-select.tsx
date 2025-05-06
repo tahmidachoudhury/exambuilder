@@ -19,7 +19,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { Badge } from "@/components/ui/badge"
-import { Question } from "@/types/questionType"
 
 export type Option = {
   label: string
@@ -32,14 +31,13 @@ type MultiSelectProps = {
   selected: string[]
   onChange: (selected: string[]) => void
   placeholder?: string
-  backendQuestions: Question[]
 }
 
 export function TopicSelect({
   options,
   selected,
   onChange,
-  backendQuestions,
+
   placeholder = "Select items...",
 }: MultiSelectProps) {
   const [open, setOpen] = React.useState(false)
@@ -74,13 +72,9 @@ export function TopicSelect({
             <CommandEmpty>No item found.</CommandEmpty>
             <CommandGroup>
               {options.map((option) => {
-                const hasTopics = backendQuestions.some(
-                  (q) => q.topic === option.value
-                )
                 return (
                   <CommandItem
                     key={option.value}
-                    disabled={!hasTopics}
                     onSelect={() => {
                       onChange(
                         selected.includes(option.value)

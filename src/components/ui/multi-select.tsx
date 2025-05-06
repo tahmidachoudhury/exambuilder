@@ -18,6 +18,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { Badge } from "@/components/ui/badge"
+import { useEffect, useRef, useState } from "react"
 
 export type Option = {
   label: string
@@ -30,6 +31,7 @@ type MultiSelectProps = {
   selected: string[]
   onChange: (selected: string[]) => void
   onSearch?: (value: string) => void
+  onclick?: (e: React.MouseEvent<HTMLElement>) => void
   placeholder?: string
 }
 
@@ -38,14 +40,45 @@ export function MultiSelect({
   selected,
   onChange,
   onSearch,
+  onclick,
   placeholder = "Select items...",
 }: MultiSelectProps) {
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
+
+  //detects last element
+  const loaderRef = useRef<HTMLDivElement>(null)
+
+  //scroller reference
+  const scrollContainerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!loaderRef.current || !scrollContainerRef.current) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          console.log("Scrolled to bottom!")
+        }
+      },
+      {
+        root: scrollContainerRef.current,
+        rootMargin: "0px",
+        threshold: 0.1, //
+      }
+    )
+
+    if (loaderRef.current) {
+      observer.observe(loaderRef.current)
+    }
+
+    return () => observer.disconnect()
+  }, [])
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
+          onClick={onclick}
           variant="outline"
           role="combobox"
           aria-expanded={open}
@@ -77,39 +110,42 @@ export function MultiSelect({
           <CommandInput placeholder="Search..." />
           <CommandList>
             <CommandEmpty>No item found.</CommandEmpty>
-            <CommandGroup>
-              {options.map((option) => (
-                <CommandItem
-                  key={option.value}
-                  onSelect={() => {
-                    onChange(
-                      selected.includes(option.value)
-                        ? selected.filter((item) => item !== option.value)
-                        : [...selected, option.value]
-                    )
-                  }}
-                >
-                  <div className="flex items-center space-x-2">
-                    <Check
-                      className={cn(
-                        "mr-2 h-4 w-4",
+            <div ref={scrollContainerRef} className="max-h-60 overflow-y-auto">
+              <CommandGroup>
+                {options.map((option) => (
+                  <CommandItem
+                    key={option.value}
+                    onSelect={() => {
+                      onChange(
                         selected.includes(option.value)
-                          ? "opacity-100"
-                          : "opacity-0"
-                      )}
-                    />
-                    <div className="flex flex-col">
-                      <span className="font-medium">{option.label}</span>
-                      {option.desc && (
-                        <span className="text-sm text-gray-500">
-                          {option.desc}
-                        </span>
-                      )}
+                          ? selected.filter((item) => item !== option.value)
+                          : [...selected, option.value]
+                      )
+                    }}
+                  >
+                    <div className="flex items-center space-x-2">
+                      <Check
+                        className={cn(
+                          "mr-2 h-4 w-4",
+                          selected.includes(option.value)
+                            ? "opacity-100"
+                            : "opacity-0"
+                        )}
+                      />
+                      <div className="flex flex-col">
+                        <span className="font-medium">{option.label}</span>
+                        {option.desc && (
+                          <span className="text-sm text-gray-500">
+                            {option.desc}
+                          </span>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                </CommandItem>
-              ))}
-            </CommandGroup>
+                  </CommandItem>
+                ))}
+                <div ref={loaderRef} className="h-10 bg-red-500" />
+              </CommandGroup>
+            </div>
           </CommandList>
         </Command>
       </PopoverContent>

@@ -9,6 +9,9 @@ interface QuestionSelectorProps {
   selectedValues: string[]
   onSelectedValuesChange: (values: string[]) => void
   filteredQuestions?: Question[] // optional
+  loaderRef: React.RefObject<HTMLDivElement>
+  dropdownOpen: boolean
+  setDropdownOpen: (isOpen: boolean) => void
 }
 
 export function QuestionSelector({
@@ -17,9 +20,18 @@ export function QuestionSelector({
   onSelect,
   selectedValues,
   onSelectedValuesChange,
+  loaderRef,
+  setDropdownOpen,
 }: QuestionSelectorProps) {
   const displayedQuestions =
     filteredQuestions.length > 0 ? filteredQuestions : questions
+
+  const [isOpen, setIsOpen] = useState(false)
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen)
+    setDropdownOpen(!isOpen)
+  }
 
   const options = displayedQuestions.map((question) => ({
     label: `${question.question_id}: ${question.question_topic}`,
@@ -36,11 +48,14 @@ export function QuestionSelector({
   }
 
   return (
-    <MultiSelect
-      options={options}
-      selected={selectedValues}
-      onChange={handleChange}
-      placeholder="Select questions"
-    />
+    <div>
+      <MultiSelect
+        onclick={toggleDropdown}
+        options={options}
+        selected={selectedValues}
+        onChange={handleChange}
+        placeholder="Select questions"
+      />
+    </div>
   )
 }

@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
@@ -25,10 +25,8 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-import { MultiSelect } from "@/components/ui/multi-select"
 import { TopicSelect } from "./ui/topic-select"
 import { Loader2 } from "lucide-react"
-import { truncate } from "@/app/admin/questions-table"
 import { QuestionSelector } from "./QuestionSelector"
 
 const difficultyOptions = [
@@ -63,6 +61,11 @@ const topics = [
 export default function UserForm() {
   const [backendQuestions, setBackendQuestions] = useState<Question[]>([])
   const [filteredQuestions, setFilteredQuestions] = useState<Question[]>([])
+  const [nextCursor, setNextCursor] = useState<string | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const [hasMore, setHasMore] = useState(true)
+  const [dropdownOpen, setDropdownOpen] = useState(false)
+  const loaderRef = useRef<HTMLDivElement>(null)
   const [finalQuestions, setFinalQuestions] = useState<Question[]>([])
   const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -78,31 +81,73 @@ export default function UserForm() {
     },
   })
 
-  //retrieve db questions securely through firebase admin with limits
   useEffect(() => {
-    const fetchFilteredQuestions = async () => {
-      try {
-        const res = await fetch(`/api/getQuestions?limit=20`)
+    fetchQuestions() // first page
+  }, [])
 
-        if (!res.ok) {
-          const errorText = await res.text()
-          throw new Error(`Server error: ${res.status} - ${errorText}`)
-        }
+  // useEffect(() => {
+  //   if (!loaderRef.current || !dropdownOpen) return
 
-        const { questions } = await res.json()
+  //   const observer = new IntersectionObserver((entries) => {
+  //     if (entries[0].isIntersecting && nextCursor && !isLoading && hasMore) {
+  //       fetchQuestions(nextCursor) // fetch the next page only when safe
+  //     }
+  //   })
 
-        if (!questions || !Array.isArray(questions)) {
-          throw new Error("Invalid response format from server")
-        }
+  //   observer.observe(loaderRef.current)
 
-        setBackendQuestions(questions)
-      } catch (error) {
-        console.error("Error fetching filtered questions:", error)
+  //   return () => observer.disconnect() // cleanup
+  // }, [loaderRef, nextCursor, hasMore, dropdownOpen])
+
+  //retrieve db questions securely through firebase admin with limits and infiite scroll pagination
+
+  const fetchQuestions = async (cursor?: string) => {
+    if (isLoading || !hasMore) return
+
+    setIsLoading(true)
+
+    try {
+      const url = cursor
+        ? `/api/getQuestions?limit=20&startAfter=${cursor}`
+        : `/api/getQuestions?limit=20`
+
+      const res = await fetch(url)
+      const data = await res.json()
+
+      if (!res.ok || !Array.isArray(data.questions)) {
+        throw new Error("Failed to fetch questions")
       }
+
+      setBackendQuestions((prev) => [...prev, ...data.questions])
+      setNextCursor(data.nextCursor)
+      if (!data.nextCursor) setHasMore(false)
+    } catch (err) {
+      console.error("🔥 Infinite scroll error:", err)
+      setHasMore(false)
     }
 
-    fetchFilteredQuestions()
-  }, [])
+    setIsLoading(false)
+  }
+
+  //scroll trigger
+  useEffect(() => {
+    if (!loaderRef.current) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && nextCursor) {
+          fetchQuestions(nextCursor)
+        }
+      },
+      {
+        rootMargin: "100px",
+      }
+    )
+
+    observer.observe(loaderRef.current)
+
+    return () => observer.disconnect()
+  }, [nextCursor])
 
   async function generateExam() {
     setIsSubmitting(true)
@@ -192,16 +237,8 @@ export default function UserForm() {
                   </FormControl>
                   <SelectContent>
                     {difficulties.map((difficulty) => {
-                      //checks if at least one question exists from the backend payload
-                      const hasQuestions = backendQuestions.some(
-                        (q) => q.difficulty === difficulty
-                      )
                       return (
-                        <SelectItem
-                          key={difficulty}
-                          value={difficulty}
-                          disabled={!hasQuestions}
-                        >
+                        <SelectItem key={difficulty} value={difficulty}>
                           {difficulty}
                         </SelectItem>
                       )
@@ -237,7 +274,6 @@ export default function UserForm() {
                         setFilteredQuestions(newTopics)
                       }}
                       placeholder="Select topics"
-                      backendQuestions={backendQuestions}
                     />
                   )}
                 </FormControl>
@@ -310,6 +346,9 @@ export default function UserForm() {
                       console.log(selectedQuestions)
                       setFinalQuestions(selectedQuestions)
                     }}
+                    loaderRef={loaderRef}
+                    dropdownOpen={dropdownOpen}
+                    setDropdownOpen={setDropdownOpen}
                   />
                 </FormControl>
                 <FormDescription>
