@@ -29,6 +29,7 @@ type MultiSelectProps = {
   options: Option[]
   selected: string[]
   onChange: (selected: string[]) => void
+  onSearch?: (value: string) => void
   placeholder?: string
 }
 
@@ -36,6 +37,7 @@ export function MultiSelect({
   options,
   selected,
   onChange,
+  onSearch,
   placeholder = "Select items...",
 }: MultiSelectProps) {
   const [open, setOpen] = React.useState(false)
@@ -64,7 +66,14 @@ export function MultiSelect({
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-full p-0">
-        <Command>
+        <Command
+          onChange={(e) => {
+            if (onSearch) {
+              const value = (e.target as HTMLInputElement).value
+              onSearch(value)
+            }
+          }}
+        >
           <CommandInput placeholder="Search..." />
           <CommandList>
             <CommandEmpty>No item found.</CommandEmpty>

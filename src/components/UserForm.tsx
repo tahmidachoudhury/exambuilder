@@ -64,6 +64,9 @@ export default function UserForm() {
   const [filteredQuestions, setFilteredQuestions] = useState<Question[]>([])
   const [finalQuestions, setFinalQuestions] = useState<Question[]>([])
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [searchTerm, setSearchTerm] = useState("")
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("")
+
   const { toast } = useToast()
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -76,22 +79,45 @@ export default function UserForm() {
     },
   })
 
+  //send one request to firebase when user stops typing for 500ms
   useEffect(() => {
-    //retrieve db questions securely through firebase admin with limits
-    const getQuestions = async () => {
+    const timeout = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm)
+    }, 500) // 500ms debounce
+
+    return () => clearTimeout(timeout)
+  }, [searchTerm])
+
+  //retrieve db questions securely through firebase admin with limits
+  useEffect(() => {
+    // console.log("Fetching with search:", debouncedSearchTerm)
+    const fetchFilteredQuestions = async () => {
+      // if (!debouncedSearchTerm.trim()) return
+
       try {
-        const response = await fetch("/api/getQuestions?limit=20")
-        if (!response.ok)
-          throw new Error(`HTTP error! Status: ${response.status}`)
-        const { questions } = await response.json()
+        const res = await fetch(
+          `/api/getQuestions?search=${debouncedSearchTerm}&limit=20`
+        )
+
+        if (!res.ok) {
+          const errorText = await res.text()
+          throw new Error(`Server error: ${res.status} - ${errorText}`)
+        }
+
+        const { questions } = await res.json()
+
+        if (!questions || !Array.isArray(questions)) {
+          throw new Error("Invalid response format from server")
+        }
+
         setBackendQuestions(questions)
       } catch (error) {
-        console.error("Error fetching questions:", error)
+        console.error("Error fetching filtered questions:", error)
       }
     }
 
-    getQuestions()
-  }, [])
+    fetchFilteredQuestions()
+  }, [debouncedSearchTerm])
 
   async function generateExam() {
     setIsSubmitting(true)
@@ -310,6 +336,9 @@ export default function UserForm() {
                       setFinalQuestions(newQuestions)
                     }}
                     placeholder="Select questions"
+                    onSearch={(value) => {
+                      setSearchTerm(value)
+                    }}
                   />
                 </FormControl>
                 <FormDescription>
