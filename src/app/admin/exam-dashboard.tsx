@@ -22,33 +22,40 @@ export function ExamDashboard() {
   )
   const { toast } = useToast()
   const [isCreating, setIsCreating] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [hasMore, setHasMore] = useState(true)
 
   useEffect(() => {
-    // retreive the questions from the firebase backend
-    const apiUrl = process.env.NEXT_PUBLIC_RETRIEVE_QUESTIONS_BACKEND_API_KEY
-    // const apiUrl = "http://localhost:3002/api/test"
-    if (!apiUrl) {
-      throw new Error(
-        "Backend API URL is not configured. Please check your environment variables."
-      )
-    }
-    fetch(apiUrl, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json", // Tell the server the payload is JSON
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const { questions } = data
-
-        setQuestions(questions)
-      })
-      .catch((error) => {
-        console.error("Error:", error)
-        console.log("Check the server mate")
-      })
+    fetchQuestions() // first page
   }, [])
+
+  const fetchQuestions = async (cursor?: string) => {
+    if (isLoading || !hasMore) return
+
+    setIsLoading(true)
+
+    try {
+      const url = cursor
+        ? `/api/get-questions?limit=100&startAfter=${cursor}`
+        : `/api/get-questions?limit=100`
+
+      const res = await fetch(url)
+      const data = await res.json()
+
+      if (!res.ok || !Array.isArray(data.questions)) {
+        throw new Error("Failed to fetch questions")
+      }
+
+      setQuestions((prev) => [...prev, ...data.questions])
+      // setNextCursor(data.nextCursor)
+      if (!data.nextCursor) setHasMore(false)
+    } catch (err) {
+      console.error("🔥 Infinite scroll error:", err)
+      setHasMore(false)
+    }
+
+    setIsLoading(false)
+  }
 
   const handleEdit = (question: Question) => {
     setSelectedQuestion(question)

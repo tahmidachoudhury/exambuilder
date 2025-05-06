@@ -1,7 +1,7 @@
 "use client"
 
-import { useEffect, useMemo, useRef, useState } from "react"
-import { set, useForm } from "react-hook-form"
+import { useEffect, useMemo, useState } from "react"
+import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import { Button } from "@/components/ui/button"
@@ -40,7 +40,7 @@ const formSchema = z.object({
 export default function UserForm() {
   const [backendQuestions, setBackendQuestions] = useState<Question[]>([])
 
-  const [nextCursor, setNextCursor] = useState<string | null>(null)
+  // const [nextCursor, setNextCursor] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [hasMore, setHasMore] = useState(true)
   const [dropdownOpen, setDropdownOpen] = useState(false)
@@ -66,22 +66,6 @@ export default function UserForm() {
     fetchQuestions() // first page
   }, [])
 
-  // useEffect(() => {
-  //   if (!loaderRef.current || !dropdownOpen) return
-
-  //   const observer = new IntersectionObserver((entries) => {
-  //     if (entries[0].isIntersecting && nextCursor && !isLoading && hasMore) {
-  //       fetchQuestions(nextCursor) // fetch the next page only when safe
-  //     }
-  //   })
-
-  //   observer.observe(loaderRef.current)
-
-  //   return () => observer.disconnect() // cleanup
-  // }, [loaderRef, nextCursor, hasMore, dropdownOpen])
-
-  //retrieve db questions securely through firebase admin with limits and infiite scroll pagination
-
   const fetchQuestions = async (cursor?: string) => {
     if (isLoading || !hasMore) return
 
@@ -100,7 +84,7 @@ export default function UserForm() {
       }
 
       setBackendQuestions((prev) => [...prev, ...data.questions])
-      setNextCursor(data.nextCursor)
+      // setNextCursor(data.nextCursor)
       if (!data.nextCursor) setHasMore(false)
     } catch (err) {
       console.error("🔥 Infinite scroll error:", err)
@@ -192,31 +176,6 @@ export default function UserForm() {
                   placeholder="Select Difficulty"
                 />
 
-                {/* <Select
-                  onValueChange={(value) => {
-                    field.onChange(value)
-                    //filters questions based on chosen difficulty
-                    //if all levels is picked then it will filter through backend questions hook
-                    setSelectedDifficulty(value)
-                  }}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select difficulty level" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {difficulties.map((difficulty) => {
-                      return (
-                        <SelectItem key={difficulty} value={difficulty}>
-                          {difficulty}
-                        </SelectItem>
-                      )
-                    })}
-                    <SelectItem value="all-levels">All levels</SelectItem>
-                  </SelectContent>
-                </Select> */}
                 <FormDescription>
                   Choose the difficulty level for the exam.
                 </FormDescription>
