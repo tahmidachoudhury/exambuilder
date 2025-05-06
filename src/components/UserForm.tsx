@@ -89,8 +89,8 @@ export default function UserForm() {
 
     try {
       const url = cursor
-        ? `/api/getQuestions?limit=100&startAfter=${cursor}`
-        : `/api/getQuestions?limit=100`
+        ? `/api/get-questions?limit=100&startAfter=${cursor}`
+        : `/api/get-questions?limit=100`
 
       const res = await fetch(url)
       const data = await res.json()
@@ -301,7 +301,6 @@ export default function UserForm() {
                     selectedValues={field.value}
                     onSelectedValuesChange={field.onChange}
                     onSelect={(selectedQuestions) => {
-                      console.log(selectedQuestions)
                       setFinalQuestions(selectedQuestions)
                     }}
                     dropdownOpen={dropdownOpen}
