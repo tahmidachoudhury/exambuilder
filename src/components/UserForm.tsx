@@ -29,6 +29,7 @@ import { MultiSelect } from "@/components/ui/multi-select"
 import { TopicSelect } from "./ui/topic-select"
 import { Loader2 } from "lucide-react"
 import { truncate } from "@/app/admin/questions-table"
+import { QuestionSelector } from "./QuestionSelector"
 
 const difficultyOptions = [
   "Grade 1-3",
@@ -64,8 +65,6 @@ export default function UserForm() {
   const [filteredQuestions, setFilteredQuestions] = useState<Question[]>([])
   const [finalQuestions, setFinalQuestions] = useState<Question[]>([])
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [searchTerm, setSearchTerm] = useState("")
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("")
 
   const { toast } = useToast()
 
@@ -79,25 +78,11 @@ export default function UserForm() {
     },
   })
 
-  //send one request to firebase when user stops typing for 500ms
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setDebouncedSearchTerm(searchTerm)
-    }, 500) // 500ms debounce
-
-    return () => clearTimeout(timeout)
-  }, [searchTerm])
-
   //retrieve db questions securely through firebase admin with limits
   useEffect(() => {
-    // console.log("Fetching with search:", debouncedSearchTerm)
     const fetchFilteredQuestions = async () => {
-      // if (!debouncedSearchTerm.trim()) return
-
       try {
-        const res = await fetch(
-          `/api/getQuestions?search=${debouncedSearchTerm}&limit=20`
-        )
+        const res = await fetch(`/api/getQuestions?limit=20`)
 
         if (!res.ok) {
           const errorText = await res.text()
@@ -117,7 +102,7 @@ export default function UserForm() {
     }
 
     fetchFilteredQuestions()
-  }, [debouncedSearchTerm])
+  }, [])
 
   async function generateExam() {
     setIsSubmitting(true)
@@ -316,28 +301,14 @@ export default function UserForm() {
               <FormItem>
                 <FormLabel>Questions</FormLabel>
                 <FormControl>
-                  <MultiSelect
-                    //check if the user chose to filter any questions, if not then display all questions
-                    options={(filteredQuestions.length > 0
-                      ? filteredQuestions
-                      : backendQuestions
-                    ).map((question: Question) => ({
-                      label: `${question.question_id}: ${question.question_topic}`,
-                      value: question.question_id,
-                      desc: truncate(question.question_description, 50),
-                    }))}
-                    selected={field.value}
-                    onChange={(chosenQuestions) => {
-                      field.onChange(chosenQuestions)
-                      const newQuestions = backendQuestions.filter((question) =>
-                        chosenQuestions.includes(question.question_id)
-                      )
-                      console.log(newQuestions)
-                      setFinalQuestions(newQuestions)
-                    }}
-                    placeholder="Select questions"
-                    onSearch={(value) => {
-                      setSearchTerm(value)
+                  <QuestionSelector
+                    questions={backendQuestions}
+                    filteredQuestions={filteredQuestions}
+                    selectedValues={field.value}
+                    onSelectedValuesChange={field.onChange}
+                    onSelect={(selectedQuestions) => {
+                      console.log(selectedQuestions)
+                      setFinalQuestions(selectedQuestions)
                     }}
                   />
                 </FormControl>
