@@ -63,35 +63,7 @@ function getSinglePageQuestions(questions) {
   return singlePageQuestions
 }
 
-//formats the questions into pairs
-// function groupQuestionsIntoPairs(formattedQuestions, singlePageQuestions) {
-//   const pairs = []
-//   let i = 0
-
-//   while (i < formattedQuestions.length) {
-//     //if current q should remain single
-//     if (singlePageQuestions.includes(i)) {
-//       pairs.push(formattedQuestions[i])
-//       i++
-//     }
-//     // If theres a next question and it should NOT remain single
-//     else if (
-//       i + 1 < formattedQuestions.length &&
-//       !singlePageQuestions.includes(i + 1)
-//     ) {
-//       pairs.push(formattedQuestions[i] + "\n\n" + formattedQuestions[i + 1])
-//       i += 2
-//     }
-//     // If theres an odd number of questions, the last one goes alone
-//     else {
-//       pairs.push(formattedQuestions[i])
-//       i++
-//     }
-//   }
-
-//   return pairs
-// }
-
+//paper now makes full pages by organising questions based on question size
 function groupQuestionsIntoFullPages(questions, formattedQuestions) {
   const pages = []
   let currentPage = []
@@ -103,6 +75,12 @@ function groupQuestionsIntoFullPages(questions, formattedQuestions) {
 
     // If the question is full page or more
     if (questions[i].full_page) {
+      //this makes sure any incomplete pages are pushed forward to "pages", and the full_page questions dont jump the queue
+      if (currentPage.length > 0) {
+        pages.push(currentPage.join("\n\n"))
+        currentPage = []
+        currentTotal = 0
+      }
       // Full page question goes alone
       pages.push(formattedQuestions[i])
       console.log(`Question ${i + 1} is a full page question!`)
@@ -147,7 +125,6 @@ function createPages(questionPairs) {
 function generateExam(questions) {
   // console.log(questions)
   const totalMarksinExam = getTotalMarks(questions)
-  const singlePageQuestions = getSinglePageQuestions(questions)
 
   //console.log(singlePageQuestions)
 
