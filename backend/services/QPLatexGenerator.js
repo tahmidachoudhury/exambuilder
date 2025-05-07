@@ -71,7 +71,7 @@ function groupQuestionsIntoFullPages(questions, formattedQuestions) {
 
   for (let i = 0; i < questions.length; i++) {
     const size = questions[i].question_size
-    console.log(`Question ${i + 1} is ${size}!`)
+    // console.log(`Question ${i + 1} is ${size}!`)
 
     // If the question is full page or more
     if (questions[i].full_page) {
@@ -83,7 +83,7 @@ function groupQuestionsIntoFullPages(questions, formattedQuestions) {
       }
       // Full page question goes alone
       pages.push(formattedQuestions[i])
-      console.log(`Question ${i + 1} is a full page question!`)
+      // console.log(`Question ${i + 1} is a full page question!`)
       continue
     }
 
@@ -91,13 +91,13 @@ function groupQuestionsIntoFullPages(questions, formattedQuestions) {
     if (currentTotal + size <= 1) {
       currentPage.push(formattedQuestions[i])
       currentTotal += size
-      console.log(`added question ${i + 1}. Page size: ${currentTotal}`)
+      // console.log(`added question ${i + 1}. Page size: ${currentTotal}`)
     } else {
       // Current page is full, start a new one
       pages.push(currentPage.join("\n\n"))
       currentPage = [formattedQuestions[i]]
       currentTotal = size
-      console.log(`Started a new page!`)
+      // console.log(`Started a new page!`)
     }
   }
 
