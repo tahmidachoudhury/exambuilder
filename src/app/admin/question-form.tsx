@@ -50,6 +50,7 @@ export function QuestionForm({
       question_topic: "",
       question_description: "",
       difficulty: "",
+      question_size: 0,
       full_page: false,
       createdAt: { _seconds: 0, _nanoseconds: 0 },
     }
