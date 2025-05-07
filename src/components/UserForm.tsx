@@ -109,8 +109,8 @@ export default function UserForm() {
     setIsSubmitting(true)
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_GENERATE_EXAM_ENDPOINT_URL
-      // const apiUrl = "http://localhost:3002/api/generate-exam"
+      // const apiUrl = process.env.NEXT_PUBLIC_GENERATE_EXAM_ENDPOINT_URL
+      const apiUrl = "http://localhost:3002/api/generate-exam"
       if (!apiUrl) {
         throw new Error(
           "Backend API URL is not configured. Please check your environment variables."

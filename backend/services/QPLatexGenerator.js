@@ -64,38 +64,77 @@ function getSinglePageQuestions(questions) {
 }
 
 //formats the questions into pairs
-function groupQuestionsIntoPairs(formattedQuestions, singlePageQuestions) {
-  const pairs = []
-  let i = 0
+// function groupQuestionsIntoPairs(formattedQuestions, singlePageQuestions) {
+//   const pairs = []
+//   let i = 0
 
-  while (i < formattedQuestions.length) {
-    //if current q should remain single
-    if (singlePageQuestions.includes(i)) {
-      pairs.push(formattedQuestions[i])
-      i++
+//   while (i < formattedQuestions.length) {
+//     //if current q should remain single
+//     if (singlePageQuestions.includes(i)) {
+//       pairs.push(formattedQuestions[i])
+//       i++
+//     }
+//     // If theres a next question and it should NOT remain single
+//     else if (
+//       i + 1 < formattedQuestions.length &&
+//       !singlePageQuestions.includes(i + 1)
+//     ) {
+//       pairs.push(formattedQuestions[i] + "\n\n" + formattedQuestions[i + 1])
+//       i += 2
+//     }
+//     // If theres an odd number of questions, the last one goes alone
+//     else {
+//       pairs.push(formattedQuestions[i])
+//       i++
+//     }
+//   }
+
+//   return pairs
+// }
+
+function groupQuestionsIntoFullPages(questions, formattedQuestions) {
+  const pages = []
+  let currentPage = []
+  let currentTotal = 0
+
+  for (let i = 0; i < questions.length; i++) {
+    const size = questions[i].question_size
+    console.log(`Question ${i + 1} is ${size}!`)
+
+    // If the question is full page or more
+    if (questions[i].full_page) {
+      // Full page question goes alone
+      pages.push(formattedQuestions[i])
+      console.log(`Question ${i + 1} is a full page question!`)
+      continue
     }
-    // If theres a next question and it should NOT remain single
-    else if (
-      i + 1 < formattedQuestions.length &&
-      !singlePageQuestions.includes(i + 1)
-    ) {
-      pairs.push(formattedQuestions[i] + "\n\n" + formattedQuestions[i + 1])
-      i += 2
-    }
-    // If theres an odd number of questions, the last one goes alone
-    else {
-      pairs.push(formattedQuestions[i])
-      i++
+
+    // If it fits in the current page
+    if (currentTotal + size <= 1) {
+      currentPage.push(formattedQuestions[i])
+      currentTotal += size
+      console.log(`added question ${i + 1}. Page size: ${currentTotal}`)
+    } else {
+      // Current page is full, start a new one
+      pages.push(currentPage.join("\n\n"))
+      currentPage = [formattedQuestions[i]]
+      currentTotal = size
+      console.log(`Started a new page!`)
     }
   }
 
-  return pairs
+  // Push remaining questions as a final page
+  if (currentPage.length > 0) {
+    pages.push(currentPage.join("\n\n"))
+  }
+
+  return pages
 }
 
-function createPages(questionPair) {
-  const finalExam = questionPair
-    .map((question) => {
-      return formatPage(question)
+function createPages(questionPairs) {
+  const finalExam = questionPairs
+    .map((questionsInPairs) => {
+      return formatPage(questionsInPairs)
     })
     .join("\n")
   // console.log(
@@ -116,12 +155,18 @@ function generateExam(questions) {
 
   console.log(`Formatted ${formattedQuestions.length} questions`)
 
-  const questionPairs = groupQuestionsIntoPairs(
-    formattedQuestions,
-    singlePageQuestions
+  // const questionPairs = groupQuestionsIntoPairs(
+  //   formattedQuestions,
+  //   singlePageQuestions
+  // )
+
+  const questionPages = groupQuestionsIntoFullPages(
+    questions,
+    formattedQuestions
   )
 
-  console.log(`Created ${questionPairs.length} question pages`)
+  // console.log(`Created ${questionPairs.length} question pages`)
+  console.log(`Created ${questionPages.length} question pages`)
 
   try {
     // Read the template
@@ -129,7 +174,8 @@ function generateExam(questions) {
     let template = fs.readFileSync(templatePath, "utf8")
 
     // Generate all pages with 2 questions per page
-    const finalExam = createPages(questionPairs)
+    // const finalExam = createPages(questionPairs)
+    const finalExam = createPages(questionPages)
 
     // Replace the placeholder with actual questions
     const finalLatex = template

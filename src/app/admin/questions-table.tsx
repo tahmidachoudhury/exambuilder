@@ -444,6 +444,12 @@ export function QuestionsTable({
                                         : "N/A"}
                                     </p>
                                   </div>
+                                  <div>
+                                    <h3 className="text-sm font-medium text-gray-500">
+                                      Question Size
+                                    </h3>
+                                    <p>{selectedQuestion.question_size}</p>
+                                  </div>
                                 </div>
                               </div>
                             )}
