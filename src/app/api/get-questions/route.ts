@@ -19,15 +19,20 @@ const db = getFirestore()
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
-  const limit = parseInt(searchParams.get("limit") || "20")
+  let limit = parseInt(searchParams.get("limit") || "20", 10)
+  if (isNaN(limit) || limit <= 0 || limit > 100) limit = 20
+
   const startAfterId = searchParams.get("startAfter")
+  const topic = searchParams.get("question_topic")
 
-  //need to explicitly type the query
-  let query: FirebaseFirestore.Query<FirebaseFirestore.DocumentData> = db
-    .collection("questions")
-    .orderBy("question_id")
+  let query: FirebaseFirestore.Query<FirebaseFirestore.DocumentData> =
+    db.collection("questions")
 
-  query = query.limit(limit)
+  if (topic) {
+    query = query.where("question_topic", "==", topic)
+  }
+
+  query = query.orderBy("question_id")
 
   if (startAfterId) {
     const startAfterDoc = await db
@@ -39,16 +44,16 @@ export async function GET(request: NextRequest) {
     }
   }
 
+  query = query.limit(limit)
+
   const snapshot = await query.get()
   const questions = snapshot.docs.map((doc) => ({
     id: doc.id,
     ...doc.data(),
   }))
 
-  //this is the unique key returned with the response for pagination
   const lastVisible = snapshot.docs[snapshot.docs.length - 1]
 
-  //this will return the next batch of questions from the db
   return NextResponse.json({
     questions,
     nextCursor: lastVisible?.id || null,

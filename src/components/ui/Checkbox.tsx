@@ -1,69 +1,28 @@
 "use client"
 
 import * as React from "react"
+import * as CheckboxPrimitive from "@radix-ui/react-checkbox"
+import { Check } from "lucide-react"
 
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Question } from "@/types/questionType"
+import { cn } from "@/lib/utils"
 
-const topics = [
-  "Number",
-  "Algebra",
-  "Geometry",
-  "RPR",
-  "Statistics",
-  "Probability",
-]
+const Checkbox = React.forwardRef<
+  React.ElementRef<typeof CheckboxPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>
+>(({ className, ...props }, ref) => (
+  <CheckboxPrimitive.Root
+    ref={ref}
+    className={cn(
+      "peer h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground",
+      className,
+    )}
+    {...props}
+  >
+    <CheckboxPrimitive.Indicator className={cn("flex items-center justify-center text-current")}>
+      <Check className="h-4 w-4" />
+    </CheckboxPrimitive.Indicator>
+  </CheckboxPrimitive.Root>
+))
+Checkbox.displayName = CheckboxPrimitive.Root.displayName
 
-type Props = {
-  backendQuestions: []
-  selected: string[]
-}
-
-export function DropdownMenuCheckboxes({ backendQuestions, selected }: Props) {
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          variant="outline"
-          role="combobox"
-          className="w-full justify-between"
-        >
-          {/* {console.log(selected)} */}
-          {selected.length > 0 ? (
-            <div className="flex flex-wrap gap-1">
-              {selected.map((value) => (
-                <Badge variant="secondary" key={value} className="mr-1"></Badge>
-              ))}
-            </div>
-          ) : (
-            <span className="text-muted-foreground">Select topics</span>
-          )}
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel>GCSE Maths Topics</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-
-        {topics.map((topic) => {
-          const hasTopics = backendQuestions.some(
-            (q: Question) => q.topic === topic
-          )
-          return (
-            <DropdownMenuCheckboxItem key={topic} disabled={!hasTopics}>
-              {topic}
-            </DropdownMenuCheckboxItem>
-          )
-        })}
-      </DropdownMenuContent>
-    </DropdownMenu>
-  )
-}
+export { Checkbox }
