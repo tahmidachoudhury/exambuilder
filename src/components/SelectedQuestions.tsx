@@ -28,11 +28,11 @@ export default function SelectedQuestions({
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle>Selected Questions</CardTitle>
-        {questions.length > 0 && (
+        {/* {questions.length > 0 && (
           <Button variant="outline" size="sm" onClick={toggleReordering}>
             {reordering ? "Done" : "Reorder"}
           </Button>
-        )}
+        )} */}
       </CardHeader>
       <CardContent>
         {questions.length === 0 ? (
