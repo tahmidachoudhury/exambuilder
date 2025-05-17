@@ -4,84 +4,10 @@ import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ChevronDown, ChevronRight } from "lucide-react"
+import { topics } from "@/lib/topics"
 
 // Sample topic data - replace with your actual data
-const topicsData = [
-  {
-    id: 1,
-    name: "Number",
-    topics: [
-      {
-        topic: "Addition and Subtraction",
-        url: "addition-and-subtraction.php",
-      },
-      {
-        topic: "Multiplication and Division",
-        url: "multiplication-and-division.php",
-      },
-      {
-        topic: "Writing, Simplifying and Ordering Fractions",
-        url: "fractions.php",
-      },
-    ],
-  },
-  {
-    id: 2,
-    name: "Algebra",
-    topics: [
-      {
-        topic: "Solving Equations",
-        url: "solving-equations.php",
-      },
-      {
-        topic: "Expanding Brackets",
-        url: "expanding-brackets.php",
-      },
-    ],
-  },
-  {
-    id: 3,
-    name: "Ratio, Proportion and Rates of Change",
-    topics: [
-      {
-        topic: "Ratio",
-        url: "ratio.php",
-      },
-      {
-        topic: "Proportion",
-        url: "proportion.php",
-      },
-    ],
-  },
-  {
-    id: 4,
-    name: "Geometry and Measures",
-    topics: [
-      {
-        topic: "Area and Perimeter",
-        url: "area-perimeter.php",
-      },
-      {
-        topic: "Angles",
-        url: "angles.php",
-      },
-    ],
-  },
-  {
-    id: 5,
-    name: "Statistics",
-    topics: [
-      {
-        topic: "Mean, Median, Mode",
-        url: "averages.php",
-      },
-      {
-        topic: "Probability",
-        url: "probability.php",
-      },
-    ],
-  },
-]
+const topicsData = topics
 
 type TopicSelectorProps = {
   onSelectTopic: (topic: string) => void
@@ -91,7 +17,11 @@ export default function TopicSelector({ onSelectTopic }: TopicSelectorProps) {
   const [expandedTopics, setExpandedTopics] = useState<number[]>([])
 
   const toggleTopic = (topicId: number) => {
-    setExpandedTopics((prev) => (prev.includes(topicId) ? prev.filter((id) => id !== topicId) : [...prev, topicId]))
+    setExpandedTopics((prev) =>
+      prev.includes(topicId)
+        ? prev.filter((id) => id !== topicId)
+        : [...prev, topicId]
+    )
   }
 
   return (
