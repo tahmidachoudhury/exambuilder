@@ -44,18 +44,23 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  query = query.limit(limit)
+  // Fetch one extra to check for more pages
+  query = query.limit(limit + 1)
 
   const snapshot = await query.get()
-  const questions = snapshot.docs.map((doc) => ({
+  const docs = snapshot.docs
+  const hasMore = docs.length > limit
+
+  // Slice to limit only if there are more
+  const questions = (hasMore ? docs.slice(0, limit) : docs).map((doc) => ({
     id: doc.id,
     ...doc.data(),
   }))
 
-  const lastVisible = snapshot.docs[snapshot.docs.length - 1]
+  const nextCursor = hasMore ? docs[limit].id : null
 
   return NextResponse.json({
     questions,
-    nextCursor: lastVisible?.id || null,
+    nextCursor,
   })
 }

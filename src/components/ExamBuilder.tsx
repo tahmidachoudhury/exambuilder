@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import TopicSelector from "./TopicSelector"
 import FilterPanel from "./FilterPanel"
 import QuestionList from "./QuestionList"
@@ -34,10 +34,13 @@ export type TopicData = {
 }
 
 export default function ExamBuilder() {
-  const [questions, setQuestions] = useState<Question[]>([])
   const [selectedQuestions, setSelectedQuestions] = useState<Question[]>([])
+  const [cursorHistory, setCursorHistory] = useState<(string | null)[]>([null])
   const [loading, setLoading] = useState(false)
+  const [pages, setPages] = useState<Array<Question[]>>([]) // array of pages (each is a list of questions)
+  const [currentPage, setCurrentPage] = useState(0)
   const [cursor, setCursor] = useState<string | null>(null)
+
   const [activeFilters, setActiveFilters] = useState({
     difficulty: [] as string[],
     type: [] as string[],
@@ -47,19 +50,60 @@ export default function ExamBuilder() {
   const fetchQuestions = async (questionTopic: string) => {
     setLoading(true)
     try {
+      const currentCursor = cursorHistory[currentPage]
       const url = `/api/get-questions?limit=5&question_topic=${encodeURIComponent(
         questionTopic
-      )}${cursor ? `&startAfter=${cursor}` : ""}`
+      )}${currentCursor ? `&startAfter=${currentCursor}` : ""}`
 
       const response = await fetch(url)
       const data = await response.json()
 
-      setQuestions(data.questions)
-      setCursor(data.lastVisible || null)
+      if (data.questions && data.questions.length > 0) {
+        // Add new page and update cursor state
+        setPages((prev) => [...prev, data.questions])
+        setCursorHistory((prev) => [...prev, data.nextCursor])
+        setCursor(data.nextCursor)
+        if (currentPage > 0) {
+          setCurrentPage((prev) => prev + 1)
+        }
+        console.log(data.questions)
+      } else {
+        // Handle case where no questions were returned
+        setCursor(null)
+      }
     } catch (error) {
       console.error("Error fetching questions:", error)
     } finally {
       setLoading(false)
+    }
+  }
+
+  // Function to paginate to the next set of questions in memory
+  async function handleNext() {
+    console.log("Page before next:", currentPage)
+
+    if (currentPage < pages.length - 1) {
+      // fetch in memory by going forward
+      setCurrentPage(currentPage + 1)
+    } else if (cursor) {
+      console.log(currentPage)
+      await fetchQuestions(pages[currentPage][0].question_topic) // fetch next page
+      setCurrentPage(currentPage + 1)
+    }
+  }
+
+  //function to paginate backwards in memory
+  function handlePrev() {
+    console.log("Page before prev:", currentPage)
+
+    if (currentPage > 0) {
+      // Go backward in memory
+      setCurrentPage(currentPage - 1)
+
+      // Update cursor to the previous position if we're going back from the last page
+      if (currentPage === pages.length - 1) {
+        setCursor(cursorHistory[cursorHistory.length - 2])
+      }
     }
   }
 
@@ -76,17 +120,21 @@ export default function ExamBuilder() {
   }
 
   // Apply filters to questions
-  const filteredQuestions = questions.filter((question) => {
-    const difficultyMatch =
-      activeFilters.difficulty.length === 0 ||
-      activeFilters.difficulty.includes(question.difficulty)
+  const filteredQuestions = useMemo(() => {
+    if (!pages[currentPage]) return []
 
-    const typeMatch =
-      activeFilters.type.length === 0 ||
-      activeFilters.type.includes(question.type)
+    return pages[currentPage].filter((question) => {
+      const difficultyMatch =
+        activeFilters.difficulty.length === 0 ||
+        activeFilters.difficulty.includes(question.difficulty)
 
-    return difficultyMatch && typeMatch
-  })
+      const typeMatch =
+        activeFilters.type.length === 0 ||
+        activeFilters.type.includes(question.type)
+
+      return difficultyMatch && typeMatch
+    })
+  }, [pages, currentPage, activeFilters.difficulty, activeFilters.type])
 
   // Handle feedback submission
   const handleFeedbackSubmit = async (feedback: {
@@ -96,6 +144,14 @@ export default function ExamBuilder() {
   }) => {
     console.log("Feedback submitted:", feedback)
     // Here you would typically send the feedback to your backend
+  }
+
+  function handleTopicSelection(topic: string) {
+    setPages([])
+    setCursorHistory([])
+    setCursor(null)
+    setCurrentPage(0)
+    fetchQuestions(topic) // pass isnewtopic as a paramter
   }
 
   return (
@@ -109,7 +165,7 @@ export default function ExamBuilder() {
           </TabsList>
 
           <TabsContent value="topics" className="space-y-6">
-            <TopicSelector onSelectTopic={fetchQuestions} />
+            <TopicSelector onSelectTopic={handleTopicSelection} />
             <ExamSummary selectedQuestions={selectedQuestions} />
           </TabsContent>
 
@@ -139,11 +195,9 @@ export default function ExamBuilder() {
           loading={loading}
           onAddQuestion={addQuestion}
           selectedQuestionIds={selectedQuestions.map((q) => q.question_id)}
-          loadMore={() => {
-            if (cursor && questions.length > 0) {
-              fetchQuestions(questions[0].question_topic)
-            }
-          }}
+          handleNext={handleNext}
+          handlePrev={handlePrev}
+          firstPage={!currentPage}
           hasMore={!!cursor}
         />
 
