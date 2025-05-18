@@ -30,7 +30,7 @@ export default function TopicSelector({ onSelectTopic }: TopicSelectorProps) {
         <CardTitle>Topics</CardTitle>
       </CardHeader>
       <CardContent className="max-h-[400px] overflow-y-auto">
-        <div className="space-y-2">
+        <div className="space-y-2 ">
           {topicsData.map((mainTopic) => (
             <div key={mainTopic.id} className="border rounded-md">
               <button
@@ -46,7 +46,7 @@ export default function TopicSelector({ onSelectTopic }: TopicSelectorProps) {
               </button>
 
               {expandedTopics.includes(mainTopic.id) && (
-                <div className="p-3 pt-0 border-t">
+                <div className="p-3 pt-0 border-t max-h-64 overflow-y-auto">
                   <ul className="space-y-1">
                     {mainTopic.topics.map((subTopic) => (
                       <li key={subTopic.url}>
