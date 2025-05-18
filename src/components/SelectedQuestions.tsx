@@ -6,7 +6,6 @@ import { Badge } from "@/components/ui/badge"
 import { Trash2, MoveUp, MoveDown } from "lucide-react"
 import type { Question } from "./ExamBuilder"
 import { useState } from "react"
-import { MathJaxContext, MathJax } from "better-react-mathjax"
 
 type SelectedQuestionsProps = {
   questions: Question[]
@@ -100,29 +99,7 @@ export default function SelectedQuestions({
                 </div>
 
                 <div className="bg-muted p-3 rounded-md overflow-x-auto">
-                  <MathJaxContext
-                    config={{
-                      tex: {
-                        inlineMath: [
-                          ["$", "$"],
-                          ["\\(", "\\)"],
-                        ],
-                        displayMath: [
-                          ["$$", "$$"],
-                          ["\\[", "\\]"],
-                        ],
-                      },
-                      loader: { load: ["input/tex", "output/chtml"] },
-                    }}
-                  >
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: question.content
-                          .replace(/\$/g, "$$")
-                          .replace(/\$/g, "$$"),
-                      }}
-                    />
-                  </MathJaxContext>
+                  <div>{question.content}</div>
                 </div>
               </div>
             ))}
