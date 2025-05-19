@@ -33,7 +33,11 @@ ${questionPair}
 //Questions comes from server
 function createQuestions(questions) {
   const questionsContent = questions.map((question, index) => {
-    return formatQuestion(index + 1, question.answer, question.total_marks)
+    return formatQuestion(
+      index + 1,
+      question.model_answer,
+      question.total_marks
+    )
   })
 
   //console.log("successfully formatted questions", questionsContent)
