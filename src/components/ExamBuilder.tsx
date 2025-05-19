@@ -11,6 +11,7 @@ import FeedbackForm from "./FeedbackForm"
 import testQuestionsRaw from "../../backend/data/questions.json"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Question } from "@/types/questionType"
+import SelectedQuestionsMinimal from "./SelectedQuestionsMinimal"
 
 export type TopicData = {
   id: number
@@ -192,7 +193,11 @@ export default function ExamBuilder() {
           hasMore={!!cursor}
         />
 
-        <SelectedQuestions
+        {/* <SelectedQuestions
+          questions={selectedQuestions}
+          onRemoveQuestion={removeQuestion}
+        /> */}
+        <SelectedQuestionsMinimal
           questions={selectedQuestions}
           onRemoveQuestion={removeQuestion}
         />
