@@ -61,7 +61,7 @@ function groupQuestionsIntoFullPages(questions, formattedQuestions) {
   let currentTotal = 0
 
   for (let i = 0; i < questions.length; i++) {
-    const size = questions[i].ms_size
+    const size = questions[i].ma_size
     // console.log(`Question ${i + 1} is ${size}!`)
 
     // If the question is full page or more
@@ -113,25 +113,28 @@ function createPages(questionPair) {
   return finalExam
 }
 
-function generateMarkscheme(questions) {
+function generateWorkedSolutions(questions) {
   //console.log(questions)
 
   //console.log(singlePageQuestions)
 
   const formattedQuestions = createQuestions(questions)
 
-  console.log(`Formatted ${formattedQuestions.length} answers`)
+  console.log(`Formatted ${formattedQuestions.length} solutions`)
 
   const questionPages = groupQuestionsIntoFullPages(
     questions,
     formattedQuestions
   )
 
-  console.log(`Created ${questionPages.length} markscheme pages`)
+  console.log(`Created ${questionPages.length} solutions pages`)
 
   try {
     // Read the template
-    const templatePath = path.join(__dirname, "../templates/ms-template.tex")
+    const templatePath = path.join(
+      __dirname,
+      "../templates/solutions-template.tex"
+    )
     let template = fs.readFileSync(templatePath, "utf8")
 
     // Generate all pages with 2 questions per page
@@ -148,6 +151,6 @@ function generateMarkscheme(questions) {
 }
 
 module.exports = {
-  generateMarkscheme,
+  generateWorkedSolutions,
   formatQuestion,
 }

@@ -7,13 +7,14 @@ const tempQuestions = require("./data/questions.json")
 const db = require("./services/firebase")
 //const { generateQuestions } = require("./services/openai")
 const { generateExam } = require("./services/QPLatexGenerator")
+const { generateMarkscheme } = require("./services/MSLatexGenerator")
+const { generateWorkedSolutions } = require("./services/MALatexGenerator")
 
 // Middleware to parse JSON
 app.use(express.json())
 
 const cors = require("cors")
 const archiver = require("archiver")
-const { generateMarkscheme } = require("./services/MSLatexGenerator")
 app.use(cors())
 
 app.get("/", (req, res) => {
@@ -50,22 +51,27 @@ app.post("/api/generate-exam", async (req, res) => {
     fs.mkdirSync(tempDir)
 
     // --- Step 1: Generate LaTeX content ---
-    const examLatex = generateExam(questions) // You already have this
-    const markschemeLatex = generateMarkscheme(questions) // You'll need to create this function
+    const examLatex = generateExam(questions)
+    const markschemeLatex = generateMarkscheme(questions)
+    const solutionsLatex = generateWorkedSolutions(questions)
 
     const examTexPath = path.join(tempDir, "exam.tex")
     const markschemeTexPath = path.join(tempDir, "markscheme.tex")
+    const solutionsTexPath = path.join(tempDir, "solutions.tex")
 
     fs.writeFileSync(examTexPath, examLatex)
     fs.writeFileSync(markschemeTexPath, markschemeLatex)
+    fs.writeFileSync(solutionsTexPath, solutionsLatex)
 
     // --- Step 2: Compile LaTeX to PDF ---
     const examPdfPath = path.join(tempDir, "exam.pdf")
     const markschemePdfPath = path.join(tempDir, "markscheme.pdf")
+    const solutionsPdfPath = path.join(tempDir, "solutions.pdf")
 
     await Promise.all([
       compileLatexToPdf(examTexPath, examPdfPath),
       compileLatexToPdf(markschemeTexPath, markschemePdfPath),
+      compileLatexToPdf(solutionsTexPath, solutionsPdfPath),
     ])
 
     // --- Step 3: Create ZIP file ---
@@ -80,6 +86,7 @@ app.post("/api/generate-exam", async (req, res) => {
 
     archive.file(examPdfPath, { name: "exam.pdf" })
     archive.file(markschemePdfPath, { name: "markscheme.pdf" })
+    archive.file(solutionsPdfPath, { name: "worked-solutions.pdf" })
 
     archive.finalize()
 

@@ -18,22 +18,18 @@ async function addQuestionSizeToAllQuestions() {
     const data = doc.data()
 
     // Skip if already has question_size
-    if (data.question_size !== undefined) return
-
-    if (data.full_page) {
-      const questionSize = 1
-    }
+    if (data.ms_size !== undefined) return
 
     // You can customize how you calculate size. For now, set default.
-    const questionSize = 0.25
+    const markschemeSize = 0.15
 
     const docRef = questionsRef.doc(doc.id)
-    batch.update(docRef, { question_size: questionSize })
+    batch.update(docRef, { ms_size: markschemeSize })
     count++
   })
 
   await batch.commit()
-  console.log(`✅ Updated ${count} questions with question_size`)
+  console.log(`✅ Updated ${count} questions with ms_size`)
 }
 
 addQuestionSizeToAllQuestions().catch(console.error)
