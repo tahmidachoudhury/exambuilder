@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Plus, Loader2, ArrowRight, ArrowLeft } from "lucide-react"
-import type { Question } from "./ExamBuilder"
+import type { Question } from "@/types/questionType"
 import { useState } from "react"
 import QuestionSkeleton from "./QuestionSkeleton"
 

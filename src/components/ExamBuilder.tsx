@@ -8,21 +8,9 @@ import SelectedQuestions from "./SelectedQuestions"
 import ExamSummary from "./ExamSummary"
 import MaxMarksGenerator from "./MaxMarksGenerator"
 import FeedbackForm from "./FeedbackForm"
+import testQuestionsRaw from "../../backend/data/questions.json"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-
-// Types
-export type Question = {
-  question_id: string
-  answer: string
-  total_marks: number
-  topic: string
-  type: string
-  question_topic: string
-  difficulty: string
-  full_page: boolean
-  question_description: string
-  content: string
-}
+import { Question } from "@/types/questionType"
 
 export type TopicData = {
   id: number
@@ -32,6 +20,8 @@ export type TopicData = {
     url: string
   }[]
 }
+
+const testQuestions = testQuestionsRaw.questions as Question[]
 
 export default function ExamBuilder() {
   const [selectedQuestions, setSelectedQuestions] = useState<Question[]>([])
@@ -191,7 +181,8 @@ export default function ExamBuilder() {
 
       <div className="lg:col-span-2 space-y-6">
         <QuestionList
-          questions={filteredQuestions}
+          // questions={filteredQuestions}
+          questions={testQuestions}
           loading={loading}
           onAddQuestion={addQuestion}
           selectedQuestionIds={selectedQuestions.map((q) => q.question_id)}

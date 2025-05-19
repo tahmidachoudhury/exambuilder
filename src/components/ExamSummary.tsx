@@ -3,7 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Download, Loader2, Printer } from "lucide-react"
-import type { Question } from "./ExamBuilder"
+import type { Question } from "@/types/questionType"
 import { useState } from "react"
 import { toast } from "@/hooks/use-toast"
 
@@ -37,8 +37,8 @@ export default function ExamSummary({ selectedQuestions }: ExamSummaryProps) {
     setIsSubmitting(true)
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_GENERATE_EXAM_ENDPOINT_URL
-      // const apiUrl = "http://localhost:3002/api/generate-exam"
+      // const apiUrl = process.env.NEXT_PUBLIC_GENERATE_EXAM_ENDPOINT_URL
+      const apiUrl = "http://localhost:3002/api/generate-exam"
       if (!apiUrl) {
         throw new Error(
           "Backend API URL is not configured. Please check your environment variables."
