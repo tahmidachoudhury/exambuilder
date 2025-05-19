@@ -112,12 +112,12 @@ export default function SelectedQuestionsMinimal({
 
                       <div
                         title={
-                          question.type === "calculator"
+                          question.type === "calc"
                             ? "Calculator"
                             : "Non-Calculator"
                         }
                       >
-                        {question.type === "calculator" ? (
+                        {question.type === "calc" ? (
                           <Calculator className="h-4 w-4" />
                         ) : (
                           <Ban className="h-4 w-4" />
@@ -125,7 +125,7 @@ export default function SelectedQuestionsMinimal({
                       </div>
 
                       <Badge variant="secondary" className="text-xs">
-                        {question.total_marks}m
+                        [{question.total_marks}]
                       </Badge>
 
                       <Button
