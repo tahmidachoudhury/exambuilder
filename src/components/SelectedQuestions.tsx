@@ -3,9 +3,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Trash2, MoveUp, MoveDown } from "lucide-react"
+import { Trash2 } from "lucide-react"
 import type { Question } from "@/types/questionType"
-import { useState } from "react"
+// import { useState } from "react"
 
 type SelectedQuestionsProps = {
   questions: Question[]
@@ -16,12 +16,12 @@ export default function SelectedQuestions({
   questions,
   onRemoveQuestion,
 }: SelectedQuestionsProps) {
-  const [reordering, setReordering] = useState(false)
+  // const [reordering, setReordering] = useState(false)
 
   // This would be implemented if you want to add reordering functionality
-  const toggleReordering = () => {
-    setReordering(!reordering)
-  }
+  // const toggleReordering = () => {
+  //   setReordering(!reordering)
+  // }
 
   return (
     <Card>
@@ -55,7 +55,7 @@ export default function SelectedQuestions({
                     </p>
                   </div>
                   <div className="flex space-x-2">
-                    {reordering && (
+                    {/* {reordering && (
                       <>
                         <Button
                           size="icon"
@@ -72,7 +72,7 @@ export default function SelectedQuestions({
                           <MoveDown className="h-4 w-4" />
                         </Button>
                       </>
-                    )}
+                    )} */}
                     <Button
                       size="icon"
                       variant="destructive"

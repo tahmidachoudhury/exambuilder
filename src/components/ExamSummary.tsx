@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Download, Loader2, Printer } from "lucide-react"
+import { Download, Loader2 } from "lucide-react"
 import type { Question } from "@/types/questionType"
 import { useState } from "react"
 import { toast } from "@/hooks/use-toast"

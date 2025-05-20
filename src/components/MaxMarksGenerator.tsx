@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Wand2 } from "lucide-react"
-import type { Question } from "./ExamBuilder"
+import type { Question } from "@/types/questionType"
 
 type MaxMarksGeneratorProps = {
   questions: Question[]
@@ -18,7 +18,11 @@ type MaxMarksGeneratorProps = {
   }
 }
 
-export default function MaxMarksGenerator({ questions, addSelectedQuestions, activeFilters }: MaxMarksGeneratorProps) {
+export default function MaxMarksGenerator({
+  questions,
+  addSelectedQuestions,
+  activeFilters,
+}: MaxMarksGeneratorProps) {
   const [maxMarks, setMaxMarks] = useState<number>(50)
   const [balanceTopics, setBalanceTopics] = useState<boolean>(true)
 
@@ -29,11 +33,15 @@ export default function MaxMarksGenerator({ questions, addSelectedQuestions, act
     let filteredQuestions = [...questions]
 
     if (activeFilters.difficulty.length > 0) {
-      filteredQuestions = filteredQuestions.filter((q) => activeFilters.difficulty.includes(q.difficulty))
+      filteredQuestions = filteredQuestions.filter((q) =>
+        activeFilters.difficulty.includes(q.difficulty)
+      )
     }
 
     if (activeFilters.type.length > 0) {
-      filteredQuestions = filteredQuestions.filter((q) => activeFilters.type.includes(q.type))
+      filteredQuestions = filteredQuestions.filter((q) =>
+        activeFilters.type.includes(q.type)
+      )
     }
 
     if (filteredQuestions.length === 0) {
@@ -136,7 +144,11 @@ export default function MaxMarksGenerator({ questions, addSelectedQuestions, act
             <Label htmlFor="balance-topics">Balance topics evenly</Label>
           </div>
 
-          <Button onClick={generateRandomExam} disabled={questions.length === 0} className="w-full">
+          <Button
+            onClick={generateRandomExam}
+            disabled={questions.length === 0}
+            className="w-full"
+          >
             <Wand2 className="h-4 w-4 mr-2" />
             Generate Random Exam
           </Button>

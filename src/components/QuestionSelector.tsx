@@ -1,4 +1,4 @@
-import { useState } from "react"
+// import { useState } from "react"
 import { MultiSelect } from "@/components/ui/multi-select"
 import { truncate } from "@/app/admin/questions-table"
 import type { Question } from "@/types/questionType"
@@ -20,17 +20,9 @@ export function QuestionSelector({
   onSelect,
   selectedValues,
   onSelectedValuesChange,
-  setDropdownOpen,
 }: QuestionSelectorProps) {
   const displayedQuestions =
     filteredQuestions.length > 0 ? filteredQuestions : questions
-
-  const [isOpen, setIsOpen] = useState(false)
-
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen)
-    setDropdownOpen(!isOpen)
-  }
 
   const options = displayedQuestions.map((question) => ({
     label: `${question.question_id}: ${question.question_topic}`,
@@ -49,7 +41,6 @@ export function QuestionSelector({
   return (
     <div>
       <MultiSelect
-        onclick={toggleDropdown}
         options={options}
         selected={selectedValues}
         onChange={handleChange}

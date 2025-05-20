@@ -14,9 +14,8 @@ import {
 import type { Question } from "@/types/questionType"
 
 type SelectedQuestionsMinimalProps = {
-  questions?: Question[]
+  questions: Question[]
   onRemoveQuestion?: (questionId: string) => void
-  loading?: boolean
 }
 
 // Helper function to get difficulty color
@@ -38,7 +37,6 @@ const getDifficultyColor = (difficulty: string) => {
 export default function SelectedQuestionsMinimal({
   questions,
   onRemoveQuestion = (id) => console.log(`Remove question ${id}`),
-  loading = false,
 }: SelectedQuestionsMinimalProps) {
   const [expandedQuestions, setExpandedQuestions] = useState<string[]>([])
 
@@ -95,7 +93,7 @@ export default function SelectedQuestionsMinimal({
                       <div className="flex items-center">
                         <span className="font-medium mr-2">{index + 1}.</span>
                         <span className="text-sm font-medium truncate">
-                          {question.question_id}
+                          {question.question_topic}
                         </span>
                       </div>
                     </div>

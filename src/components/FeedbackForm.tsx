@@ -1,10 +1,22 @@
 "use client"
 
 import { useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardFooter,
+} from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Label } from "@/components/ui/label"
 import { StarIcon } from "lucide-react"
 import { toast } from "@/components/ui/use-toast"
@@ -74,7 +86,7 @@ export default function FeedbackForm({ onFeedbackSubmit }: FeedbackFormProps) {
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to submit feedback. Please try again.",
+        description: `Failed to submit feedback. Please try again.${error}`,
         variant: "destructive",
       })
     } finally {
@@ -108,9 +120,18 @@ export default function FeedbackForm({ onFeedbackSubmit }: FeedbackFormProps) {
           <Label>Rating</Label>
           <div className="flex space-x-1">
             {[1, 2, 3, 4, 5].map((star) => (
-              <button key={star} type="button" onClick={() => setRating(star)} className="focus:outline-none">
+              <button
+                key={star}
+                type="button"
+                onClick={() => setRating(star)}
+                className="focus:outline-none"
+              >
                 <StarIcon
-                  className={`h-6 w-6 ${rating >= star ? "text-yellow-400 fill-yellow-400" : "text-gray-300"}`}
+                  className={`h-6 w-6 ${
+                    rating >= star
+                      ? "text-yellow-400 fill-yellow-400"
+                      : "text-gray-300"
+                  }`}
                 />
               </button>
             ))}
@@ -129,7 +150,11 @@ export default function FeedbackForm({ onFeedbackSubmit }: FeedbackFormProps) {
         </div>
       </CardContent>
       <CardFooter>
-        <Button onClick={handleSubmit} disabled={isSubmitting} className="w-full">
+        <Button
+          onClick={handleSubmit}
+          disabled={isSubmitting}
+          className="w-full"
+        >
           {isSubmitting ? "Submitting..." : "Submit Feedback"}
         </Button>
       </CardFooter>
