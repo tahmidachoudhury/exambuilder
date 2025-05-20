@@ -6,6 +6,7 @@ import { Analytics } from "@vercel/analytics/react"
 import { AuthProvider } from "@/context/AuthContext"
 import { TabNavigation } from "@/components/TabNavigation"
 import Footer from "@/components/footer"
+import { ThemeProvider } from "@/components/theme-provider"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,15 +29,22 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <TabNavigation />
-        <AuthProvider>{children}</AuthProvider>
-        <Footer />
-        <Toaster />
-        <Analytics />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <TabNavigation />
+          <AuthProvider>{children}</AuthProvider>
+          <Footer />
+          <Toaster />
+          <Analytics />
+        </ThemeProvider>
       </body>
     </html>
   )

@@ -27,7 +27,7 @@ export function ExamDashboard() {
 
   useEffect(() => {
     fetchQuestions() // first page
-  }, [])
+  })
 
   const fetchQuestions = async (cursor?: string) => {
     if (isLoading || !hasMore) return

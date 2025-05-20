@@ -10,7 +10,6 @@ import {
   CommandGroup,
   CommandItem,
   CommandList,
-  CommandTitle,
 } from "@/components/ui/command"
 
 import {
@@ -71,7 +70,6 @@ export function TopicSelect({
       </PopoverTrigger>
       <PopoverContent className="w-full p-0">
         <Command>
-          <CommandTitle placeholder="GCSE Maths Topics" />
           <CommandList>
             <CommandEmpty>No item found.</CommandEmpty>
             <CommandGroup>
