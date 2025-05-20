@@ -2,9 +2,12 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { BookOpen, FileText, GalleryVerticalEnd } from "lucide-react"
+import { BookOpen, FileText, GalleryVerticalEnd, Moon, Sun } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { useTheme } from "next-themes"
 
 export function TabNavigation() {
+  const { theme, setTheme } = useTheme()
   const pathname = usePathname()
 
   const tabs = [
@@ -31,7 +34,7 @@ export function TabNavigation() {
             Maths Exam Builder.
           </h1>
 
-          <nav className="flex space-x-1">
+          <nav className="flex items-center gap-2">
             {tabs.map((tab) => {
               const isActive = pathname === tab.href
 
@@ -53,6 +56,15 @@ export function TabNavigation() {
                 </Link>
               )
             })}
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+            >
+              <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+              <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+              <span className="sr-only">Toggle theme</span>
+            </Button>
           </nav>
         </div>
       </div>

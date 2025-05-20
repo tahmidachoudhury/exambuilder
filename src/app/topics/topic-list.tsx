@@ -13,16 +13,13 @@ export default function TopicList({ topics }: TopicListProps) {
           key={category.id}
           className="border rounded-lg overflow-hidden shadow-sm"
         >
-          <div className="bg-gray-100 p-4 border-b">
-            <h2 className="text-xl font-semibold">
+          <div className="bg-primary p-4 border-b">
+            <h2 className="text-xl font-semibold text-primary-foreground">
               {category.id}. {category.name}
             </h2>
           </div>
           <div className="divide-y">
             {category.topics.map((topicObj, index) => {
-              {
-                console.log(topicObj.url)
-              }
               return (
                 <TopicItem
                   key={index}
