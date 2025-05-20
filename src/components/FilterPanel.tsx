@@ -3,7 +3,7 @@
 import type React from "react"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Checkbox } from "@/components/ui/checkbox"
+import { Checkbox } from "./ui/checkbox"
 import { Label } from "@/components/ui/label"
 
 type FilterPanelProps = {
@@ -19,7 +19,10 @@ type FilterPanelProps = {
   >
 }
 
-export default function FilterPanel({ activeFilters, setActiveFilters }: FilterPanelProps) {
+export default function FilterPanel({
+  activeFilters,
+  setActiveFilters,
+}: FilterPanelProps) {
   const difficulties = ["Grade 1-3", "Grade 4-5", "Grade 6-7", "Grade 8-9"]
 
   const paperTypes = ["calculator", "non-calc"]
@@ -73,7 +76,9 @@ export default function FilterPanel({ activeFilters, setActiveFilters }: FilterP
                     checked={activeFilters.difficulty.includes(difficulty)}
                     onCheckedChange={() => toggleDifficulty(difficulty)}
                   />
-                  <Label htmlFor={`difficulty-${difficulty}`}>{difficulty}</Label>
+                  <Label htmlFor={`difficulty-${difficulty}`}>
+                    {difficulty}
+                  </Label>
                 </div>
               ))}
             </div>
@@ -89,7 +94,9 @@ export default function FilterPanel({ activeFilters, setActiveFilters }: FilterP
                     checked={activeFilters.type.includes(type)}
                     onCheckedChange={() => toggleType(type)}
                   />
-                  <Label htmlFor={`type-${type}`}>{type === "non-calc" ? "Non-Calculator" : "Calculator"}</Label>
+                  <Label htmlFor={`type-${type}`}>
+                    {type === "non-calc" ? "Non-Calculator" : "Calculator"}
+                  </Label>
                 </div>
               ))}
             </div>
