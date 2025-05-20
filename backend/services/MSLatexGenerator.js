@@ -64,20 +64,6 @@ function groupQuestionsIntoFullPages(questions, formattedQuestions) {
     const size = questions[i].ms_size
     // console.log(`Question ${i + 1} is ${size}!`)
 
-    // If the question is full page or more
-    if (questions[i].full_page) {
-      //this makes sure any incomplete pages are pushed forward to "pages", and the full_page questions dont jump the queue
-      if (currentPage.length > 0) {
-        pages.push(currentPage.join("\n\n"))
-        currentPage = []
-        currentTotal = 0
-      }
-      // Full page question goes alone
-      pages.push(formattedQuestions[i])
-      // console.log(`Question ${i + 1} is a full page question!`)
-      continue
-    }
-
     // If it fits in the current page
     if (currentTotal + size <= 1) {
       currentPage.push(formattedQuestions[i])

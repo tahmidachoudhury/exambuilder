@@ -1,3 +1,84 @@
 {
-  "questions": []
+  "questions": [
+    {
+      "question_id": "1.21.1",
+      "answer": "$$ 3 \\times 2.54 = 7.62 $$ cm \\hfill (1)\n\n\\vspace{0.3cm}\n$$ 50 \\div 2.54 = 19.69 $$ inches \\hfill (2)\n\\vspace{0.3cm}",
+      "ms_size": 0.05,
+      "total_marks": 3,
+      "topic": "Number",
+      "type": "calc",
+      "question_size": 1,
+      "model_answer": "\\textbf{Part (a)}\n\n\\qquad Multiply by the scale factor from inches to cm:\n\n$$ 3 \\times 2.54 = 7.62 $$ cm \\hfill (1)\n\n\\vspace{0.3cm}\n\\textbf{Part (b)}\n\n\\qquad Divide by the scale factor from cm to inches:\n\n$$ 50 \\div 2.54 = 19.69 $$ inches \\hfill (2)\n\\vspace{0.3cm}",
+      "ma_size": 0.15,
+      "question_topic": "Conversions and Units",
+      "difficulty": "Grade 1-3",
+      "full_page": true,
+      "question_description": "Convert between inches and cm using a graph.",
+      "content": "You can use this graph to change between inches and cm.\n\n\\begin{center}\n\\begin{tikzpicture}[scale=0.5]\n\n  \\draw[step=0.5cm, very thin, gray!50] (0,0) grid (20,28);\n  \\draw[step=4cm, thick, gray!80] (0,0) grid (20,28);\n  \\draw[->, thick] (0,0) -- (0,29);\n  \\draw[->, thick] (0,0) -- (21,0);\n\n  \\node at (-3,14.5) {\\text{cm}};\n  \\node at (10.5,-2.4) {\\text{inches}};\n\n  \\draw[thick] (0,0) -- (20,50.8);\n\n\\end{tikzpicture}\n\\end{center}\n\n\\begin{enumerate}\n  \\item[(a)] Change 3 inches to cm \n\n  \\vspace{1cm}\n  \\hfill \\makebox[5cm]{\\dotfill} cm \n  \\hfill (1)\n\n  \\item[(b)] Change 50 cm to inches \n\n  \\vspace{2cm}\n  \\hfill \\makebox[5cm]{\\dotfill} inches \n  \\hfill (2)\n\\end{enumerate}\n"
+    },
+    {
+      "question_id": "1.21.2",
+      "answer": "$$ 7 \\times 6.35 = 44.45 $$ kilograms \\hfill (1)\n\n\\vspace{0.3cm}\n$$ 100 \\div 6.35 = 15.75 $$ stones \\hfill (2)\n\\vspace{0.3cm}",
+      "ms_size": 0.05,
+      "total_marks": 3,
+      "topic": "Number",
+      "type": "calc",
+      "question_size": 1,
+      "model_answer": "\\textbf{Part (a)}\n\n\\qquad Multiply by the scale factor from stones to kilograms:\n\n$$ 7 \\times 6.35 = 44.45 $$ kilograms \\hfill (1)\n\n\\vspace{0.3cm}\n\\textbf{Part (b)}\n\n\\qquad Divide by the scale factor from kilograms to stones:\n\n$$ 100 \\div 6.35 = 15.75 $$ stones \\hfill (2)\n\\vspace{0.3cm}",
+      "ma_size": 0.15,
+      "question_topic": "Conversions and Units",
+      "difficulty": "Grade 1-3",
+      "full_page": true,
+      "question_description": "Convert between stones and kilograms using a graph.",
+      "content": "You can use this graph to change between stones and kilograms.\n\n\\begin{center}\n\\begin{tikzpicture}[scale=0.5]\n\n  \\draw[step=0.5cm, very thin, gray!50] (0,0) grid (20,28);\n  \\draw[step=4cm, thick, gray!80] (0,0) grid (20,28);\n  \\draw[->, thick] (0,0) -- (0,29);\n  \\draw[->, thick] (0,0) -- (21,0);\n\n  \\node at (-3,14.5) {\\text{kg}};\n  \\node at (10.5,-2.4) {\\text{stones}};\n\n  \\draw[thick] (0,0) -- (20,127.0);\n\n\\end{tikzpicture}\n\\end{center}\n\n\\begin{enumerate}\n  \\item[(a)] Change 7 stones to kilograms \n\n  \\vspace{1cm}\n  \\hfill \\makebox[5cm]{\\dotfill} kilograms \n  \\hfill (1)\n\n  \\item[(b)] Change 100 kilograms to stones \n\n  \\vspace{2cm}\n  \\hfill \\makebox[5cm]{\\dotfill} stones \n  \\hfill (2)\n\\end{enumerate}\n"
+    },
+    {
+      "question_id": "1.21.3",
+      "answer": "$$ 12 \\times 0.3048 = 3.66 $$ metres \\hfill (1)\n\n\\vspace{0.3cm}\n$$ 25 \\div 0.3048 = 82.02 $$ feet \\hfill (2)\n\\vspace{0.3cm}",
+      "ms_size": 0.05,
+      "total_marks": 3,
+      "topic": "Number",
+      "type": "calc",
+      "question_size": 1,
+      "model_answer": "\\textbf{Part (a)}\n\n\\qquad Multiply by the scale factor from feet to metres:\n\n$$ 12 \\times 0.3048 = 3.66 $$ metres \\hfill (1)\n\n\\vspace{0.3cm}\n\\textbf{Part (b)}\n\n\\qquad Divide by the scale factor from metres to feet:\n\n$$ 25 \\div 0.3048 = 82.02 $$ feet \\hfill (2)\n\\vspace{0.3cm}",
+      "ma_size": 0.15,
+      "question_topic": "Conversions and Units",
+      "difficulty": "Grade 1-3",
+      "full_page": true,
+      "question_description": "Convert between feet and metres using a graph.",
+      "content": "You can use this graph to change between feet and metres.\n\n\\begin{center}\n\\begin{tikzpicture}[scale=0.5]\n\n  \\draw[step=0.5cm, very thin, gray!50] (0,0) grid (20,28);\n  \\draw[step=4cm, thick, gray!80] (0,0) grid (20,28);\n  \\draw[->, thick] (0,0) -- (0,29);\n  \\draw[->, thick] (0,0) -- (21,0);\n\n  \\node at (-3,14.5) {\\text{m}};\n  \\node at (10.5,-2.4) {\\text{feet}};\n\n  \\draw[thick] (0,0) -- (20,6.1);\n\n\\end{tikzpicture}\n\\end{center}\n\n\\begin{enumerate}\n  \\item[(a)] Change 12 feet to metres \n\n  \\vspace{1cm}\n  \\hfill \\makebox[5cm]{\\dotfill} metres \n  \\hfill (1)\n\n  \\item[(b)] Change 25 metres to feet \n\n  \\vspace{2cm}\n  \\hfill \\makebox[5cm]{\\dotfill} feet \n  \\hfill (2)\n\\end{enumerate}\n"
+    },
+    {
+      "question_id": "1.21.4",
+      "answer": "$$ 15 \\times 1.75975 = 26.4 $$ pints \\hfill (1)\n\n\\vspace{0.3cm}\n$$ 70 \\div 1.75975 = 39.78 $$ litres \\hfill (2)\n\\vspace{0.3cm}",
+      "ms_size": 0.05,
+      "total_marks": 3,
+      "topic": "Number",
+      "type": "calc",
+      "question_size": 1,
+      "model_answer": "\\textbf{Part (a)}\n\n\\qquad Multiply by the scale factor from litres to pints:\n\n$$ 15 \\times 1.75975 = 26.4 $$ pints \\hfill (1)\n\n\\vspace{0.3cm}\n\\textbf{Part (b)}\n\n\\qquad Divide by the scale factor from pints to litres:\n\n$$ 70 \\div 1.75975 = 39.78 $$ litres \\hfill (2)\n\\vspace{0.3cm}",
+      "ma_size": 0.15,
+      "question_topic": "Conversions and Units",
+      "difficulty": "Grade 1-3",
+      "full_page": true,
+      "question_description": "Convert between litres and pints using a graph.",
+      "content": "You can use this graph to change between litres and pints.\n\n\\begin{center}\n\\begin{tikzpicture}[scale=0.5]\n\n  \\draw[step=0.5cm, very thin, gray!50] (0,0) grid (20,28);\n  \\draw[step=4cm, thick, gray!80] (0,0) grid (20,28);\n  \\draw[->, thick] (0,0) -- (0,29);\n  \\draw[->, thick] (0,0) -- (21,0);\n\n  \\node at (-3,14.5) {\\text{pints}};\n  \\node at (10.5,-2.4) {\\text{litres}};\n\n  \\draw[thick] (0,0) -- (20,35.2);\n\n\\end{tikzpicture}\n\\end{center}\n\n\\begin{enumerate}\n  \\item[(a)] Change 15 litres to pints \n\n  \\vspace{1cm}\n  \\hfill \\makebox[5cm]{\\dotfill} pints \n  \\hfill (1)\n\n  \\item[(b)] Change 70 pints to litres \n\n  \\vspace{2cm}\n  \\hfill \\makebox[5cm]{\\dotfill} litres \n  \\hfill (2)\n\\end{enumerate}\n"
+    },
+    {
+      "question_id": "1.21.5",
+      "answer": "$$ 10 \\times 1.60934 = 16.09 $$ kilometres \\hfill (1)\n\n\\vspace{0.3cm}\n$$ 30 \\div 1.60934 = 18.64 $$ miles \\hfill (2)\n\\vspace{0.3cm}",
+      "ms_size": 0.05,
+      "total_marks": 3,
+      "topic": "Number",
+      "type": "calc",
+      "question_size": 1,
+      "model_answer": "\\textbf{Part (a)}\n\n\\qquad Multiply by the scale factor from miles to kilometres:\n\n$$ 10 \\times 1.60934 = 16.09 $$ kilometres \\hfill (1)\n\n\\vspace{0.3cm}\n\\textbf{Part (b)}\n\n\\qquad Divide by the scale factor from kilometres to miles:\n\n$$ 30 \\div 1.60934 = 18.64 $$ miles \\hfill (2)\n\\vspace{0.3cm}",
+      "ma_size": 0.15,
+      "question_topic": "Conversions and Units",
+      "difficulty": "Grade 1-3",
+      "full_page": true,
+      "question_description": "Convert between miles and kilometres using a graph.",
+      "content": "You can use this graph to change between miles and kilometres.\n\n\\begin{center}\n\\begin{tikzpicture}[scale=0.5]\n\n  \\draw[step=0.5cm, very thin, gray!50] (0,0) grid (20,28);\n  \\draw[step=4cm, thick, gray!80] (0,0) grid (20,28);\n  \\draw[->, thick] (0,0) -- (0,29);\n  \\draw[->, thick] (0,0) -- (21,0);\n\n  \\node at (-3,14.5) {\\text{km}};\n  \\node at (10.5,-2.4) {\\text{miles}};\n\n  \\draw[thick] (0,0) -- (20,32.2);\n\n\\end{tikzpicture}\n\\end{center}\n\n\\begin{enumerate}\n  \\item[(a)] Change 10 miles to kilometres \n\n  \\vspace{1cm}\n  \\hfill \\makebox[5cm]{\\dotfill} kilometres \n  \\hfill (1)\n\n  \\item[(b)] Change 30 kilometres to miles \n\n  \\vspace{2cm}\n  \\hfill \\makebox[5cm]{\\dotfill} miles \n  \\hfill (2)\n\\end{enumerate}\n"
+    }
+  ]
 }
