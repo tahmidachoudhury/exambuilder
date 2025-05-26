@@ -54,7 +54,7 @@ export const topics: TopicCategory[] = [
       { topic: "Standard Form", url: "standard-form.php" },
       {
         topic: "Compound Interest and Depreciation",
-        url: "compound-shapes.php",
+        url: "compound-interest.php",
       },
       { topic: "Surds", url: "surds.php" },
       { topic: "Indices", url: "indices.php" },
