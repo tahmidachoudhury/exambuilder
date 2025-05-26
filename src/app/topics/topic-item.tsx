@@ -21,7 +21,7 @@ export default function TopicItem({
       href={finalurl}
       target="_blank"
       rel="noopener noreferrer"
-      className="p-4 flex items-center justify-between hover:bg-gray-50 transition-colors group"
+      className="p-4 flex items-center justify-between hover:bg-secondary transition-colors group"
     >
       <div className="flex items-baseline">
         <span className="text-gray-500 w-12 font-mono">
