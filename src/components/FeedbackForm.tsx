@@ -150,12 +150,15 @@ export default function FeedbackForm({ onFeedbackSubmit }: FeedbackFormProps) {
         </div>
       </CardContent>
       <CardFooter>
-        <Button
+        {/* <Button
           onClick={handleSubmit}
           disabled={isSubmitting}
           className="w-full"
         >
           {isSubmitting ? "Submitting..." : "Submit Feedback"}
+        </Button> */}
+        <Button disabled={true} className="w-full">
+          Submit Feedback
         </Button>
       </CardFooter>
     </Card>
