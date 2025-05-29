@@ -33,7 +33,7 @@ export default function Footer() {
       </div>
 
       {/* Copyright and disclaimer */}
-      <div className="text-center text-sm text-gray-500">
+      <div className="text-center text-sm text-primary-foreground">
         Copyright Tacknowledge © {currentYear}. The questions are modeled after
         past exam papers and are intended for practice purposes only. They may
         not appear in your actual exam.

@@ -22,14 +22,10 @@ async function updateQuestionTopics() {
     const questionId = doc.id
 
     // Check if the question ID matches our pattern (1.17.1 through 1.17.20)
-    if (
-      questionId.startsWith("1.17.") &&
-      parseInt(questionId.substring(5)) >= 1 &&
-      parseInt(questionId.substring(5)) <= 20
-    ) {
+    if (questionId.startsWith("2.1.")) {
       // Update to the correct topic
       const docRef = questionsRef.doc(questionId)
-      batch.update(docRef, { question_topic: "Reverse Percentages" })
+      batch.update(docRef, { topic: "Algebra" })
       count++
     }
   })
