@@ -146,7 +146,8 @@ export default function MaxMarksGenerator({
 
           <Button
             onClick={generateRandomExam}
-            disabled={questions.length === 0}
+            // disabled={questions.length === 0}
+            disabled={true}
             className="w-full"
           >
             <Wand2 className="h-4 w-4 mr-2" />
