@@ -1,36 +1,35 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Maths Exam Builder
 
-## Getting Started
+A lightweight exam-building tool designed for tutors and teachers to generate GCSE-style maths exams. Select from a curated question bank and generate clean, printable PDFs using LaTeX formatting.
 
-First, run the development server:
+This project was born out of a real need I experienced as a maths tutor — I often wanted to create structured, exam-style papers for my students but couldn’t find a tool that was simple, fast, and free-to-use. So I built one. Now, I can generate tailored practice exams for my students in just a few clicks and I hope to scale it so teachers and educators across the UK can use it too.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Select from a fixed set of GCSE-style maths questions
+- Automatically compiles the selection into a structured LaTeX exam paper
+- Generates downloadable PDFs for printing or digital use
+- Simple, tutor-focused user interface
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+- Frontend: Next.js (App Router), TypeScript
+- Backend: Node.js, Firebase Admin SDK (Base64 encoded)
+- PDF Generation: LaTeX installed through Docker
+- Deployment: Frontend on Vercel, Backend on Digital Ocean
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Planned Improvements
 
-## Deploy on Vercel
+- Drag-and-drop question ordering
+- Add custom questions manually
+- Exam history and saving for logged-in users
+- Deploy on AWS for cost-effective hosting
+- Use Kubernetes for scalable container management
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+View the project on my portfolio: [tahmidchoudhury.uk/projects/exambuilder](https://tahmidchoudhury.uk/projects/exambuilder)
