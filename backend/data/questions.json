@@ -1,3 +1,36 @@
 {
-  "questions": []
+  "questions": [
+    {
+      "question_id": "2.26.1",
+      "answer": "$$(x + 5)^2 - 23$$",
+      "ms_size": 0.125,
+      "total_marks": 3,
+      "topic": "Algebra",
+      "type": "calc",
+      "question_size": 0.5,
+      "model_answer": "(a) Start with the expression: \n\n$$x^2 + 10x + 2$$\n\nUse the identity:\n\n$$(x + \\dfrac{b}{2})^2 = x^2 + bx + \\left(\\dfrac{b}{2}\\right)^2$$\n\nApply it with $$b = 10$$:\n\n$$x^2 + 10x + 2 = (x + \\dfrac{10}{2})^2 - (\\dfrac{10}{2})^2 + 2$$\n\n$$= (x + 5)^2 - 25 + 2$$\n\n$$= (x + 5)^2 - 23$$ \\hfill (2)\n\n(b) The turning point of a quadratic in the form $$y = (x + a)^2 + b$$ is at $$(-a, b)$$\n\nSo for $$y = (x + 5)^2 - 23$$, the turning point is $$(-5, -23)$$ \\hfill (1)",
+      "ma_size": 0.3,
+      "question_topic": "Completing the Square",
+      "difficulty": "Grade 8-9",
+      "full_page": false,
+      "question_description": "Convert a quadratic expression into completed square form and identify the turning point of the graph.",
+      "content": "(a) Write $$x^2 + 10x + 2$$ in the form $$(x + a)^2 + b$$ where $$a$$ and $$b$$ are integers. \n\n\\vspace{7cm}\n\n\\hfill \\makebox[6cm]{\\dotfill}\n\n\\hfill (2)\n\n\\vspace{0.3cm}\n\n(b) Hence, or otherwise, write down the coordinates of the turning point of the graph of $$y = x^2 + 10x + 2$$\n\n\\vspace{2cm}\n\n\\hfill \\makebox[4cm]{\\dotfill}\n\n\\hfill (1)"
+    },
+    {
+      "question_id": "2.26.2",
+      "answer": "$$(x - 3)^2 + 16$$",
+      "ms_size": 0.125,
+      "total_marks": 3,
+      "topic": "Algebra",
+      "type": "calc",
+      "question_size": 0.3,
+      "model_answer": "(a) Start with the expression: \n\n$$x^2 - 6x + 25$$\n\nUse the identity:\n\n$$(x + \\dfrac{b}{2})^2 = x^2 + bx + \\left(\\dfrac{b}{2}\\right)^2$$\n\nApply it with $$b = -6$$:\n\n$$x^2 - 6x + 25 = (x + \\dfrac{-6}{2})^2 - \\left(\\dfrac{-6}{2}\\right)^2 + 25$$\n\n$$= (x - 3)^2 - 9 + 25$$\n\n$$= (x - 3)^2 + 16$$ \\hfill (2)\n\n(b) The turning point of a quadratic in the form $$y = (x + a)^2 + b$$ is at $$(-a, b)$$\n\nSo for $$y = (x - 3)^2 + 16$$, the turning point is $$(3, 16)$$ \\hfill (1)",
+      "ma_size": 0.2,
+      "question_topic": "Completing the Square",
+      "difficulty": "Grade 8-9",
+      "full_page": false,
+      "question_description": "Convert a quadratic expression into completed square form and identify the turning point of the graph.",
+      "content": "(a) Write $$x^2 - 6x + 25$$ in the form $$(x + a)^2 + b$$ where $$a$$ and $$b$$ are integers. \n\n\\vspace{7cm}\n\n\\hfill \\makebox[6cm]{\\dotfill}\n\n\\hfill (2)\n\n\\vspace{0.3cm}\n\n(b) Hence, or otherwise, write down the coordinates of the turning point of the graph of $$y = x^2 - 6x + 25$$\n\n\\vspace{2cm}\n\n\\hfill \\makebox[4cm]{\\dotfill}\n\n\\hfill (1)"
+    }
+  ]
 }
