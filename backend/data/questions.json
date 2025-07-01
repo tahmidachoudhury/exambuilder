@@ -1,36 +1,36 @@
 {
   "questions": [
     {
-      "question_id": "2.26.1",
-      "answer": "$$(x + 5)^2 - 23$$",
+      "question_id": "4.1.1",
       "ms_size": 0.125,
-      "total_marks": 3,
-      "topic": "Algebra",
-      "type": "calc",
-      "question_size": 0.5,
-      "model_answer": "(a) Start with the expression: \n\n$$x^2 + 10x + 2$$\n\nUse the identity:\n\n$$(x + \\dfrac{b}{2})^2 = x^2 + bx + \\left(\\dfrac{b}{2}\\right)^2$$\n\nApply it with $$b = 10$$:\n\n$$x^2 + 10x + 2 = (x + \\dfrac{10}{2})^2 - (\\dfrac{10}{2})^2 + 2$$\n\n$$= (x + 5)^2 - 25 + 2$$\n\n$$= (x + 5)^2 - 23$$ \\hfill (2)\n\n(b) The turning point of a quadratic in the form $$y = (x + a)^2 + b$$ is at $$(-a, b)$$\n\nSo for $$y = (x + 5)^2 - 23$$, the turning point is $$(-5, -23)$$ \\hfill (1)",
+      "total_marks": 1,
+      "topic": "Geometry and Measures",
+      "type": "non-calc",
+      "question_size": 0.45,
+      "model_answer": "Use a ruler to draw a straight baseline.\n\nPlace the protractor's centre point at one end of the line.\n\nAlign the 0° mark of the protractor with the baseline.\n\nMark a point at the 60° mark on the scale.\n\nRemove the protractor and draw a line from the centre to the 60° mark.\n\nLabel the angle as \\( A \\). $$\\implies$$ Accurate 60° angle drawn with protractor.\n\n\\hfill (1)",
+      "answer": "60° angle with correct label",
       "ma_size": 0.3,
-      "question_topic": "Completing the Square",
-      "difficulty": "Grade 8-9",
+      "question_topic": "Angles",
+      "difficulty": "Grade 1-3",
       "full_page": false,
-      "question_description": "Convert a quadratic expression into completed square form and identify the turning point of the graph.",
-      "content": "(a) Write $$x^2 + 10x + 2$$ in the form $$(x + a)^2 + b$$ where $$a$$ and $$b$$ are integers. \n\n\\vspace{7cm}\n\n\\hfill \\makebox[6cm]{\\dotfill}\n\n\\hfill (2)\n\n\\vspace{0.3cm}\n\n(b) Hence, or otherwise, write down the coordinates of the turning point of the graph of $$y = x^2 + 10x + 2$$\n\n\\vspace{2cm}\n\n\\hfill \\makebox[4cm]{\\dotfill}\n\n\\hfill (1)"
+      "question_description": "Students are assessed on their ability to construct and label a 60° angle accurately using a protractor.",
+      "content": "In the space below draw an angle of 60°\n\n\\qquad Label the angle A. \n\n\\vspace{8cm}"
     },
     {
-      "question_id": "2.26.2",
-      "answer": "$$(x - 3)^2 + 16$$",
+      "question_id": "4.1.2",
       "ms_size": 0.125,
-      "total_marks": 3,
-      "topic": "Algebra",
-      "type": "calc",
-      "question_size": 0.3,
-      "model_answer": "(a) Start with the expression: \n\n$$x^2 - 6x + 25$$\n\nUse the identity:\n\n$$(x + \\dfrac{b}{2})^2 = x^2 + bx + \\left(\\dfrac{b}{2}\\right)^2$$\n\nApply it with $$b = -6$$:\n\n$$x^2 - 6x + 25 = (x + \\dfrac{-6}{2})^2 - \\left(\\dfrac{-6}{2}\\right)^2 + 25$$\n\n$$= (x - 3)^2 - 9 + 25$$\n\n$$= (x - 3)^2 + 16$$ \\hfill (2)\n\n(b) The turning point of a quadratic in the form $$y = (x + a)^2 + b$$ is at $$(-a, b)$$\n\nSo for $$y = (x - 3)^2 + 16$$, the turning point is $$(3, 16)$$ \\hfill (1)",
-      "ma_size": 0.2,
-      "question_topic": "Completing the Square",
-      "difficulty": "Grade 8-9",
+      "total_marks": 1,
+      "topic": "Geometry and Measures",
+      "type": "non-calc",
+      "question_size": 0.45,
+      "model_answer": "Use a ruler to draw a straight baseline.\n\nPlace the protractor’s centre at one end of the line.\n\nAlign the 0° mark of the protractor with the baseline.\n\nMark the point at 135° using the outer scale.\n\nRemove the protractor and connect the centre to the mark.\n\nLabel the angle as \\( A \\). $$\\implies$$ Accurate 135° angle drawn with protractor.\n\n\\hfill (1)",
+      "answer": "135° angle with correct label",
+      "ma_size": 0.3,
+      "question_topic": "Angles",
+      "difficulty": "Grade 1-3",
       "full_page": false,
-      "question_description": "Convert a quadratic expression into completed square form and identify the turning point of the graph.",
-      "content": "(a) Write $$x^2 - 6x + 25$$ in the form $$(x + a)^2 + b$$ where $$a$$ and $$b$$ are integers. \n\n\\vspace{7cm}\n\n\\hfill \\makebox[6cm]{\\dotfill}\n\n\\hfill (2)\n\n\\vspace{0.3cm}\n\n(b) Hence, or otherwise, write down the coordinates of the turning point of the graph of $$y = x^2 - 6x + 25$$\n\n\\vspace{2cm}\n\n\\hfill \\makebox[4cm]{\\dotfill}\n\n\\hfill (1)"
+      "question_description": "Students are asked to construct a 135° angle using a protractor and label it accurately.",
+      "content": "In the space below draw an angle of 135°\n\n\\qquad Label the angle A. \n\n\\vspace{8cm}"
     }
   ]
 }

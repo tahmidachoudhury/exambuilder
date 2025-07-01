@@ -12,6 +12,8 @@ const db = admin.firestore()
 async function seedQuestions() {
   const batch = db.batch() // Use batch for efficiency
 
+  const questionArray = questions.questions
+
   questions.questions.forEach((q) => {
     const docRef = db.collection("questions").doc(q.question_id)
     batch.set(docRef, {
@@ -21,7 +23,7 @@ async function seedQuestions() {
   })
 
   await batch.commit()
-  console.log("✅ All questions seeded to Firestore!")
+  console.log(`✅ ${questionArray.length} questions seeded to Firestore!`)
 }
 
 seedQuestions().catch((err) => {
