@@ -1,0 +1,62 @@
+[
+  {
+    "question_id": "4.24.1",
+    "ms_size": 0.125,
+    "total_marks": 2,
+    "topic": "Geometry and Measures",
+    "type": "non-calc",
+    "question_size": 0.6,
+    "model_answer": "\\textbf{Step 1: Identify the transformation:} \\\\\nThis is a translation. \\\\ \n\\hfill (1)\n\n\\textbf{Step 2: State the vector of translation:} \\\\\nEach vertex of shape A has been translated 4 units right and 6 units down. \\\\\n$$\\text{Translation by vector } \\begin{pmatrix} 4 \\\\ -6 \\end{pmatrix}$$\n\\hfill (1)",
+    "answer": "Translation by vector \\( \\begin{pmatrix} 4 \\\\ -6 \\end{pmatrix} \\)",
+    "ma_size": 0.3,
+    "question_topic": "Translations",
+    "difficulty": "Grade 1-3",
+    "full_page": false,
+    "question_description": "Describes a translation of shape A onto shape B using a vector with both horizontal and vertical movement.",
+    "content": "\\begin{center}\n\\begin{tikzpicture}[scale=1]\n\n  % Grid\n  \\draw[very thin, color=gray!40] (-5,-5) grid (5,5);\n\n  % Axes\n  \\draw[->, thick] (-5.5,0)--(5.5,0) node[right] { $x$};\n  \\draw[->, thick] (0,-5.5)--(0,5.5) node[above] { $y$};\n\n  % Tick labels\n  \\foreach \\x in {-5,-4,...,5} {\n    \\ifnum\\x=0\\else\n      \\node at (\\x,-0.4) { \\x};\n    \\fi\n  }\n\n  \\foreach \\y in {-5,-4,...,5} {\n    \\ifnum\\y=0\\else\n      \\node at (-0.4,\\y) { \\y};\n    \\fi\n  }\n\n  \\node at (-0.4, -0.4) {\\small $O$};\n\n  % Original shape\n  \\draw[fill=gray!50, fill opacity=0.5, draw=black] (-3,1) -- (-2,1) -- (-1,2) -- (-2,3) -- (-3,3) -- cycle;\n  \\node at (-2.2,2) {\\textbf{A}};\n\n  % Translated shape\n  \\draw[fill=gray!50, fill opacity=0.5, draw=black] (1,-5) -- (2,-5) -- (3,-4) -- (2,-3) -- (1,-3) -- cycle;\n  \\node at (1.8,-4) {\\textbf{B}};\n\n\\end{tikzpicture}\n\\end{center}\n\n\\qquad Describe fully the single transformation that maps shape A on shape B. \n\n\\vspace{0.5cm}\n\n\\dotfill\n\n\\vspace{0.5cm}\n\n\\dotfill",
+    "createdAt": {
+      "_seconds": 1752407496,
+      "_nanoseconds": 91000000
+    }
+  },
+  {
+    "question_id": "4.24.2",
+    "ms_size": 0.125,
+    "total_marks": 2,
+    "topic": "Geometry and Measures",
+    "type": "non-calc",
+    "question_size": 0.6,
+    "model_answer": "\\textbf{Step 1: Identify the transformation:} \\\\\nThis is a translation. \\\\ \n\\hfill (1)\n\n\\textbf{Step 2: State the vector of translation:} \\\\\nEach vertex of shape A has been translated 3 units left and 4 units up. \\\\\n$$\\text{Translation by vector } \\begin{pmatrix} -3 \\\\ 4 \\end{pmatrix}$$\n\\hfill (1)",
+    "answer": "Translation by vector \\( \\begin{pmatrix} -3 \\\\ 4 \\end{pmatrix} \\)",
+    "ma_size": 0.3,
+    "question_topic": "Translations",
+    "difficulty": "Grade 1-3",
+    "full_page": false,
+    "question_description": "Identifies and describes the translation of shape A onto shape B using a negative horizontal and positive vertical vector.",
+    "content": "\\begin{center}\n\\begin{tikzpicture}[scale=1]\n\n  % Grid\n  \\draw[very thin, color=gray!40] (-5,-5) grid (5,5);\n\n  % Axes\n  \\draw[->, thick] (-5.5,0)--(5.5,0) node[right] { $x$};\n  \\draw[->, thick] (0,-5.5)--(0,5.5) node[above] { $y$};\n\n  % Tick labels\n  \\foreach \\x in {-5,-4,...,5} {\n    \\ifnum\\x=0\\else\n      \\node at (\\x,-0.4) { \\x};\n    \\fi\n  }\n\n  \\foreach \\y in {-5,-4,...,5} {\n    \\ifnum\\y=0\\else\n      \\node at (-0.4,\\y) { \\y};\n    \\fi\n  }\n\n  \\node at (-0.4, -0.4) {\\small $O$};\n\n  % Original shape A\n  \\draw[fill=gray!50, fill opacity=0.5, draw=black] (2,-4) -- (3,-4) -- (4,-3) -- (3,-2) -- (2,-2) -- cycle;\n  \\node at (3.2,-3) {\\textbf{A}};\n\n  % Translated shape B\n  \\draw[fill=gray!50, fill opacity=0.5, draw=black] (-1,0) -- (0,0) -- (1,1) -- (0,2) -- (-1,2) -- cycle;\n  \\node at (0.2,1) {\\textbf{B}};\n\n\\end{tikzpicture}\n\\end{center}\n\n\\qquad Describe fully the single transformation that maps shape A on shape B. \n\n\\vspace{0.5cm}\n\n\\dotfill\n\n\\vspace{0.5cm}\n\n\\dotfill",
+    "createdAt": {
+      "_seconds": 1752407496,
+      "_nanoseconds": 91000000
+    }
+  },
+  {
+    "question_id": "4.24.3",
+    "ms_size": 0.125,
+    "total_marks": 2,
+    "topic": "Geometry and Measures",
+    "type": "non-calc",
+    "question_size": 0.6,
+    "model_answer": "\\textbf{Step 1: Identify the transformation:} \\\\\nThis is a translation. \\\\ \n\\hfill (1)\n\n\\textbf{Step 2: State the vector of translation:} \\\\\nEach vertex of shape A has been translated 4 units right and 5 units down. \\\\\n$$\\text{Translation by vector } \\begin{pmatrix} 4 \\\\ -5 \\end{pmatrix}$$\n\\hfill (1)",
+    "answer": "Translation by vector \\( \\begin{pmatrix} 4 \\\\ -5 \\end{pmatrix} \\)",
+    "ma_size": 0.3,
+    "question_topic": "Translations",
+    "difficulty": "Grade 1-3",
+    "full_page": false,
+    "question_description": "Describes a translation that moves shape A to shape B with a positive horizontal and negative vertical vector.",
+    "content": "\\begin{center}\n\\begin{tikzpicture}[scale=1]\n\n  % Grid\n  \\draw[very thin, color=gray!40] (-5,-5) grid (5,5);\n\n  % Axes\n  \\draw[->, thick] (-5.5,0)--(5.5,0) node[right] { $x$};\n  \\draw[->, thick] (0,-5.5)--(0,5.5) node[above] { $y$};\n\n  % Tick labels\n  \\foreach \\x in {-5,-4,...,5} {\n    \\ifnum\\x=0\\else\n      \\node at (\\x,-0.4) { \\x};\n    \\fi\n  }\n\n  \\foreach \\y in {-5,-4,...,5} {\n    \\ifnum\\y=0\\else\n      \\node at (-0.4,\\y) { \\y};\n    \\fi\n  }\n\n  \\node at (-0.4, -0.4) {\\small $O$};\n\n  % Original shape A\n  \\draw[fill=gray!50, fill opacity=0.5, draw=black] (-4,3) -- (-3,3) -- (-2,4) -- (-3,5) -- (-4,5) -- cycle;\n  \\node at (-3.2,4) {\\textbf{A}};\n\n  % Translated shape B\n  \\draw[fill=gray!50, fill opacity=0.5, draw=black] (0,-2) -- (1,-2) -- (2,-1) -- (1,0) -- (0,0) -- cycle;\n  \\node at (0.8,-1) {\\textbf{B}};\n\n\\end{tikzpicture}\n\\end{center}\n\n\\qquad Describe fully the single transformation that maps shape A on shape B. \n\n\\vspace{0.5cm}\n\n\\dotfill\n\n\\vspace{0.5cm}\n\n\\dotfill",
+    "createdAt": {
+      "_seconds": 1752407496,
+      "_nanoseconds": 91000000
+    }
+  }
+]

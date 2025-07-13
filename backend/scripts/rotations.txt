@@ -1,0 +1,82 @@
+[
+  {
+    "question_id": "4.21.1",
+    "ms_size": 0.125,
+    "total_marks": 2,
+    "topic": "Geometry and Measures",
+    "type": "non-calc",
+    "question_size": 0.6,
+    "model_answer": "\\textbf{Step 1: Identify the transformation:}\\\\\nTriangle A maps onto triangle B by a rotation. \\\\ \n\\hfill (1)\n\n\\textbf{Step 2: Describe the rotation fully:}\\\\\n$$\\text{Rotation of } 90^\\circ \\text{ anticlockwise about the point } (1,1)$$\n\\hfill (1)",
+    "answer": "Rotation 90° anticlockwise about (1,1)",
+    "ma_size": 0.3,
+    "question_topic": "Rotations",
+    "difficulty": "Grade 1-3",
+    "full_page": false,
+    "question_description": "Identify and describe the single transformation that maps triangle A onto triangle B, including direction and centre of rotation.",
+    "content": "\\begin{center}\n\\begin{tikzpicture}[scale=1]\n\n  % Grid\n  \\draw[very thin, color=gray!40] (-5,-5) grid (5,5);\n\n  % Axes\n  \\draw[->, thick] (-5.5,0)--(5.5,0) node[right] { $x$};\n  \\draw[->, thick] (0,-5.5)--(0,5.5) node[above] { $y$};\n\n  % Tick labels\n  \\foreach \\x in {-5,-4,...,5} {\n    \\ifnum\\x=0\\else\n      \\node at (\\x,-0.4) { \\x};\n    \\fi\n  }\n\n  \\foreach \\y in {-5,-4,...,5} {\n    \\ifnum\\y=0\\else\n      \\node at (-0.4,\\y) { \\y};\n    \\fi\n  }\n\n  \\node at (-0.4, -0.4) {\\small $O$};\n\n  % Original triangle\n  \\draw[fill=gray!50, fill opacity=0.5, draw=black] (1,-3) -- (1,-5) -- (4,-3) -- cycle;\n  \\node at (2,-3.5) {\\textbf{A}};\n\n  \\draw[fill=gray!50, fill opacity=0.5, draw=black] (-1, 1) -- (-3,1) -- (-3,4) -- cycle;\n  \\node at (-2.5,2) {\\textbf{B}};\n\n\\end{tikzpicture}\n\\end{center}\n\n\n\\qquad Describe fully the single transformation that maps triangle A on triangle B. \n\n\\vspace{0.5cm}\n\n\\dotfill\n\n\\vspace{0.5cm}\n\n\\dotfill",
+    "createdAt": {
+      "_seconds": 1752079450,
+      "_nanoseconds": 56000000
+    }
+  },
+  {
+    "question_id": "4.21.2",
+    "ms_size": 0.125,
+    "total_marks": 2,
+    "topic": "Geometry and Measures",
+    "type": "non-calc",
+    "question_size": 0.6,
+    "model_answer": "\\textbf{Step 1: Identify the transformation:} \\\\\nTriangle A is mapped onto triangle B by a rotation. \\\\\n\\hfill (1)\n\n\\textbf{Step 2: Describe the rotation:} \\\\\n$$\\text{Rotation of } 90^\\circ \\text{ clockwise about the origin } (0,0)$$\n\\hfill (1)\n\n\\textbf{Note:} Use tracing paper to rotate shape A about the origin. You’ll see that a 90° clockwise turn moves each point of A directly onto B.",
+    "answer": "Rotation of 90° clockwise about the origin (0, 0)",
+    "ma_size": 0.3,
+    "question_topic": "Rotations",
+    "difficulty": "Grade 1-3",
+    "full_page": false,
+    "question_description": "Describes a single 90° clockwise rotation mapping triangle A onto triangle B using tracing paper or coordinate observation.",
+    "content": "\\begin{center}\n\\begin{tikzpicture}[scale=1]\n\n  % Grid\n  \\draw[very thin, color=gray!40] (-5,-5) grid (5,5);\n\n  % Axes\n  \\draw[->, thick] (-5.5,0)--(5.5,0) node[right] { $x$};\n  \\draw[->, thick] (0,-5.5)--(0,5.5) node[above] { $y$};\n\n  % Tick labels\n  \\foreach \\x in {-5,-4,...,5} {\n    \\ifnum\\x=0\\else\n      \\node at (\\x,-0.4) { \\x};\n    \\fi\n  }\n\n  \\foreach \\y in {-5,-4,...,5} {\n    \\ifnum\\y=0\\else\n      \\node at (-0.4,\\y) { \\y};\n    \\fi\n  }\n\n  \\node at (-0.4, -0.4) {\\small $O$};\n\n  % Original triangle\n  \\draw[fill=gray!50, fill opacity=0.5, draw=black] (-3,2) -- (-3,4) -- (0,2) -- cycle;\n  \\node at (-2,2.5) {\\textbf{A}};\n\n  \\draw[fill=gray!50, fill opacity=0.5, draw=black] (1, -2) -- (3,-2) -- (3,1) -- cycle;\n  \\node at (2.2,-1.2) {\\textbf{B}};\n\n\\end{tikzpicture}\n\\end{center}\n\n\\qquad Describe fully the single transformation that maps triangle A on triangle B. \n\n\\vspace{0.5cm}\n\n\\dotfill\n\n\\vspace{0.5cm}\n\n\\dotfill",
+    "createdAt": {
+      "_seconds": 1752079450,
+      "_nanoseconds": 56000000
+    }
+  },
+  {
+    "question_id": "4.21.3",
+    "ms_size": 0.125,
+    "total_marks": 2,
+    "topic": "Geometry and Measures",
+    "type": "non-calc",
+    "question_size": 0.6,
+    "model_answer": "\\textbf{Step 1: Identify the transformation:}\\\\\nThis is a rotation of 180°.\\\\\n\\hfill (1)\n\n\\textbf{Step 2: State the centre of rotation:}\\\\\n$$\\text{Centre of rotation is at } (1,0)$$\n\\hfill (1)\n\n\\textbf{Step 3: Apply rotation to each vertex of shape A:}\\\\\nOriginal coordinates: $(-3,2), (-1,2), (-2,4)$\\\\\nAfter rotating 180° about $(1,0)$: \\\\ \n$$(-3,2) \\rightarrow (5,-2),\\quad (-1,2) \\rightarrow (3,-2),\\quad (-2,4) \\rightarrow (4,-4)$$",
+    "answer": "Rotation of 180° about (1, 0), image at (5, -2), (3, -2), (4, -4)",
+    "ma_size": 0.3,
+    "question_topic": "Rotations",
+    "difficulty": "Grade 1-3",
+    "full_page": false,
+    "question_description": "Performs a 180° rotation about a given point and describes the transformation fully, including the final coordinates.",
+    "content": "\\begin{center}\n\\begin{tikzpicture}[scale=1]\n\n  % Grid\n  \\draw[very thin, color=gray!40] (-5,-5) grid (5,5);\n\n  % Axes\n  \\draw[->, thick] (-5.5,0)--(5.5,0) node[right] { $x$};\n  \\draw[->, thick] (0,-5.5)--(0,5.5) node[above] { $y$};\n\n  % Tick labels\n  \\foreach \\x in {-5,-4,...,5} {\n    \\ifnum\\x=0\\else\n      \\node at (\\x,-0.4) { \\x};\n    \\fi\n  }\n\n  \\foreach \\y in {-5,-4,...,5} {\n    \\ifnum\\y=0\\else\n      \\node at (-0.4,\\y) { \\y};\n    \\fi\n  }\n\n  \\node at (-0.4, -0.4) {\\small $O$};\n\n  % Original triangle\n  \\draw[fill=gray!50, fill opacity=0.5, draw=black] (-3,2) -- (-1,2) -- (-2,4) -- cycle;\n  \\node at (-2,2.8) {\\textbf{A}};\n\n\\end{tikzpicture}\n\\end{center}\n\n\\qquad Rotate shape A 180° about (1, 0)\n\n\\vspace{0.3cm}",
+    "createdAt": {
+      "_seconds": 1752079450,
+      "_nanoseconds": 56000000
+    }
+  },
+  {
+    "question_id": "4.21.4",
+    "ms_size": 0.125,
+    "total_marks": 2,
+    "topic": "Geometry and Measures",
+    "type": "non-calc",
+    "question_size": 0.6,
+    "model_answer": "\\textbf{Step 1: Identify the transformation:} \\\\\nThis is a rotation of 90° clockwise. \\\\\n\\hfill (1)\n\n\\textbf{Step 2: State the centre of rotation:} \\\\\n$$\\text{Centre of rotation is at } (4,3)$$\n\\hfill (1)\n\n\\textbf{Step 3: Apply the rotation to each vertex of shape A:} \\\\\nOriginal coordinates: $(1,2), (3,4), (3,1)$ \\\\\nAfter 90° clockwise rotation about $(4,3)$: \\\\\n$$(1,2) \\rightarrow (5,6), \\quad (3,4) \\rightarrow (3,4), \\quad (3,1) \\rightarrow (6,4)$$",
+    "answer": "Rotation of 90° clockwise about (4, 3), image at (5, 6), (3, 4), (6, 4)",
+    "ma_size": 0.3,
+    "question_topic": "Rotations",
+    "difficulty": "Grade 1-3",
+    "full_page": false,
+    "question_description": "Performs a 90° clockwise rotation about a given point and gives the coordinates of the resulting image.",
+    "content": "\\begin{center}\n\\begin{tikzpicture}[scale=1]\n\n  % Grid\n  \\draw[very thin, color=gray!40] (-5,-5) grid (5,5);\n\n  % Axes\n  \\draw[->, thick] (-5.5,0)--(5.5,0) node[right] { $x$};\n  \\draw[->, thick] (0,-5.5)--(0,5.5) node[above] { $y$};\n\n  % Tick labels\n  \\foreach \\x in {-5,-4,...,5} {\n    \\ifnum\\x=0\\else\n      \\node at (\\x,-0.4) { \\x};\n    \\fi\n  }\n\n  \\foreach \\y in {-5,-4,...,5} {\n    \\ifnum\\y=0\\else\n      \\node at (-0.4,\\y) { \\y};\n    \\fi\n  }\n\n  \\node at (-0.4, -0.4) {\\small $O$};\n\n  % Original triangle\n  \\draw[fill=gray!50, fill opacity=0.5, draw=black] (1,2) -- (3,4) -- (3,1) -- cycle;\n  \\node at (2.3,2.1) {\\textbf{A}};\n\n\\end{tikzpicture}\n\\end{center}\n\n\\qquad Rotate triangle A 90° clockwise about (4,3). \n\n\\vspace{0.3cm}",
+    "createdAt": {
+      "_seconds": 1752079450,
+      "_nanoseconds": 56000000
+    }
+  }
+]

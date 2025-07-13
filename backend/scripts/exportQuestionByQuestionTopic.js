@@ -6,16 +6,19 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 })
 
+questionTopic = "Translations"
+fileName = "translations.txt"
+
 const db = admin.firestore()
 
-async function exportBestBuysQuestions() {
+async function exportQuestions() {
   const questionsRef = db.collection("questions")
   const snapshot = await questionsRef
-    .where("question_topic", "==", "Best Buys")
+    .where("question_topic", "==", `${questionTopic}`)
     .get()
 
   if (snapshot.empty) {
-    console.log("No 'Best Buys' questions found.")
+    console.log(`No ${questionTopic} questions found.`)
     return
   }
 
@@ -29,11 +32,9 @@ async function exportBestBuysQuestions() {
 
   const fileContent = JSON.stringify(questions, null, 2)
 
-  fs.writeFileSync("best_buys_questions.txt", fileContent)
+  fs.writeFileSync(`${fileName}`, fileContent)
 
-  console.log(
-    `✅ Exported ${questions.length} questions to best_buys_questions.txt`
-  )
+  console.log(`✅ Exported ${questions.length} questions to ${fileName}`)
 }
 
-exportBestBuysQuestions().catch(console.error)
+exportQuestions().catch(console.error)

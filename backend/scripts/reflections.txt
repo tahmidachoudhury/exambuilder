@@ -1,0 +1,82 @@
+[
+  {
+    "question_id": "4.22.1",
+    "ms_size": 0.125,
+    "total_marks": 2,
+    "topic": "Geometry and Measures",
+    "type": "non-calc",
+    "question_size": 0.6,
+    "model_answer": "\\textbf{Step 1: Reflect each vertex across the line } x = -1: \\\\\n\\begin{itemize}\n  \\item (1, 2) reflects to (-3, 2)\n  \\item (3, 4) reflects to (-5, 4)\n  \\item (3, 1) reflects to (-5, 1)\n\\end{itemize}\n\\hfill (1)\n\n\\textbf{Step 2: State all three coordinates of the image:} \\\\\n$$(-3, 2),\\ (-5, 4),\\ (-5, 1)$$\n\\hfill (1)",
+    "answer": "(-3, 2), (-5, 4), (-5, 1)",
+    "ma_size": 0.3,
+    "question_topic": "Reflections",
+    "difficulty": "Grade 1-3",
+    "full_page": false,
+    "question_description": "Reflects a triangle in a vertical line and gives the coordinates of the new image.",
+    "content": "\\begin{center}\n\\begin{tikzpicture}[scale=1]\n\n  % Grid\n  \\draw[very thin, color=gray!40] (-5,-5) grid (5,5);\n\n  % Axes\n  \\draw[->, thick] (-5.5,0)--(5.5,0) node[right] { $x$};\n  \\draw[->, thick] (0,-5.5)--(0,5.5) node[above] { $y$};\n\n  % Tick labels\n  \\foreach \\x in {-5,-4,...,5} {\n    \\ifnum\\x=0\\else\n      \\node at (\\x,-0.4) { \\x};\n    \\fi\n  }\n\n  \\foreach \\y in {-5,-4,...,5} {\n    \\ifnum\\y=0\\else\n      \\node at (-0.4,\\y) { \\y};\n    \\fi\n  }\n\n  \\node at (-0.4, -0.4) {\\small $O$};\n\n  % Original triangle\n  \\draw[fill=gray!50, fill opacity=0.5, draw=black] (1,2) -- (3,4) -- (3,1) -- cycle;\n  \\node at (2.3,2.1) {\\textbf{A}};\n\n\\end{tikzpicture}\n\\end{center}\n\n\\qquad Reflect shape A in the line with equation x = -1 \n\n\\vspace{0.3cm}",
+    "createdAt": {
+      "_seconds": 1752080425,
+      "_nanoseconds": 156000000
+    }
+  },
+  {
+    "question_id": "4.22.2",
+    "ms_size": 0.125,
+    "total_marks": 2,
+    "topic": "Geometry and Measures",
+    "type": "non-calc",
+    "question_size": 0.6,
+    "model_answer": "\\textbf{Step 1: Reflect each vertex across the line } y = x: \\\\\n\\begin{itemize}\n  \\item (1, 1) reflects to (1, 1)\n  \\item (2, 3) reflects to (3, 2)\n  \\item (4, 3) reflects to (3, 4)\n  \\item (3, 1) reflects to (1, 3)\n\\end{itemize}\n\\hfill (1)\n\n\\textbf{Step 2: State all four coordinates of the image:} \\\\\n$$(1, 1),\\ (3, 2),\\ (3, 4),\\ (1, 3)$$\n\\hfill (1)",
+    "answer": "(1, 1), (3, 2), (3, 4), (1, 3)",
+    "ma_size": 0.3,
+    "question_topic": "Reflections",
+    "difficulty": "Grade 1-3",
+    "full_page": false,
+    "question_description": "Reflects a quadrilateral in the line y = x and gives the image coordinates.",
+    "content": "\\begin{center}\n\\begin{tikzpicture}[scale=1]\n\n  % Grid\n  \\draw[very thin, color=gray!40] (-5,-5) grid (5,5);\n\n  % Axes\n  \\draw[->, thick] (-5.5,0)--(5.5,0) node[right] { $x$};\n  \\draw[->, thick] (0,-5.5)--(0,5.5) node[above] { $y$};\n\n  % Tick labels\n  \\foreach \\x in {-5,-4,...,5} {\n    \\ifnum\\x=0\\else\n      \\node at (\\x,-0.4) { \\x};\n    \\fi\n  }\n\n  \\foreach \\y in {-5,-4,...,5} {\n    \\ifnum\\y=0\\else\n      \\node at (-0.4,\\y) { \\y};\n    \\fi\n  }\n\n  \\node at (-0.4, -0.4) {\\small $O$};\n\n  % Original triangle\n  \\draw[fill=gray!50, fill opacity=0.5, draw=black] (1,1) -- (2,3) -- (4,3) -- (3,1) -- cycle;\n  \\node at (2.3,2.1) {\\textbf{A}};\n\n\\end{tikzpicture}\n\\end{center}\n\n\\qquad Reflect shape A in the line with equation $y = x$ \n\n\\vspace{0.3cm}",
+    "createdAt": {
+      "_seconds": 1752080425,
+      "_nanoseconds": 156000000
+    }
+  },
+  {
+    "question_id": "4.22.3",
+    "ms_size": 0.125,
+    "total_marks": 2,
+    "topic": "Geometry and Measures",
+    "type": "non-calc",
+    "question_size": 0.6,
+    "model_answer": "\\textbf{Step 1: Identify the transformation type:} \\\\\nThis is a reflection. \\\\ \n\\hfill (1)\n\n\\textbf{Step 2: Identify the line of reflection:} \\\\\nAll $y$-coordinates have changed sign while $x$-coordinates stayed the same. \\\\ \nSo, the shape is reflected in the $x$-axis. \\\\ \n$$\\text{Reflection in the line } y = 0$$\n\\hfill (1)",
+    "answer": "Reflection in the x-axis",
+    "ma_size": 0.3,
+    "question_topic": "Reflections",
+    "difficulty": "Grade 1-3",
+    "full_page": false,
+    "question_description": "Describes a reflection that maps a quadrilateral onto its image across the x-axis.",
+    "content": "\\begin{center}\n\\begin{tikzpicture}[scale=1]\n\n  % Grid\n  \\draw[very thin, color=gray!40] (-5,-5) grid (5,5);\n\n  % Axes\n  \\draw[->, thick] (-5.5,0)--(5.5,0) node[right] { $x$};\n  \\draw[->, thick] (0,-5.5)--(0,5.5) node[above] { $y$};\n\n  % Tick labels\n  \\foreach \\x in {-5,-4,...,5} {\n    \\ifnum\\x=0\\else\n      \\node at (\\x,-0.4) { \\x};\n    \\fi\n  }\n\n  \\foreach \\y in {-5,-4,...,5} {\n    \\ifnum\\y=0\\else\n      \\node at (-0.4,\\y) { \\y};\n    \\fi\n  }\n\n  \\node at (-0.4, -0.4) {\\small $O$};\n\n  % Original triangle\n  \\draw[fill=gray!50, fill opacity=0.5, draw=black] (1,1) -- (2,3) -- (4,3) -- (3,1) -- cycle;\n  \\node at (2.3,2.1) {\\textbf{A}};\n\n  \\draw[fill=gray!50, fill opacity=0.5, draw=black] (1,-1) -- (2,-3) -- (4,-3) -- (3,-1) -- cycle;\n  \\node at (2.3,-2.1) {\\textbf{B}};\n\n\\end{tikzpicture}\n\\end{center}\n\n\\qquad Describe fully the single transformation that maps triangle A on triangle B. \n\n\\vspace{0.5cm}\n\n\\dotfill\n\n\\vspace{0.5cm}\n\n\\dotfill",
+    "createdAt": {
+      "_seconds": 1752080425,
+      "_nanoseconds": 156000000
+    }
+  },
+  {
+    "question_id": "4.22.4",
+    "ms_size": 0.125,
+    "total_marks": 2,
+    "topic": "Geometry and Measures",
+    "type": "non-calc",
+    "question_size": 0.6,
+    "model_answer": "\\textbf{Step 1: Identify the transformation:} \\\\\nThis is a reflection. \\\\ \n\\hfill (1)\n\n\\textbf{Step 2: State the mirror line:} \\\\\n$$\\text{Reflection in the line } x = 1$$\n\\hfill (1)",
+    "answer": "Reflection in the line \\( x = 1 \\)",
+    "ma_size": 0.3,
+    "question_topic": "Reflections",
+    "difficulty": "Grade 1-3",
+    "full_page": false,
+    "question_description": "Describes a single reflection mapping triangle A onto triangle B using the line x = 1.",
+    "content": "\\begin{center}\n\\begin{tikzpicture}[scale=1]\n\n  % Grid\n  \\draw[very thin, color=gray!40] (-5,-5) grid (5,5);\n\n  % Axes\n  \\draw[->, thick] (-5.5,0)--(5.5,0) node[right] { $x$};\n  \\draw[->, thick] (0,-5.5)--(0,5.5) node[above] { $y$};\n\n  % Tick labels\n  \\foreach \\x in {-5,-4,...,5} {\n    \\ifnum\\x=0\\else\n      \\node at (\\x,-0.4) { \\x};\n    \\fi\n  }\n\n  \\foreach \\y in {-5,-4,...,5} {\n    \\ifnum\\y=0\\else\n      \\node at (-0.4,\\y) { \\y};\n    \\fi\n  }\n\n  \\node at (-0.4, -0.4) {\\small $O$};\n\n  % Original triangle\n  \\draw[fill=gray!50, fill opacity=0.5, draw=black] (0,1) -- (-1,3) -- (-3,3) -- cycle;\n  \\node at (-1.3,2.3) {\\textbf{A}};\n\n  \\draw[fill=gray!50, fill opacity=0.5, draw=black] (2,1) -- (3,3) -- (5,3) -- cycle;\n  \\node at (3.3,2.3) {\\textbf{B}};\n\n\\end{tikzpicture}\n\\end{center}\n\n\\qquad Describe fully the single transformation that maps triangle A on triangle B. \n\n\\vspace{0.5cm}\n\n\\dotfill\n\n\\vspace{0.5cm}\n\n\\dotfill",
+    "createdAt": {
+      "_seconds": 1752080425,
+      "_nanoseconds": 156000000
+    }
+  }
+]

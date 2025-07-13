@@ -1,0 +1,22 @@
+[
+  {
+    "question_id": "4.23.1",
+    "ms_size": 0.125,
+    "total_marks": 2,
+    "topic": "Geometry and Measures",
+    "type": "non-calc",
+    "question_size": 0.8,
+    "model_answer": "\\textbf{Step 1: Identify the transformation:} \\\\\nThis is an enlargement. \\\\ \n\\hfill (1)\n\n\\textbf{Step 2: Identify the centre and scale factor:} \\\\\nTo find the centre, trace back equal steps from each vertex of shape B to shape A. \\\\\nThe shape is enlarged by scale factor 2 about the point $(-7, 1)$. \\\\\n$$\\text{Enlargement of scale factor } 2 \\text{ about centre } (-7,1)$$ \n\\hfill (1)",
+    "answer": "Enlargement of scale factor 2 about centre (-7, 1)",
+    "ma_size": 0.3,
+    "question_topic": "Enlargements",
+    "difficulty": "Grade 1-3",
+    "full_page": false,
+    "question_description": "Describes an enlargement transformation from shape A to B using a negative centre of enlargement and a scale factor of 2.",
+    "content": "\\begin{center}\n\\begin{tikzpicture}[scale=1]\n\n  % Grid\n  \\draw[very thin, color=gray!40] (-7,-7) grid (7,7);\n\n  % Axes\n  \\draw[->, thick] (-7.5,0)--(7.5,0) node[right] { $x$};\n  \\draw[->, thick] (0,-7.5)--(0,7.5) node[above] { $y$};\n\n  % Tick labels\n  \\foreach \\x in {-7,-6,...,7} {\n    \\ifnum\\x=0\\else\n      \\node at (\\x,-0.4) { \\x};\n    \\fi\n  }\n\n  \\foreach \\y in {-7,-6,...,7} {\n    \\ifnum\\y=0\\else\n      \\node at (-0.4,\\y) { \\y};\n    \\fi\n  }\n\n  \\node at (-0.4, -0.4) {\\small $O$};\n\n  % Original shape\n  \\draw[fill=gray!50, fill opacity=0.5, draw=black] (-3,1) -- (-2,1) -- (-1,2) -- (-2,3) -- (-3,3) -- cycle;\n  \\node at (-2.2,2) {\\textbf{A}};\n\n  % Enlarged shape\n  \\draw[fill=gray!50, fill opacity=0.5, draw=black] (1,1) -- (3,1) -- (5,3) -- (3,5) -- (1,5) -- cycle;\n  \\node at (2.8,3) {\\textbf{B}};\n\n\\end{tikzpicture}\n\\end{center}\n\n\\qquad Describe fully the single transformation that maps shape A on shape B. \n\n\\vspace{0.5cm}\n\n\\dotfill\n\n\\vspace{0.5cm}\n\n\\dotfill",
+    "createdAt": {
+      "_seconds": 1752406451,
+      "_nanoseconds": 789000000
+    }
+  }
+]
