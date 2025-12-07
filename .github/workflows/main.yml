@@ -38,7 +38,7 @@ jobs:
 
       # 5) SSH into the droplet, pull latest code, and run deploy.sh
       - name: Deploy to DigitalOcean droplet
-        working-directory: ~/exambuilder/backend
+
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.DO_HOST }}
