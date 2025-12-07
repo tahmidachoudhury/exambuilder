@@ -23,6 +23,7 @@ jobs:
 
       # 3) Build the backend Docker image from the Dockerfile in repo root
       - name: Build backend Docker image
+        working-directory: ./backend
         run: |
           IMAGE_NAME=${{ secrets.DOCKERHUB_USERNAME }}/exambuilder-backend:latest
           echo "Building image $IMAGE_NAME"
