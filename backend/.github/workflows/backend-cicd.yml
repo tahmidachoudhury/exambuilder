@@ -1,0 +1,49 @@
+name: Backend CI/CD (Option B)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1) Checkout the repository so the runner has your Dockerfile + code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2) Log in to Docker Hub using repo secrets
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # 3) Build the backend Docker image from the Dockerfile in repo root
+      - name: Build backend Docker image
+        run: |
+          IMAGE_NAME=${{ secrets.DOCKERHUB_USERNAME }}/exambuilder-backend:latest
+          echo "Building image $IMAGE_NAME"
+          docker build -t $IMAGE_NAME .
+
+      # 4) Push the image to Docker Hub
+      - name: Push backend image
+        run: |
+          IMAGE_NAME=${{ secrets.DOCKERHUB_USERNAME }}/exambuilder-backend:latest
+          echo "Pushing image $IMAGE_NAME"
+          docker push $IMAGE_NAME
+
+      # 5) SSH into the droplet, pull latest code, and run deploy.sh
+      - name: Deploy to DigitalOcean droplet
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DO_HOST }}
+          username: ${{ secrets.DO_USER }}
+          key: ${{ secrets.DO_SSH_KEY }}
+          script: |
+            cd /exambuilder/backend
+            git pull origin main
+            chmod +x deploy.sh
+            ./deploy.sh
