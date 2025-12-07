@@ -1,8 +1,7 @@
 services:
   exam-builder:
-    build: .
+    image: tahmidachoudhury/exambuilder-backend:latest
+    container_name: exam-builder-backend
+    restart: unless-stopped
     ports:
       - "3002:3002"
-    volumes:
-      - .:/app
-      - /app/node_modules
