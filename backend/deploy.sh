@@ -3,11 +3,11 @@ set -euo pipefail
 
 echo "[deploy] Using compose file docker-compose.yml"  # or docker-compose.prod.yml
 
-echo "[deploy] Pulling latest backend image..."
-docker-compose pull exam-builder
+echo "[deploy] Pulling latest latest images..."
+docker-compose pull
 
-echo "[deploy] Restarting backend container..."
-docker-compose up -d exam-builder
+echo "[deploy] Starting all services..."
+docker-compose up -d 
 
 echo "[deploy] Cleaning up old images..."
 docker image prune -f
