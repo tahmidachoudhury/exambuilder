@@ -72,6 +72,10 @@ Components:
 
 ![Exam Builder Backend Architecture](docs/exambuilder.drawio.png)
 
+---
+
+![Grafana Node Export Panel](docs/grafana_node_panel.png)
+
 ### ⚙️ Deployment Flow
 
 1. Push to GitHub
