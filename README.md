@@ -30,7 +30,7 @@ This project now includes:
 
 ---
 
-### 🔧 Architecture Diagram (new version)
+### 🔧 Architecture Diagram
 
 Components:
 
