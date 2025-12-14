@@ -6,30 +6,108 @@ This project was born out of a real need I experienced as a maths tutor — I of
 
 ---
 
-## Features
+# Exam Builder – Observability + Deployment Case Study
 
-- Select from a fixed set of GCSE-style maths questions
-- Automatically compiles the selection into a structured LaTeX exam paper
-- Generates downloadable PDFs for printing or digital use
-- Simple, tutor-focused user interface
+🚀 Overview
+
+I revived an older project of mine, a LaTeX-based exam builder, and used it as a playground for learning real DevOps fundamentals: observability, Docker-based architecture, CI/CD, Linux troubleshooting, and production deployment.
+
+This project now includes:
+
+- Node backend with /health endpoint
+
+- Docker Compose architecture
+
+- CI/CD for SSH deployment with DockerHub
+
+- Observability stack: Node Exporter, Prometheus, Grafana
+
+- UptimeRobot external monitoring
+
+- Nginx reverse proxy + SSL
+
+- Automated deployments with a custom deploy.sh
 
 ---
 
-## Tech Stack
+### 🔧 Architecture Diagram (new version)
 
-- Frontend: Next.js (App Router), TypeScript
-- Backend: Node.js, Firebase Admin SDK (Base64 encoded)
-- PDF Generation: LaTeX installed through Docker
-- Deployment: Frontend on Vercel, Backend on Digital Ocean
+Components:
 
----
+- User
 
-## Planned Improvements
+- Nginx reverse proxy
 
-- Drag-and-drop question ordering
-- Add custom questions manually
-- Exam history and saving for logged-in users
-- Deploy on AWS for cost-effective hosting
-- Use Kubernetes for scalable container management
+  - Serves backend API
 
-View the project on my portfolio: [tahmidchoudhury.uk/projects/exambuilder](https://tahmidchoudhury.uk/projects/exambuilder)
+  - Routes grafana.tacknowledge.co.uk to Grafana container
+
+  - Handles SSL termination
+
+- Backend container (Node)
+
+  - Exposes /api/health
+
+  - Prometheus-ready
+
+- Node Exporter container
+
+  - System metrics
+
+- Prometheus container
+
+  - Scrapes Node Exporter
+
+  - Provides metrics to Grafana
+
+- Grafana container
+
+  - Dashboards + alerts
+
+- DigitalOcean Droplet
+
+  - All containers running via Docker Compose
+
+  - Volumes persist Grafana + Prometheus data
+
+![Exam Builder Backend Architecture](docs/exambuilder.drawio.png)
+
+### ⚙️ Deployment Flow
+
+1. Push to GitHub
+
+2. GitHub Actions SSH into droplet with `main.yml`
+
+3. Run `deploy.sh`
+
+4. Script pulls new backend image from Docker Hub, restarts entire stack using:
+
+```
+docker-compose up -d
+```
+
+5. Observability stack stays running, with dashboards kept inside Docker volumes.
+
+### 📊 Observability Features
+
+- Node Exporter
+
+  - CPU, RAM, Disk, Network, Load
+
+- Prometheus
+
+  - Scrapes metrics every 15s
+
+- Grafana
+
+  - Imported "Node Exporter Full (ID: 1860)" dashboard
+
+  - Custom CPU Usage panel
+
+  - SSL-secured grafana.tacknowledge.co.uk
+
+- UptimeRobot
+
+  - Monitors /api/health
+
+  - External uptime verification
