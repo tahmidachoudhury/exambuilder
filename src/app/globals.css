@@ -2,80 +2,118 @@
 @tailwind components;
 @tailwind utilities;
 
+/* @import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap"); */
+
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
+    /* Navy/Slate Educational Theme */
+    --background: 210 20% 98%;
+    --foreground: 222 47% 11%;
+
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
+    --card-foreground: 222 47% 11%;
+
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
-    --primary: 20 90% 88%;
-    --primary-foreground: 20 60% 20%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
-    --success: 142, 50%, 90%;
-    --success-foreground: 142, 71%, 20%;
-    --warning: 43, 90%, 85%;
-    --warning-foreground: 43, 100%, 20%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-    --radius: 0.5rem;
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --popover-foreground: 222 47% 11%;
+
+    /* Deep Navy Primary */
+    --primary: 222 47% 20%;
+    --primary-foreground: 210 40% 98%;
+
+    /* Soft Slate Secondary */
+    --secondary: 214 32% 91%;
+    --secondary-foreground: 222 47% 20%;
+
+    --muted: 210 20% 96%;
+    --muted-foreground: 215 16% 47%;
+
+    /* Warm Amber Accent */
+    --accent: 38 92% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 222 47% 20%;
+
+    --radius: 0.75rem;
+
+    /* Custom Colors */
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+
+    /* Difficulty Colors */
+    --grade-easy: 142 71% 45%;
+    --grade-medium: 38 92% 50%;
+    --grade-hard: 25 95% 53%;
+    --grade-expert: 0 84% 60%;
+
+    /* Drag States */
+    --drag-overlay: 222 47% 20% / 0.1;
+    --drop-zone-active: 38 92% 50% / 0.15;
+    --drop-zone-border: 38 92% 50%;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 hsl(222 47% 11% / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(222 47% 11% / 0.1),
+      0 2px 4px -2px hsl(222 47% 11% / 0.1);
+    --shadow-lg: 0 10px 15px -3px hsl(222 47% 11% / 0.1),
+      0 4px 6px -4px hsl(222 47% 11% / 0.1);
+    --shadow-drag: 0 20px 25px -5px hsl(222 47% 11% / 0.15),
+      0 8px 10px -6px hsl(222 47% 11% / 0.15);
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 222 47% 11%;
+    --sidebar-primary: 222 47% 20%;
+    --sidebar-primary-foreground: 210 40% 98%;
+    --sidebar-accent: 210 20% 96%;
+    --sidebar-accent-foreground: 222 47% 20%;
+    --sidebar-border: 214 32% 91%;
+    --sidebar-ring: 222 47% 20%;
   }
+
   .dark {
-    --background: 0 0% 10%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 12%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 12%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 20 70% 60%;
-    --primary-foreground: 20 90% 95%;
-    --secondary: 0 0% 15%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 65%;
-    --accent: 0 0% 15%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
-    --ring: 0 0% 80%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-    --radius: 0.5rem;
-    --sidebar-background: 0 0% 13%;
-    --sidebar-foreground: 0 0% 80%;
-    --sidebar-primary: 176 79% 32%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 0 0% 18%;
-    --sidebar-accent-foreground: 0 0% 90%;
-    --sidebar-border: 0 0% 20%;
-    --sidebar-ring: 176 79% 32%;
+    --background: 222 47% 8%;
+    --foreground: 210 40% 98%;
+
+    --card: 222 47% 11%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 38 92% 50%;
+    --primary-foreground: 222 47% 11%;
+
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 38 92% 50%;
+    --accent-foreground: 222 47% 11%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --ring: 38 92% 50%;
+
+    --sidebar-background: 222 47% 11%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 38 92% 50%;
+    --sidebar-primary-foreground: 222 47% 11%;
+    --sidebar-accent: 217 33% 17%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 217 33% 17%;
+    --sidebar-ring: 38 92% 50%;
   }
 }
 
@@ -83,7 +121,100 @@
   * {
     @apply border-border;
   }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: "DM Sans", system-ui, sans-serif;
+  }
+}
+
+@layer components {
+  .question-card {
+    @apply relative bg-card rounded-xl border border-border p-4 cursor-grab transition-all duration-200;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .question-card:hover {
+    box-shadow: var(--shadow-md);
+    @apply border-primary/20;
+  }
+
+  .question-card.dragging {
+    @apply cursor-grabbing opacity-90;
+    box-shadow: var(--shadow-drag);
+    @apply scale-[1.02] rotate-[1deg];
+  }
+
+  .drop-zone {
+    @apply border-2 border-dashed border-border rounded-xl transition-all duration-200;
+  }
+
+  .drop-zone.active {
+    @apply border-accent bg-accent/10;
+  }
+
+  .sortable-item {
+    @apply touch-manipulation;
+  }
+
+  .drag-handle {
+    @apply cursor-grab active:cursor-grabbing text-muted-foreground hover:text-foreground transition-colors;
+  }
+
+  .filter-chip {
+    @apply inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-all;
+  }
+
+  .filter-chip.active {
+    @apply bg-primary text-primary-foreground;
+  }
+
+  .filter-chip.inactive {
+    @apply bg-muted text-muted-foreground hover:bg-secondary hover:text-secondary-foreground;
+  }
+
+  .grade-badge {
+    @apply inline-flex items-center px-2 py-0.5 rounded-md text-xs font-semibold;
+  }
+
+  .grade-easy {
+    @apply bg-emerald-100 text-emerald-700;
+  }
+
+  .grade-medium {
+    @apply bg-amber-100 text-amber-700;
+  }
+
+  .grade-hard {
+    @apply bg-orange-100 text-orange-700;
+  }
+
+  .grade-expert {
+    @apply bg-red-100 text-red-700;
+  }
+}
+
+@layer utilities {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--muted-foreground) / 0.3) transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--muted-foreground) / 0.3);
+    border-radius: 3px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background-color: hsl(var(--muted-foreground) / 0.5);
   }
 }
