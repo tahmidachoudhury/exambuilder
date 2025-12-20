@@ -1,14 +1,20 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { BookOpen, FileText, GalleryVerticalEnd, Moon, Sun } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { useTheme } from "next-themes"
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import {
+  BookOpen,
+  FileText,
+  GalleryVerticalEnd,
+  Moon,
+  Sun,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useTheme } from "next-themes";
 
 export function TabNavigation() {
-  const { theme, setTheme } = useTheme()
-  const pathname = usePathname()
+  const { theme, setTheme } = useTheme();
+  const pathname = usePathname();
 
   const tabs = [
     {
@@ -21,7 +27,7 @@ export function TabNavigation() {
       href: "/topics",
       icon: BookOpen,
     },
-  ]
+  ];
 
   return (
     <div className="border-b">
@@ -36,7 +42,7 @@ export function TabNavigation() {
 
           <nav className="flex items-center gap-2">
             {tabs.map((tab) => {
-              const isActive = pathname === tab.href
+              const isActive = pathname === tab.href;
 
               return (
                 <Link
@@ -54,7 +60,7 @@ export function TabNavigation() {
                   <tab.icon className="h-4 w-4" />
                   <span className="hidden sm:inline">{tab.name}</span>
                 </Link>
-              )
+              );
             })}
             <Button
               variant="outline"
@@ -69,5 +75,5 @@ export function TabNavigation() {
         </div>
       </div>
     </div>
-  )
+  );
 }

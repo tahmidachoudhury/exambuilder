@@ -1,30 +1,30 @@
-"use client"
+"use client";
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import { loginUser } from "@/lib/firebase/auth"
-import { useToast } from "@/hooks/use-toast"
-import Link from "next/link"
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { loginUser } from "@/lib/firebase/auth";
+import { useToast } from "@/hooks/use-toast";
+import Link from "next/link";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"form">) {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   //const [error, setError] = useState<string | null>(null)
-  const router = useRouter()
-  const { toast } = useToast()
+  const router = useRouter();
+  const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     //setError(null)
 
-    const { user, error } = await loginUser(email, password)
+    const { user, error } = await loginUser(email, password);
 
     if (error) {
       //Check the issue with the sign in
@@ -32,14 +32,14 @@ export function LoginForm({
       toast({
         title: "Uh oh! Something went wrong.",
         description: "There was a problem with your login details.",
-      })
-      return
+      });
+      return;
     }
 
     if (user) {
-      router.push("/admin")
+      router.push("/admin");
     }
-  }
+  };
 
   return (
     <>
@@ -94,5 +94,5 @@ export function LoginForm({
         </div>
       </form>
     </>
-  )
+  );
 }

@@ -1,14 +1,14 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import TopicSelector from "./TopicSelector";
+import TopicSelector from "../TopicSelector";
 import FilterPanel from "./FilterPanel";
 import QuestionList from "./QuestionList";
 // import SelectedQuestions from "./SelectedQuestions"
 import ExamSummary from "./ExamSummary";
 import MaxMarksGenerator from "./MaxMarksGenerator";
 import FeedbackForm from "./FeedbackForm";
-import testQuestionsRaw from "../../backend/data/questions.json";
+import testQuestionsRaw from "../../../backend/data/questions.json";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Question } from "@/types/questionType";
 import SelectedQuestionsMinimal from "./SelectedQuestionsMinimal";
