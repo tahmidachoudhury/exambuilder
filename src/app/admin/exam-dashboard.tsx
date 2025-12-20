@@ -1,71 +1,71 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { PlusCircle } from "lucide-react"
+import { useEffect, useState } from "react";
+import { PlusCircle } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
-import { QuestionsTable } from "./questions-table"
-import { QuestionForm } from "./question-form"
-import { Question } from "@/types/questionType"
-import { useToast } from "@/hooks/use-toast"
-import { ToastAction } from "@/components/ui/toast"
+import { Button } from "@/components/ui/button";
+import { QuestionsTable } from "./questions-table";
+import { QuestionForm } from "./question-form";
+import { Question } from "@/types/questionType";
+import { useToast } from "@/hooks/use-toast";
+import { ToastAction } from "@/components/ui/toast";
 import {
   createQuestion,
   deleteQuestion,
   updateQuestion,
-} from "@/lib/firebase/crudQuestions"
+} from "@/lib/firebase/crudQuestions";
 
 export function ExamDashboard() {
-  const [questions, setQuestions] = useState<Question[]>([])
+  const [questions, setQuestions] = useState<Question[]>([]);
   const [selectedQuestion, setSelectedQuestion] = useState<Question | null>(
     null
-  )
-  const { toast } = useToast()
-  const [isCreating, setIsCreating] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [hasMore, setHasMore] = useState(true)
+  );
+  const { toast } = useToast();
+  const [isCreating, setIsCreating] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
-    fetchQuestions() // first page
-  })
+    fetchQuestions(); // first page
+  });
 
   const fetchQuestions = async (cursor?: string) => {
-    if (isLoading || !hasMore) return
+    if (isLoading || !hasMore) return;
 
-    setIsLoading(true)
+    setIsLoading(true);
 
     try {
       const url = cursor
         ? `/api/get-questions?limit=100&startAfter=${cursor}`
-        : `/api/get-questions?limit=100`
+        : `/api/get-questions?limit=100`;
 
-      const res = await fetch(url)
-      const data = await res.json()
+      const res = await fetch(url);
+      const data = await res.json();
 
       if (!res.ok || !Array.isArray(data.questions)) {
-        throw new Error("Failed to fetch questions")
+        throw new Error("Failed to fetch questions");
       }
 
-      setQuestions((prev) => [...prev, ...data.questions])
+      setQuestions((prev) => [...prev, ...data.questions]);
       // setNextCursor(data.nextCursor)
-      if (!data.nextCursor) setHasMore(false)
+      if (!data.nextCursor) setHasMore(false);
     } catch (err) {
-      console.error("🔥 Infinite scroll error:", err)
-      setHasMore(false)
+      console.error("🔥 Infinite scroll error:", err);
+      setHasMore(false);
     }
 
-    setIsLoading(false)
-  }
+    setIsLoading(false);
+  };
 
   const handleEdit = (question: Question) => {
-    setSelectedQuestion(question)
-    setIsCreating(false)
-  }
+    setSelectedQuestion(question);
+    setIsCreating(false);
+  };
 
   const handleCreate = () => {
-    setIsCreating(true)
-    setSelectedQuestion(null)
-  }
+    setIsCreating(true);
+    setSelectedQuestion(null);
+  };
 
   const handleDelete = (questionId: string) => {
     // Show confirmation toast first
@@ -81,18 +81,18 @@ export function ExamDashboard() {
           Delete
         </ToastAction>
       ),
-    })
-  }
+    });
+  };
 
   // Separated function to handle the actual deletion after confirmation
   const confirmDelete = async (questionId: string) => {
     // Only delete when this function is called (which happens on ToastAction click)
-    setQuestions(questions.filter((q) => q.question_id !== questionId))
+    setQuestions(questions.filter((q) => q.question_id !== questionId));
     //deletes question from firestore db
-    const response = await deleteQuestion(questionId)
+    const response = await deleteQuestion(questionId);
 
     if (selectedQuestion?.question_id === questionId) {
-      setSelectedQuestion(null)
+      setSelectedQuestion(null);
     }
 
     //successful deletion toast
@@ -101,22 +101,22 @@ export function ExamDashboard() {
         title: "Question deleted",
         description: "The question has been permanently removed.",
         variant: "success",
-      })
+      });
     } else {
       toast({
         title: "Error deleting question",
         description: "Something went wrong.",
         variant: "destructive",
-      })
+      });
     }
-  }
+  };
 
   const handleSave = async (question: Question) => {
     if (isCreating) {
-      setQuestions([...questions, question])
-      setIsCreating(false)
+      setQuestions([...questions, question]);
+      setIsCreating(false);
       //creates new question in firebase db
-      const response = await createQuestion(question.question_id, question)
+      const response = await createQuestion(question.question_id, question);
 
       if (response.success) {
         toast({
@@ -124,22 +124,22 @@ export function ExamDashboard() {
           description:
             "The question has been created and uploaded to the database.",
           variant: "success",
-        })
+        });
       } else {
         toast({
           title: "Error creating question",
           description: "Something went wrong.",
           variant: "destructive",
-        })
+        });
       }
     } else {
       setQuestions(
         questions.map((q) =>
           q.question_id === question.question_id ? question : q
         )
-      )
+      );
       //updates new question in firebase db
-      const response = await updateQuestion(question.question_id, question)
+      const response = await updateQuestion(question.question_id, question);
 
       if (response.success) {
         toast({
@@ -147,22 +147,22 @@ export function ExamDashboard() {
           description:
             "The question has been updated and uploaded to the database.",
           variant: "success",
-        })
+        });
       } else {
         toast({
           title: "Error updating question",
           description: "Something went wrong.",
           variant: "destructive",
-        })
+        });
       }
     }
-    setSelectedQuestion(null)
-  }
+    setSelectedQuestion(null);
+  };
 
   const handleCancel = () => {
-    setSelectedQuestion(null)
-    setIsCreating(false)
-  }
+    setSelectedQuestion(null);
+    setIsCreating(false);
+  };
 
   return (
     <div className="container mx-auto py-6">
@@ -191,5 +191,5 @@ export function ExamDashboard() {
         )}
       </div>
     </div>
-  )
+  );
 }

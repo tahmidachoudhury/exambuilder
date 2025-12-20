@@ -1,48 +1,48 @@
-"use client"
+"use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Download, Loader2 } from "lucide-react"
-import type { Question } from "@/types/questionType"
-import { useState } from "react"
-import { toast } from "@/hooks/use-toast"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Download, Loader2 } from "lucide-react";
+import type { Question } from "@/types/questionType";
+import { useState } from "react";
+import { toast } from "@/hooks/use-toast";
 
 type ExamSummaryProps = {
-  selectedQuestions: Question[]
-}
+  selectedQuestions: Question[];
+};
 
 export default function ExamSummary({ selectedQuestions }: ExamSummaryProps) {
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const totalMarks = selectedQuestions.reduce(
     (sum, question) => sum + question.total_marks,
     0
-  )
+  );
 
   const difficultyBreakdown = selectedQuestions.reduce((acc, question) => {
-    acc[question.difficulty] = (acc[question.difficulty] || 0) + 1
-    return acc
-  }, {} as Record<string, number>)
+    acc[question.difficulty] = (acc[question.difficulty] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
 
   const topicBreakdown = selectedQuestions.reduce((acc, question) => {
-    acc[question.topic] = (acc[question.topic] || 0) + 1
-    return acc
-  }, {} as Record<string, number>)
+    acc[question.topic] = (acc[question.topic] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
 
   const typeBreakdown = selectedQuestions.reduce((acc, question) => {
-    acc[question.type] = (acc[question.type] || 0) + 1
-    return acc
-  }, {} as Record<string, number>)
+    acc[question.type] = (acc[question.type] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
 
   async function generateExam() {
-    setIsSubmitting(true)
+    setIsSubmitting(true);
 
     try {
-      // const apiUrl = process.env.NEXT_PUBLIC_GENERATE_EXAM_ENDPOINT_URL
-      const apiUrl = "http://localhost:3002/api/generate-exam"
+      const apiUrl = process.env.NEXT_PUBLIC_GENERATE_EXAM_ENDPOINT_URL;
+      // const apiUrl = "http://localhost:3002/api/generate-exam"
       if (!apiUrl) {
         throw new Error(
           "Backend API URL is not configured. Please check your environment variables."
-        )
+        );
       }
       const response = await fetch(apiUrl, {
         method: "POST",
@@ -54,34 +54,34 @@ export default function ExamSummary({ selectedQuestions }: ExamSummaryProps) {
           Expires: "0",
         },
         body: JSON.stringify(selectedQuestions), // Send the selected exam questions to the backend
-      })
-      if (!response.ok) throw new Error("ZIP generation failed")
-      console.log(response)
+      });
+      if (!response.ok) throw new Error("ZIP generation failed");
+      console.log(response);
 
       // Get ZIP blob from response
-      const zipBlob = await response.blob()
+      const zipBlob = await response.blob();
 
       // Create download link
-      const downloadUrl = window.URL.createObjectURL(zipBlob)
-      const a = document.createElement("a")
-      a.href = downloadUrl
-      a.download = `exam-${Date.now()}.zip` // Timestamped ZIP filename
-      document.body.appendChild(a)
-      a.click()
+      const downloadUrl = window.URL.createObjectURL(zipBlob);
+      const a = document.createElement("a");
+      a.href = downloadUrl;
+      a.download = `exam-${Date.now()}.zip`; // Timestamped ZIP filename
+      document.body.appendChild(a);
+      a.click();
 
       // Clean up
-      window.URL.revokeObjectURL(downloadUrl)
-      document.body.removeChild(a)
+      window.URL.revokeObjectURL(downloadUrl);
+      document.body.removeChild(a);
     } catch (error) {
-      console.error("Error:", error)
+      console.error("Error:", error);
       // Show error to user
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
       toast({
         title: "Download complete 🎉",
         description: "Please check your downloads for a .zip folder",
         variant: "success",
-      })
+      });
     }
   }
 
@@ -92,8 +92,8 @@ export default function ExamSummary({ selectedQuestions }: ExamSummaryProps) {
       </CardHeader>
       <form
         onSubmit={(e) => {
-          e.preventDefault()
-          generateExam()
+          e.preventDefault();
+          generateExam();
         }}
         className="space-y-8"
       >
@@ -179,5 +179,5 @@ export default function ExamSummary({ selectedQuestions }: ExamSummaryProps) {
         </CardContent>
       </form>
     </Card>
-  )
+  );
 }
