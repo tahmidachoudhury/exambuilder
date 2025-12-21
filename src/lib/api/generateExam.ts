@@ -1,5 +1,4 @@
-// Put this somewhere reusable (same file or /lib/api/generateExam.ts)
-async function generateExamZip(options: {
+export async function generateExamZip(options: {
   questions: unknown; // replace with your Question[] type
   endpoint?: string;
   filenamePrefix?: string;

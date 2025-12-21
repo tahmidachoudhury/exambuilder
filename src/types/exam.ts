@@ -4,7 +4,7 @@ export interface Question {
   topic: string;
   question_topic: string;
   difficulty: "Grade 1-3" | "Grade 4-5" | "Grade 6-7" | "Grade 8-9";
-  type: "calculator" | "non-calculator";
+  type: "calc" | "non-calc";
   content: string;
   answer: string;
   model_answer: string;
@@ -27,7 +27,7 @@ export interface TopicCategory {
 }
 
 export type GradeFilter = "Grade 1-3" | "Grade 4-5" | "Grade 6-7" | "Grade 8-9";
-export type CalculatorFilter = "calculator" | "non-calculator";
+export type CalculatorFilter = "calc" | "non-calc";
 
 export interface ExamFilters {
   grades: GradeFilter[];

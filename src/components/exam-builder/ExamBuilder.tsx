@@ -34,6 +34,7 @@ import { QuestionPreviewModal } from "./QuestionPreviewModal";
 import { QuestionCard } from "./QuestionCard";
 import { topics } from "@/lib/topics";
 import { getQuestions } from "@/lib/api/getQuestions";
+import { generateExamZip } from "@/lib/api/generateExam";
 
 export default function ExamBuilder() {
   // State

@@ -1,7 +1,7 @@
-import { X, Calculator, BookX, GraduationCap } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { cn } from '@/lib/utils';
-import { ExamFilters, GradeFilter, CalculatorFilter } from '@/types/exam';
+import { X, Calculator, BookX, GraduationCap } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { ExamFilters, GradeFilter, CalculatorFilter } from "@/types/exam";
 
 interface FilterChipsProps {
   filters: ExamFilters;
@@ -11,15 +11,35 @@ interface FilterChipsProps {
 }
 
 const gradeOptions: { value: GradeFilter; label: string; color: string }[] = [
-  { value: 'Grade 1-3', label: '1-3', color: 'bg-emerald-100 text-emerald-700 border-emerald-200' },
-  { value: 'Grade 4-5', label: '4-5', color: 'bg-amber-100 text-amber-700 border-amber-200' },
-  { value: 'Grade 6-7', label: '6-7', color: 'bg-orange-100 text-orange-700 border-orange-200' },
-  { value: 'Grade 8-9', label: '8-9', color: 'bg-red-100 text-red-700 border-red-200' },
+  {
+    value: "Grade 1-3",
+    label: "1-3",
+    color: "bg-emerald-100 text-emerald-700 border-emerald-200",
+  },
+  {
+    value: "Grade 4-5",
+    label: "4-5",
+    color: "bg-amber-100 text-amber-700 border-amber-200",
+  },
+  {
+    value: "Grade 6-7",
+    label: "6-7",
+    color: "bg-orange-100 text-orange-700 border-orange-200",
+  },
+  {
+    value: "Grade 8-9",
+    label: "8-9",
+    color: "bg-red-100 text-red-700 border-red-200",
+  },
 ];
 
-const calculatorOptions: { value: CalculatorFilter; label: string; icon: typeof Calculator }[] = [
-  { value: 'calculator', label: 'Calculator', icon: Calculator },
-  { value: 'non-calculator', label: 'Non-Calc', icon: BookX },
+const calculatorOptions: {
+  value: CalculatorFilter;
+  label: string;
+  icon: typeof Calculator;
+}[] = [
+  { value: "calc", label: "Calculator", icon: Calculator },
+  { value: "non-calc", label: "Non-Calc", icon: BookX },
 ];
 
 export function FilterChips({
@@ -28,7 +48,8 @@ export function FilterChips({
   onToggleCalculator,
   onClearAll,
 }: FilterChipsProps) {
-  const hasActiveFilters = filters.grades.length > 0 || filters.calculatorTypes.length > 0;
+  const hasActiveFilters =
+    filters.grades.length > 0 || filters.calculatorTypes.length > 0;
 
   return (
     <div className="flex flex-wrap items-center gap-2">
@@ -42,10 +63,10 @@ export function FilterChips({
               key={grade.value}
               onClick={() => onToggleGrade(grade.value)}
               className={cn(
-                'filter-chip border transition-all duration-200',
+                "filter-chip border transition-all duration-200",
                 isActive
                   ? grade.color
-                  : 'bg-transparent border-border text-muted-foreground hover:border-primary/30 hover:text-foreground'
+                  : "bg-transparent border-border text-muted-foreground hover:border-primary/30 hover:text-foreground"
               )}
             >
               <span>{grade.label}</span>
@@ -69,10 +90,10 @@ export function FilterChips({
               key={option.value}
               onClick={() => onToggleCalculator(option.value)}
               className={cn(
-                'filter-chip border transition-all duration-200',
+                "filter-chip border transition-all duration-200",
                 isActive
-                  ? 'bg-primary text-primary-foreground border-primary'
-                  : 'bg-transparent border-border text-muted-foreground hover:border-primary/30 hover:text-foreground'
+                  ? "bg-primary text-primary-foreground border-primary"
+                  : "bg-transparent border-border text-muted-foreground hover:border-primary/30 hover:text-foreground"
               )}
             >
               <Icon className="w-3.5 h-3.5" />
