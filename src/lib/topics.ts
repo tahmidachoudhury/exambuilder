@@ -1,13 +1,14 @@
-export interface TopicCategory {
-  id: number
-  name: string
-  topics: TopicMetaData[]
-}
+// export interface TopicCategory {
+//   id: number;
+//   name: string;
+//   topics: TopicMetaData[];
+// }
+// export interface TopicMetaData {
+//   topic: string;
+//   url: string;
+// }
 
-export interface TopicMetaData {
-  topic: string
-  url: string
-}
+import { TopicCategory } from "@/types/exam";
 
 export const topics: TopicCategory[] = [
   {
@@ -253,4 +254,4 @@ export const topics: TopicCategory[] = [
       },
     ],
   },
-]
+];

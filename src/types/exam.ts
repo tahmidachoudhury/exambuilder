@@ -3,8 +3,8 @@ export interface Question {
   question_id: string;
   topic: string;
   question_topic: string;
-  difficulty: 'Grade 1-3' | 'Grade 4-5' | 'Grade 6-7' | 'Grade 8-9';
-  type: 'calculator' | 'non-calculator';
+  difficulty: "Grade 1-3" | "Grade 4-5" | "Grade 6-7" | "Grade 8-9";
+  type: "calculator" | "non-calculator";
   content: string;
   answer: string;
   model_answer: string;
@@ -16,19 +16,18 @@ export interface Question {
 }
 
 export interface Topic {
-  id: string;
-  name: string;
-  category: string;
-  questionCount: number;
+  topic: string;
+  url: string;
 }
 
 export interface TopicCategory {
+  id: number;
   name: string;
   topics: Topic[];
 }
 
-export type GradeFilter = 'Grade 1-3' | 'Grade 4-5' | 'Grade 6-7' | 'Grade 8-9';
-export type CalculatorFilter = 'calculator' | 'non-calculator';
+export type GradeFilter = "Grade 1-3" | "Grade 4-5" | "Grade 6-7" | "Grade 8-9";
+export type CalculatorFilter = "calculator" | "non-calculator";
 
 export interface ExamFilters {
   grades: GradeFilter[];

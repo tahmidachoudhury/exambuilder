@@ -1,10 +1,11 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronRight, BookOpen, Search, Hash } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { TopicCategory, Topic } from '@/types/exam';
-import { Input } from '@/components/ui/input';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronRight, BookOpen, Search, Hash } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { TopicCategory, Topic } from "@/types/exam";
+import { topics } from "@/lib/topics";
+import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface TopicSidebarProps {
   categories: TopicCategory[];
@@ -22,7 +23,7 @@ export function TopicSidebar({
   const [expandedCategories, setExpandedCategories] = useState<string[]>(
     categories.map((c) => c.name)
   );
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   const toggleCategory = (categoryName: string) => {
     setExpandedCategories((prev) =>
@@ -35,8 +36,8 @@ export function TopicSidebar({
   const filteredCategories = categories
     .map((category) => ({
       ...category,
-      topics: category.topics.filter((topic) =>
-        topic.name.toLowerCase().includes(searchQuery.toLowerCase())
+      topics: category.topics.filter((item) =>
+        item.topic.toLowerCase().includes(searchQuery.toLowerCase())
       ),
     }))
     .filter((category) => category.topics.length > 0);
@@ -74,8 +75,8 @@ export function TopicSidebar({
               >
                 <ChevronRight
                   className={cn(
-                    'w-4 h-4 transition-transform duration-200',
-                    expandedCategories.includes(category.name) && 'rotate-90'
+                    "w-4 h-4 transition-transform duration-200",
+                    expandedCategories.includes(category.name) && "rotate-90"
                   )}
                 />
                 <span>{category.name}</span>
@@ -89,7 +90,7 @@ export function TopicSidebar({
                 {expandedCategories.includes(category.name) && (
                   <motion.div
                     initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
+                    animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.2 }}
                     className="overflow-hidden"
@@ -97,11 +98,11 @@ export function TopicSidebar({
                     <div className="ml-4 mt-1 space-y-0.5">
                       {category.topics.map((topic) => (
                         <TopicItem
-                          key={topic.id}
+                          key={topic.topic}
                           topic={topic}
-                          isSelected={selectedTopic === topic.id}
-                          onClick={() => onSelectTopic(topic.id)}
-                          isLoading={isLoading && selectedTopic === topic.id}
+                          isSelected={selectedTopic === topic.topic}
+                          onClick={() => onSelectTopic(topic.topic)}
+                          isLoading={isLoading && selectedTopic === topic.topic}
                         />
                       ))}
                     </div>
@@ -135,30 +136,31 @@ function TopicItem({ topic, isSelected, onClick, isLoading }: TopicItemProps) {
     <button
       onClick={onClick}
       className={cn(
-        'w-full flex items-center gap-2 px-3 py-2 text-sm rounded-md transition-all duration-200',
+        "w-full flex items-start gap-2 px-3 py-2 text-sm rounded-md transition-all duration-200",
         isSelected
-          ? 'bg-primary text-primary-foreground font-medium'
-          : 'text-foreground hover:bg-muted'
+          ? "bg-primary text-primary-foreground font-medium"
+          : "text-foreground hover:bg-muted"
       )}
     >
       {isLoading ? (
-        <div className="w-3 h-3 border-2 border-current border-t-transparent rounded-full animate-spin" />
+        <div className="w-3 h-3 border-2 border-current border-t-transparent rounded-full animate-spin mt-0.5 flex-shrink-0" />
       ) : (
         <div
           className={cn(
-            'w-1.5 h-1.5 rounded-full',
-            isSelected ? 'bg-primary-foreground' : 'bg-muted-foreground'
+            "w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0",
+            isSelected ? "bg-primary-foreground" : "bg-muted-foreground"
           )}
         />
       )}
-      <span className="truncate">{topic.name}</span>
+      <span className="flex-1 break-words text-left">{topic.topic}</span>
       <span
         className={cn(
-          'ml-auto text-xs',
-          isSelected ? 'text-primary-foreground/80' : 'text-muted-foreground'
+          "text-xs flex-shrink-0",
+          isSelected ? "text-primary-foreground/80" : "text-muted-foreground"
         )}
       >
-        {topic.questionCount}
+        {/* {topic.questionCount} this will be the number of questions in the topic*/}
+        67
       </span>
     </button>
   );

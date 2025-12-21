@@ -32,6 +32,7 @@ import { QuestionsPanel } from "./QuestionsPanel";
 import { ExamSummary } from "./ExamSummary";
 import { QuestionPreviewModal } from "./QuestionPreviewModal";
 import { QuestionCard } from "./QuestionCard";
+import { topics } from "@/lib/topics";
 
 export default function ExamBuilder() {
   // State
@@ -65,7 +66,7 @@ export default function ExamBuilder() {
   );
 
   const selectedTopicData = useMemo(
-    () => allTopics.find((t) => t.id === selectedTopic),
+    () => allTopics.find((t) => t.topic === selectedTopic),
     [selectedTopic]
   );
 
@@ -95,8 +96,10 @@ export default function ExamBuilder() {
     await new Promise((resolve) => setTimeout(resolve, 500));
 
     try {
+      // ! api call to https://api.tacknowledge.co.uk/api/get-questions goes here
       const fetchedQuestions = generateQuestionsForTopic(topicId);
       setQuestions(fetchedQuestions);
+      console.log(fetchedQuestions);
     } catch {
       setError("Failed to load questions. Please try again.");
     } finally {
@@ -152,6 +155,7 @@ export default function ExamBuilder() {
     toast.info("Generating exam PDFs...");
 
     // Simulate API call
+    // ! api call to backend goes here https://api.tacknowledge.co.uk/api/generate-exam
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
     setIsGenerating(false);
@@ -214,7 +218,7 @@ export default function ExamBuilder() {
         <div className="flex flex-1 min-h-0">
           {/* Topic Sidebar */}
           <TopicSidebar
-            categories={topicCategories}
+            categories={topics}
             selectedTopic={selectedTopic}
             onSelectTopic={handleSelectTopic}
             isLoading={isLoading}
@@ -246,7 +250,7 @@ export default function ExamBuilder() {
             <QuestionsPanel
               questions={filteredQuestions}
               selectedTopic={selectedTopic}
-              topicName={selectedTopicData?.name ?? null}
+              topicName={selectedTopicData?.topic ?? null}
               isLoading={isLoading}
               error={error}
               addedQuestionIds={addedQuestionIds}
