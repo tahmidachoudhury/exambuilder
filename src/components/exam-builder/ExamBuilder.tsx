@@ -33,6 +33,7 @@ import { ExamSummary } from "./ExamSummary";
 import { QuestionPreviewModal } from "./QuestionPreviewModal";
 import { QuestionCard } from "./QuestionCard";
 import { topics } from "@/lib/topics";
+import { getQuestions } from "@/lib/api/getQuestions";
 
 export default function ExamBuilder() {
   // State
@@ -93,15 +94,17 @@ export default function ExamBuilder() {
     setError(null);
 
     // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 500));
-
     try {
-      // ! api call to https://api.tacknowledge.co.uk/api/get-questions goes here
-      const fetchedQuestions = generateQuestionsForTopic(topicId);
-      setQuestions(fetchedQuestions);
-      console.log(fetchedQuestions);
-    } catch {
-      setError("Failed to load questions. Please try again.");
+      const questions = await getQuestions({
+        topicId,
+        limit: 5,
+      });
+
+      setQuestions(questions);
+      console.log("Fetched questions:", questions);
+    } catch (e) {
+      console.error(e);
+      setError(e instanceof Error ? e.message : "Failed to load questions.");
     } finally {
       setIsLoading(false);
     }
@@ -156,13 +159,28 @@ export default function ExamBuilder() {
 
     // Simulate API call
     // ! api call to backend goes here https://api.tacknowledge.co.uk/api/generate-exam
-    await new Promise((resolve) => setTimeout(resolve, 2000));
 
-    setIsGenerating(false);
-    toast.success("Exam generated successfully! Download starting...");
+    try {
+      console.log(examQuestions);
 
-    // In real app, this would trigger a download
-  }, [examQuestions.length]);
+      await generateExamZip({
+        questions: examQuestions,
+        filenamePrefix: "exam",
+      });
+
+      toast.success("Exam generated successfully! Download starting...");
+
+      console.log("Success! Reached endpoint");
+    } catch (error) {
+      console.error(error);
+
+      toast.error(
+        error instanceof Error ? error.message : "Failed to generate exam"
+      );
+    } finally {
+      setIsGenerating(false);
+    }
+  }, [examQuestions]);
 
   // Drag handlers
   const handleDragStart = useCallback((event: DragStartEvent) => {
