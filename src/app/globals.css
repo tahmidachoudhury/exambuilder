@@ -7,9 +7,11 @@
 @layer base {
   :root {
     /* Navy/Slate Educational Theme */
+    /* this changes the background and navbar bg*/
     --background: 210 20% 98%;
     --foreground: 222 47% 11%;
 
+    /* this changes the card background */
     --card: 0 0% 100%;
     --card-foreground: 222 47% 11%;
 
@@ -24,10 +26,12 @@
     --secondary: 214 32% 91%;
     --secondary-foreground: 222 47% 20%;
 
+    /* changes all muted elements */
     --muted: 210 20% 96%;
     --muted-foreground: 215 16% 47%;
 
     /* Warm Amber Accent */
+    /* this changes button color */
     --accent: 38 92% 50%;
     --accent-foreground: 0 0% 100%;
 
@@ -78,10 +82,12 @@
   }
 
   .dark {
-    --background: 222 47% 8%;
+    /* this changes the background and navbar bg*/
+    --background: 0 0% 10%;
     --foreground: 210 40% 98%;
 
-    --card: 222 47% 11%;
+    /* this changes the card background */
+    --card: 0 0% 12%;
     --card-foreground: 210 40% 98%;
 
     --popover: 222 47% 11%;
@@ -93,9 +99,11 @@
     --secondary: 217 33% 17%;
     --secondary-foreground: 210 40% 98%;
 
+    /* changes all muted elements */
     --muted: 217 33% 17%;
     --muted-foreground: 215 20% 65%;
 
+    /* this changes button color */
     --accent: 38 92% 50%;
     --accent-foreground: 222 47% 11%;
 
