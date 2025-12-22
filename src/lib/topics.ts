@@ -8,9 +8,9 @@
 //   url: string;
 // }
 
-import { TopicCategory } from "@/types/exam";
+import { Category } from "@/types/exam";
 
-export const topics: TopicCategory[] = [
+export const Categories: Category[] = [
   {
     id: 1,
     name: "Number",

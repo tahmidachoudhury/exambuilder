@@ -32,7 +32,7 @@ import { QuestionsPanel } from "./QuestionsPanel";
 import { ExamSummary } from "./ExamSummary";
 import { QuestionPreviewModal } from "./QuestionPreviewModal";
 import { QuestionCard } from "./QuestionCard";
-import { topics } from "@/lib/topics";
+import { Categories } from "@/lib/topics";
 import { getQuestions } from "@/lib/api/getQuestions";
 import { generateExamZip } from "@/lib/api/generateExam";
 
@@ -237,7 +237,7 @@ export default function ExamBuilder() {
         <div className="flex flex-1 min-h-0">
           {/* Topic Sidebar */}
           <TopicSidebar
-            categories={topics}
+            categories={Categories}
             selectedTopic={selectedTopic}
             onSelectTopic={handleSelectTopic}
             isLoading={isLoading}

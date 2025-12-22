@@ -21,7 +21,7 @@ export interface Topic {
   url: string;
 }
 
-export interface TopicCategory {
+export interface Category {
   id: number;
   name: string;
   topics: Topic[];

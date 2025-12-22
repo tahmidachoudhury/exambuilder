@@ -2,13 +2,13 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight, BookOpen, Search, Hash } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { TopicCategory, Topic } from "@/types/exam";
-import { topics } from "@/lib/topics";
+import { Category, Topic } from "@/types/exam";
+import { Categories } from "@/lib/topics";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface TopicSidebarProps {
-  categories: TopicCategory[];
+  categories: Category[];
   selectedTopic: string | null;
   onSelectTopic: (topicId: string) => void;
   isLoading?: boolean;
