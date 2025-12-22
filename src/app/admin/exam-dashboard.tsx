@@ -72,7 +72,7 @@ export function ExamDashboard() {
     toast({
       title: "Are you sure?",
       description: "This will permanently delete the question.",
-      variant: "warning",
+      variant: "destructive",
       action: (
         <ToastAction
           onClick={() => confirmDelete(questionId)}

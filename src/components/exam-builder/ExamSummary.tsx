@@ -1,11 +1,11 @@
-import { useDroppable } from '@dnd-kit/core';
+import { useDroppable } from "@dnd-kit/core";
 import {
   SortableContext,
   useSortable,
   verticalListSortingStrategy,
-} from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
-import { motion, AnimatePresence } from 'framer-motion';
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   GripVertical,
   X,
@@ -17,13 +17,13 @@ import {
   BookX,
   Loader2,
   FileArchive,
-} from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { ExamQuestion } from '@/types/exam';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Separator } from '@/components/ui/separator';
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+import { ExamQuestion } from "@/types/exam";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
 
 interface ExamSummaryProps {
   questions: ExamQuestion[];
@@ -43,7 +43,7 @@ export function ExamSummary({
   isDragOver,
 }: ExamSummaryProps) {
   const { setNodeRef, isOver } = useDroppable({
-    id: 'exam-summary',
+    id: "exam-summary",
   });
 
   const totalMarks = questions.reduce((sum, q) => sum + q.total_marks, 0);
@@ -52,8 +52,8 @@ export function ExamSummary({
     <aside
       ref={setNodeRef}
       className={cn(
-        'w-80 bg-card border-l border-border flex flex-col h-full transition-all duration-200',
-        (isOver || isDragOver) && 'bg-accent/10 border-accent'
+        "w-80 bg-card border-l border-border flex flex-col h-full transition-all duration-200",
+        (isOver || isDragOver) && "bg-accent/10 border-accent"
       )}
     >
       {/* Header */}
@@ -72,7 +72,9 @@ export function ExamSummary({
       {/* Stats */}
       <div className="grid grid-cols-2 gap-3 p-4 border-b border-border">
         <div className="bg-muted/50 rounded-lg p-3 text-center">
-          <p className="text-2xl font-bold text-foreground">{questions.length}</p>
+          <p className="text-2xl font-bold text-foreground">
+            {questions.length}
+          </p>
           <p className="text-xs text-muted-foreground">Questions</p>
         </div>
         <div className="bg-muted/50 rounded-lg p-3 text-center">
@@ -90,8 +92,8 @@ export function ExamSummary({
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 className={cn(
-                  'drop-zone flex flex-col items-center justify-center py-12 px-4',
-                  (isOver || isDragOver) && 'active'
+                  "drop-zone flex flex-col items-center justify-center py-12 px-4",
+                  (isOver || isDragOver) && "active"
                 )}
               >
                 <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center mb-3">
@@ -101,7 +103,7 @@ export function ExamSummary({
                   Drop questions here
                 </p>
                 <p className="text-xs text-muted-foreground text-center mt-1">
-                  or click "Add" on any question
+                  or click &quot;Add&quot; on any question
                 </p>
               </motion.div>
             ) : (
@@ -145,7 +147,12 @@ export function ExamSummary({
               className="bg-background/50"
               disabled
             />
-            <Button variant="outline" size="sm" disabled className="whitespace-nowrap">
+            <Button
+              variant="outline"
+              size="sm"
+              disabled
+              className="whitespace-nowrap"
+            >
               Generate
             </Button>
           </div>
@@ -218,8 +225,8 @@ function SortableQuestionItem({
       exit={{ opacity: 0, x: -20 }}
       transition={{ delay: index * 0.05 }}
       className={cn(
-        'sortable-item bg-background rounded-lg border border-border p-3 group',
-        isDragging && 'shadow-card-drag opacity-90 z-50'
+        "sortable-item bg-background rounded-lg border border-border p-3 group",
+        isDragging && "shadow-card-drag opacity-90 z-50"
       )}
       {...attributes}
     >
@@ -235,7 +242,9 @@ function SortableQuestionItem({
 
         {/* Question Number */}
         <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-          <span className="text-xs font-semibold text-primary">{index + 1}</span>
+          <span className="text-xs font-semibold text-primary">
+            {index + 1}
+          </span>
         </div>
 
         {/* Content */}
@@ -244,7 +253,7 @@ function SortableQuestionItem({
             <span className="text-xs font-mono text-muted-foreground">
               {question.question_id}
             </span>
-            {question.type === 'calculator' ? (
+            {question.type === "calc" ? (
               <Calculator className="w-3 h-3 text-muted-foreground" />
             ) : (
               <BookX className="w-3 h-3 text-muted-foreground" />
