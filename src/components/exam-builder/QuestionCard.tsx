@@ -1,11 +1,11 @@
-import { forwardRef } from 'react';
-import { useDraggable } from '@dnd-kit/core';
-import { CSS } from '@dnd-kit/utilities';
-import { motion } from 'framer-motion';
-import { Plus, GripVertical, Calculator, BookX, Eye } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { Question } from '@/types/exam';
-import { Button } from '@/components/ui/button';
+import { forwardRef } from "react";
+import { useDraggable } from "@dnd-kit/core";
+import { CSS } from "@dnd-kit/utilities";
+import { motion } from "framer-motion";
+import { Plus, GripVertical, Calculator, BookX, Eye } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Question } from "@/types/exam";
+import { Button } from "@/components/ui/button";
 
 interface QuestionCardProps {
   question: Question;
@@ -15,19 +15,23 @@ interface QuestionCardProps {
   index?: number;
 }
 
-const difficultyStyles: Record<Question['difficulty'], string> = {
-  'Grade 1-3': 'grade-badge grade-easy',
-  'Grade 4-5': 'grade-badge grade-medium',
-  'Grade 6-7': 'grade-badge grade-hard',
-  'Grade 8-9': 'grade-badge grade-expert',
+const difficultyStyles: Record<Question["difficulty"], string> = {
+  "Grade 1-3": "grade-badge grade-easy",
+  "Grade 4-5": "grade-badge grade-medium",
+  "Grade 6-7": "grade-badge grade-hard",
+  "Grade 8-9": "grade-badge grade-expert",
 };
 
 export const QuestionCard = forwardRef<HTMLDivElement, QuestionCardProps>(
-  function QuestionCard({ question, onAdd, onPreview, isAdded, index = 0 }, ref) {
-    const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
-      id: question.id,
-      data: { question },
-    });
+  function QuestionCard(
+    { question, onAdd, onPreview, isAdded, index = 0 },
+    ref
+  ) {
+    const { attributes, listeners, setNodeRef, transform, isDragging } =
+      useDraggable({
+        id: question.id,
+        data: { question },
+      });
 
     const style = transform
       ? {
@@ -40,7 +44,7 @@ export const QuestionCard = forwardRef<HTMLDivElement, QuestionCardProps>(
       <motion.div
         ref={(node) => {
           setNodeRef(node);
-          if (typeof ref === 'function') ref(node);
+          if (typeof ref === "function") ref(node);
           else if (ref) ref.current = node;
         }}
         initial={{ opacity: 0, y: 10 }}
@@ -48,9 +52,9 @@ export const QuestionCard = forwardRef<HTMLDivElement, QuestionCardProps>(
         transition={{ delay: index * 0.05 }}
         style={style}
         className={cn(
-          'question-card group',
-          isDragging && 'dragging',
-          isAdded && 'ring-2 ring-success/50 bg-success/5'
+          "question-card group",
+          isDragging && "dragging",
+          isAdded && "ring-2 ring-success/50 bg-success/5"
         )}
         {...attributes}
       >
@@ -80,7 +84,7 @@ export const QuestionCard = forwardRef<HTMLDivElement, QuestionCardProps>(
                 </span>
               </div>
               <div className="flex items-center gap-1.5">
-                {question.type === 'calculator' ? (
+                {question.type === "calc" ? (
                   <span className="flex items-center gap-1 text-xs text-muted-foreground">
                     <Calculator className="w-3.5 h-3.5" />
                     Calc
@@ -99,9 +103,12 @@ export const QuestionCard = forwardRef<HTMLDivElement, QuestionCardProps>(
             </p>
 
             <div className="flex items-center justify-between">
-              <span className="text-xs text-muted-foreground">{question.topic}</span>
+              <span className="text-xs text-muted-foreground">
+                {question.topic}
+              </span>
               <span className="text-xs font-semibold text-primary">
-                {question.total_marks} {question.total_marks === 1 ? 'mark' : 'marks'}
+                {question.total_marks}{" "}
+                {question.total_marks === 1 ? "mark" : "marks"}
               </span>
             </div>
           </button>
@@ -123,14 +130,14 @@ export const QuestionCard = forwardRef<HTMLDivElement, QuestionCardProps>(
             onClick={onAdd}
             disabled={isAdded}
             className={cn(
-              'flex-1',
+              "flex-1",
               isAdded
-                ? 'bg-success/10 text-success border border-success/20 hover:bg-success/10'
-                : 'bg-primary text-primary-foreground hover:bg-primary/90'
+                ? "bg-success/10 text-success border border-success/20 hover:bg-success/10"
+                : "bg-primary text-primary-foreground hover:bg-primary/90"
             )}
           >
-            <Plus className={cn('w-4 h-4 mr-1.5', isAdded && 'rotate-45')} />
-            {isAdded ? 'Added' : 'Add'}
+            <Plus className={cn("w-4 h-4 mr-1.5", isAdded && "rotate-45")} />
+            {isAdded ? "Added" : "Add"}
           </Button>
         </div>
       </motion.div>

@@ -7,24 +7,26 @@ import { Button } from "@/components/ui/button";
 import { QuestionsTable } from "./questions-table";
 import { QuestionForm } from "./question-form";
 import { Question } from "@/types/questionType";
-import { useToast } from "@/hooks/use-toast";
-import { ToastAction } from "@/components/ui/toast";
+import { toast } from "sonner";
 import {
   createQuestion,
   deleteQuestion,
   updateQuestion,
 } from "@/lib/firebase/crudQuestions";
 
+// ? use try-catch around the toasts so you can see the error
+
 export function ExamDashboard() {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [selectedQuestion, setSelectedQuestion] = useState<Question | null>(
     null
   );
-  const { toast } = useToast();
+
   const [isCreating, setIsCreating] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
 
+  //! this NEEDS to be fixed
   useEffect(() => {
     fetchQuestions(); // first page
   });
@@ -36,8 +38,8 @@ export function ExamDashboard() {
 
     try {
       const url = cursor
-        ? `/api/get-questions?limit=100&startAfter=${cursor}`
-        : `/api/get-questions?limit=100`;
+        ? `/api/get-questions?limit=5&startAfter=${cursor}`
+        : `/api/get-questions?limit=5`;
 
       const res = await fetch(url);
       const data = await res.json();
@@ -69,18 +71,14 @@ export function ExamDashboard() {
 
   const handleDelete = (questionId: string) => {
     // Show confirmation toast first
-    toast({
-      title: "Are you sure?",
+    toast.info("Are you sure?", {
       description: "This will permanently delete the question.",
-      variant: "destructive",
-      action: (
-        <ToastAction
-          onClick={() => confirmDelete(questionId)}
-          altText="Permanently delete question from database"
-        >
-          Delete
-        </ToastAction>
-      ),
+      action: {
+        label: "Delete",
+        onClick: () => confirmDelete(questionId),
+      },
+
+      className: "border-red-500",
     });
   };
 
@@ -97,17 +95,11 @@ export function ExamDashboard() {
 
     //successful deletion toast
     if (response.success) {
-      toast({
-        title: "Question deleted",
+      toast.success("Question deleted", {
         description: "The question has been permanently removed.",
-        variant: "success",
       });
     } else {
-      toast({
-        title: "Error deleting question",
-        description: "Something went wrong.",
-        variant: "destructive",
-      });
+      toast.error("Failed to delete question");
     }
   };
 
@@ -119,17 +111,13 @@ export function ExamDashboard() {
       const response = await createQuestion(question.question_id, question);
 
       if (response.success) {
-        toast({
-          title: "Question created",
+        toast.success("Question created", {
           description:
             "The question has been created and uploaded to the database.",
-          variant: "success",
         });
       } else {
-        toast({
-          title: "Error creating question",
+        toast.error("Error creating question", {
           description: "Something went wrong.",
-          variant: "destructive",
         });
       }
     } else {
@@ -142,17 +130,13 @@ export function ExamDashboard() {
       const response = await updateQuestion(question.question_id, question);
 
       if (response.success) {
-        toast({
-          title: "Question updated",
+        toast.success("Question updated", {
           description:
             "The question has been updated and uploaded to the database.",
-          variant: "success",
         });
       } else {
-        toast({
-          title: "Error updating question",
+        toast("Error updating question", {
           description: "Something went wrong.",
-          variant: "destructive",
         });
       }
     }

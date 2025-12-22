@@ -4,9 +4,8 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { Analytics } from "@vercel/analytics/react";
 import { AuthProvider } from "@/context/AuthContext";
-import { TabNavigation } from "@/components/old/TabNavigation";
-import Footer from "@/components/old/footer";
-import { ThemeProvider } from "@/components/old/theme-provider";
+import { ThemeProvider } from "@/components/theme-provider";
+// import { ThemeProvider } from "next-themes";
 import { Navbar } from "@/components/Navbar";
 
 const geistSans = Geist({

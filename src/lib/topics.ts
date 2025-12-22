@@ -9,6 +9,7 @@
 // }
 
 import { Category } from "@/types/exam";
+import { TopicItem } from "@/data/topicListData";
 
 export const Categories: Category[] = [
   {
@@ -255,3 +256,5 @@ export const Categories: Category[] = [
     ],
   },
 ];
+
+export const allTopics: TopicItem[] = Categories.flatMap((cat) => cat.topics);

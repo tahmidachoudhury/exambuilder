@@ -21,18 +21,13 @@ import {
   GradeFilter,
   CalculatorFilter,
 } from "@/types/exam";
-import {
-  topicCategories,
-  generateQuestionsForTopic,
-  allTopics,
-} from "@/data/mockData";
 import { TopicSidebar } from "./TopicSidebar";
 import { FilterChips } from "./FilterChips";
 import { QuestionsPanel } from "./QuestionsPanel";
 import { ExamSummary } from "./ExamSummary";
 import { QuestionPreviewModal } from "./QuestionPreviewModal";
 import { QuestionCard } from "./QuestionCard";
-import { Categories } from "@/lib/topics";
+import { Categories, allTopics } from "@/lib/topics";
 import { getQuestions } from "@/lib/api/getQuestions";
 import { generateExamZip } from "@/lib/api/generateExam";
 

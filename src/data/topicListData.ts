@@ -14,8 +14,14 @@ export const topicCategories: TopicCategory[] = [
     id: 1,
     name: "Number",
     topics: [
-      { topic: "Addition and Subtraction", url: "addition-and-subtraction.php" },
-      { topic: "Multiplication and Division", url: "multiplication-and-division.php" },
+      {
+        topic: "Addition and Subtraction",
+        url: "addition-and-subtraction.php",
+      },
+      {
+        topic: "Multiplication and Division",
+        url: "multiplication-and-division.php",
+      },
       { topic: "Fractions", url: "fractions.php" },
       { topic: "Decimals", url: "decimals.php" },
       { topic: "Percentages", url: "percentages.php" },
@@ -33,8 +39,14 @@ export const topicCategories: TopicCategory[] = [
       { topic: "Simplifying Expressions", url: "simplifying-expressions.php" },
       { topic: "Expanding Brackets", url: "expanding-brackets.php" },
       { topic: "Factorising", url: "factorising.php" },
-      { topic: "Solving Linear Equations", url: "solving-linear-equations.php" },
-      { topic: "Solving Quadratic Equations", url: "solving-quadratic-equations.php" },
+      {
+        topic: "Solving Linear Equations",
+        url: "solving-linear-equations.php",
+      },
+      {
+        topic: "Solving Quadratic Equations",
+        url: "solving-quadratic-equations.php",
+      },
       { topic: "Simultaneous Equations", url: "simultaneous-equations.php" },
       { topic: "Inequalities", url: "inequalities.php" },
       { topic: "Sequences", url: "sequences.php" },
@@ -50,7 +62,10 @@ export const topicCategories: TopicCategory[] = [
       { topic: "Polygons", url: "polygons.php" },
       { topic: "Circles", url: "circles.php" },
       { topic: "Transformations", url: "transformations.php" },
-      { topic: "Congruence and Similarity", url: "congruence-and-similarity.php" },
+      {
+        topic: "Congruence and Similarity",
+        url: "congruence-and-similarity.php",
+      },
       { topic: "Pythagoras Theorem", url: "pythagoras-theorem.php" },
       { topic: "Trigonometry", url: "trigonometry.php" },
       { topic: "Vectors", url: "vectors.php" },
@@ -90,3 +105,7 @@ export const topicCategories: TopicCategory[] = [
     ],
   },
 ];
+
+export const allTopics: TopicItem[] = topicCategories.flatMap(
+  (cat) => cat.topics
+);
