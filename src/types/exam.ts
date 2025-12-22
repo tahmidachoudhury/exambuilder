@@ -3,6 +3,7 @@ export interface Question {
   question_id: string;
   topic: string;
   question_topic: string;
+  question_description: string;
   difficulty: "Grade 1-3" | "Grade 4-5" | "Grade 6-7" | "Grade 8-9";
   type: "calc" | "non-calc";
   content: string;
